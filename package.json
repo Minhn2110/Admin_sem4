@@ -46,11 +46,11 @@
         "highlight.js": "^9.17.1",
         "lodash": "^4.17.11",
         "material-design-icons": "^3.0.1",
-        "moment": "^2.24.0",
+        "moment": "^2.25.3",
         "ng-inline-svg": "^9.2.2",
         "ngrx-store-freeze": "^0.2.4",
         "ngx-clipboard": "^12.3.0",
-        "ngx-daterangepicker-material": "^2.1.6",
+        "ngx-daterangepicker-material": "^2.1.8",
         "ngx-highlightjs": "^3.0.3",
         "ngx-perfect-scrollbar": "^8.0.0",
         "ngx-permissions": "^7.0.3",
@@ -96,8 +96,9 @@
         "webpack-cli": "^3.3.10",
         "webpack-messages": "^2.0.4",
         "webpack-rtl-plugin": "^2.0.0"
-    },  "engines": {
+    },
+    "engines": {
         "node": "10.15.0",
         "npm": "6.4.1"
-      }
+    }
 }
