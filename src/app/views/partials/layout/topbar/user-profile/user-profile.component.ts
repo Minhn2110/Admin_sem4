@@ -16,10 +16,10 @@ export class UserProfileComponent implements OnInit {
 	// Public properties
 	user$: Observable<User>;
 
-	// @Input() avatar = true;
-	// @Input() greeting = true;
-	// @Input() badge: boolean;
-	// @Input() icon: boolean;
+	@Input() avatar = true;
+	@Input() greeting = true;
+	@Input() badge: boolean;
+	@Input() icon: boolean;
 
 	/**
 	 * Component constructor
