@@ -25,7 +25,7 @@ import {
 	UsersPageRequested,
 	EmployeePageRequested,
 	selectUserById,
-	selectAllRoles, AuthService
+	selectAllRoles, AuthService, EmployeesDataSource
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
@@ -39,7 +39,7 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 export class EmployeeListComponent implements OnInit {
 
 	// Table fields
-	dataSource: UsersDataSource;
+	dataSource: EmployeesDataSource;
 	displayedColumns = ['select', 'id', 'fullname', 'email', 'phone', 'salary', 'status', 'actions'];
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild('sort1', {static: true}) sort: MatSort;
@@ -79,10 +79,10 @@ export class EmployeeListComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit() {
-		this.authService.getAllUsers().subscribe(data => console.log(data));
 		// load roles list
 		const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
 		this.subscriptions.push(rolesSubscription);
+		console.log('this.subscriptions', this.allRoles);
 
 		// If the user changes the sort order, reset back to the first page.
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
@@ -118,7 +118,7 @@ export class EmployeeListComponent implements OnInit {
 		this.subheaderService.setTitle('Employee management');
 
 		// Init DataSource
-		this.dataSource = new UsersDataSource(this.store);
+		this.dataSource = new EmployeesDataSource(this.store);
 		const entitiesSubscription = this.dataSource.entitySubject.pipe(
 			skip(1),
 			distinctUntilChanged()
@@ -219,16 +219,6 @@ export class EmployeeListComponent implements OnInit {
 	 *
 	 * @param user: User
 	 */
-	getUserRolesStr(user: User): string {
-		const titles: string[] = [];
-		each(user.roles, (roleId: number) => {
-			const _role = find(this.allRoles, (role: Role) => role.id === roleId);
-			if (_role) {
-				titles.push(_role.title);
-			}
-		});
-		return titles.join(', ');
-	}
 
 	/**
 	 * Redirect to edit page

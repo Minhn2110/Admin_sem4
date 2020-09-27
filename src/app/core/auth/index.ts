@@ -5,6 +5,7 @@ export { AuthNoticeService } from './auth-notice/auth-notice.service';
 // DATA SOURCERS
 export { RolesDataSource } from './_data-sources/roles.datasource';
 export { UsersDataSource } from './_data-sources/users.datasource';
+export { EmployeesDataSource } from './_data-sources/employees.datasource';
 
 // ACTIONS
 export {
@@ -46,22 +47,30 @@ export {
     UsersPageRequested,
     UsersActionToggleLoading,
     DepartmentCreated,
+} from './_actions/user.actions';
+
+export {
     EmployeeCreated,
     EmployeePageRequested,
-    EmployeeUpdated
-} from './_actions/user.actions';
+    EmployeeUpdated,
+    EmployeePageLoaded
+} from './_actions/employee.actions'
 
 // EFFECTS
 export { AuthEffects } from './_effects/auth.effects';
 export { PermissionEffects } from './_effects/permission.effects';
 export { RoleEffects } from './_effects/role.effects';
 export { UserEffects } from './_effects/user.effects';
+export { EmployeeEffects } from './_effects/employee.effects';
+
 
 // REDUCERS
 export { authReducer } from './_reducers/auth.reducers';
 export { permissionsReducer } from './_reducers/permission.reducers';
 export { rolesReducer } from './_reducers/role.reducers';
 export { usersReducer } from './_reducers/user.reducers';
+export { employeeReducer } from './_reducers/employee.reducers';
+
 
 // SELECTORS
 export {
@@ -102,6 +111,17 @@ export {
     selectUsersActionLoading,
     selectUsersShowInitWaitingMessage
 } from './_selectors/user.selectors';
+
+export {
+    selectEmployeeById,
+    selectEmployeesPageLoading,
+    selectEmployeesActionLoading,
+    selectLastCreatedEmployeeId,
+    selectEmployeesPageLastQuery,
+    selectEmployeesInStore,
+    selectEmployeesShowInitWaitingMessage,
+    selectHasEmployeesInStore
+} from './_selectors/employee.selectors';
 
 // GUARDS
 export { AuthGuard } from './_guards/auth.guard';

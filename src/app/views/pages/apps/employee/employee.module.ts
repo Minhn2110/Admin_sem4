@@ -22,6 +22,10 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { EmployeeComponent } from './employee.component';
 
+import {
+	employeeReducer,
+	EmployeeEffects
+} from '../../../../core/auth';
 
 const routes: Routes = [
   {
@@ -68,6 +72,8 @@ const routes: Routes = [
     PartialsModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forFeature('employees', employeeReducer),
+    EffectsModule.forFeature([EmployeeEffects]),
     MatButtonModule,
     MatMenuModule,
     MatSelectModule,

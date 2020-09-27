@@ -14,15 +14,16 @@ import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud'
 // Services and Models
 import {
   User,
-  UserUpdated,
-  Address,
   SocialNetworks,
   selectHasUsersInStore,
   selectUserById,
-  UserOnServerCreated,
   selectLastCreatedUserId,
   selectUsersActionLoading,
-  DepartmentCreated,
+  selectLastCreatedEmployeeId,
+  selectEmployeesActionLoading,
+  selectEmployeeById,
+  selectEmployeesInStore,
+
   EmployeeCreated,
   EmployeeUpdated
 } from '../../../../../core/auth';
@@ -85,7 +86,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     const routeSubscription = this.activatedRoute.params.subscribe(params => {
       const id = params.id;
       if (id && id > 0) {
-        this.store.pipe(select(selectUserById(id))).subscribe(res => {
+        this.store.pipe(select(selectEmployeeById(id))).subscribe(res => {
           if (res) {
             this.user = res;
             this.oldUser = Object.assign({}, this.user);

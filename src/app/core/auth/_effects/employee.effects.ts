@@ -9,36 +9,36 @@ import { Store, select, Action } from '@ngrx/store';
 // CRUD
 import { QueryResultsModel, QueryParamsModel } from '../../_base/crud';
 // Services
-import { AuthService } from '../../../core/auth/_services';
+import { AuthService } from '../_services';
 // State
-import { AppState } from '../../../core/reducers';
+import { AppState } from '../../reducers';
 import {
-    UserActionTypes,
-    UsersPageRequested,
-    UsersPageLoaded,
-    UserCreated,
-    UserDeleted,
-    UserUpdated,
-    UserOnServerCreated,
     UsersActionToggleLoading,
-    UsersPageToggleLoading, DepartmentCreated,
+    UsersPageToggleLoading
 } from '../_actions/user.actions';
 
+import {
+    EmployeePageRequested, 
+    EmployeePageLoaded
+} from '../_actions/employee.actions'
+import { EmployeeActionTypes } from '../_actions/employee.actions';
+
 @Injectable()
-export class UserEffects {
+export class EmployeeEffects {
     showPageLoadingDistpatcher = new UsersPageToggleLoading({ isLoading: true });
     hidePageLoadingDistpatcher = new UsersPageToggleLoading({ isLoading: false });
 
     showActionLoadingDistpatcher = new UsersActionToggleLoading({ isLoading: true });
     hideActionLoadingDistpatcher = new UsersActionToggleLoading({ isLoading: false });
 
+
     @Effect()
-    loadUsersPage$ = this.actions$
+    loadEmployeesPage$ = this.actions$
         .pipe(
-            ofType<UsersPageRequested>(UserActionTypes.UsersPageRequested),
+            ofType<any>(EmployeeActionTypes.EmployeePageRequested),
             mergeMap(({ payload }) => {
                 this.store.dispatch(this.showPageLoadingDistpatcher);
-                const requestToServer = this.auth.getAllUsers();
+                const requestToServer = this.auth.getAllEmployee();
                 const lastQuery = of(payload.page);
                 return forkJoin(requestToServer, lastQuery);
                 return requestToServer
@@ -47,7 +47,7 @@ export class UserEffects {
                 console.log('response', response);
                 // const result: QueryResultsModel = response[0];
                 const lastQuery: QueryParamsModel = response[1];
-                return new UsersPageLoaded({
+                return new EmployeePageLoaded({
                     users: response,
                     totalCount: response.length,
                     page: lastQuery
@@ -55,29 +55,14 @@ export class UserEffects {
             }),
         );
 
-
     @Effect()
-    deleteUser$ = this.actions$
+    updateEmployee$ = this.actions$
         .pipe(
-            ofType<UserDeleted>(UserActionTypes.UserDeleted),
-            mergeMap(({ payload }) => {
-                this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.deleteUser(payload.id);
-            }
-            ),
-            map(() => {
-                return this.hideActionLoadingDistpatcher;
-            }),
-        );
-
-    @Effect()
-    updateUser$ = this.actions$
-        .pipe(
-            ofType<UserUpdated>(UserActionTypes.UserUpdated),
+            ofType<any>(EmployeeActionTypes.EmployeeUpdated),
             mergeMap(({ payload }) => {
                 console.log('payload', payload);
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.updateUser(payload.id, payload.user);
+                return this.auth.updateEmployee(payload.id, payload.user);
             }),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -86,31 +71,13 @@ export class UserEffects {
 
 
     @Effect()
-    createUser$ = this.actions$
+    createEmployee$ = this.actions$
         .pipe(
-            ofType<UserOnServerCreated>(UserActionTypes.UserOnServerCreated),
-            mergeMap(({ payload }) => {
-                this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.createUser(payload.user).pipe(
-                    tap(res => {
-                        this.store.dispatch(new UserCreated({ user: res }));
-                    })
-                );
-            }),
-            map(() => {
-                return this.hideActionLoadingDistpatcher;
-            }),
-        );
-
-    @Effect()
-    createDepartment$ = this.actions$
-        .pipe(
-            ofType<any>(UserActionTypes.DepartmentCreated),
+            ofType<any>(EmployeeActionTypes.EmployeeCreated),
             mergeMap((payload) => {
-                console.log('payload', payload.payload.name);
-                // debugger
+                console.log('payload', payload);
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.createDepartment(payload.payload).pipe(
+                return this.auth.createEmployee(payload.payload).pipe(
                     tap(res => {
                         console.log('ress', res);
                         // this.store.dispatch(new UserCreated({ user: res }));
