@@ -40,6 +40,9 @@ export function usersReducer(state = initialUsersState, action: UserActions): Us
         case UserActionTypes.UserOnServerCreated: return {
             ...state
         };
+        // case UserActionTypes.DepartmentCreated: return {
+        //     ...state
+        // };
         case UserActionTypes.UserCreated: return adapter.addOne(action.payload.user, {
             ...state, lastCreatedUserId: action.payload.user.id
         });
@@ -49,9 +52,9 @@ export function usersReducer(state = initialUsersState, action: UserActions): Us
             ...state, listLoading: false, lastQuery: new QueryParamsModel({})
         };
         case UserActionTypes.UsersPageLoaded: {
-            return adapter.addMany(action.payload.users, {
+            return adapter.addMany(action.payload.users[0], {
                 ...initialUsersState,
-                totalCount: action.payload.totalCount,
+                totalCount: action.payload.users[0].length,
                 lastQuery: action.payload.page,
                 listLoading: false,
                 showInitWaitingMessage: false

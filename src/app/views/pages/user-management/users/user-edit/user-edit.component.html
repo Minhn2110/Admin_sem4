@@ -17,7 +17,6 @@
 			</button>
 			<mat-menu #menu="matMenu">
 				<button mat-menu-item color="primary" (click)="onSumbit(true)">Save & Exit</button>
-				<button mat-menu-item color="primary">Save & Duplicate</button>
 				<button mat-menu-item color="primary" (click)="onSumbit(false)">Save & Continue</button>
 			</mat-menu>
 		</ng-container>
@@ -76,22 +75,6 @@
 									</div>
 								</div>
 								<div class="form-group kt-form__group row">
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
-										<mat-form-field class="mat-form-field-fluid">
-											<input matInput placeholder="Enter Occupation" formControlName="occupation"/>
-											<mat-hint align="start">Please enter
-												<strong>Occupation</strong>
-											</mat-hint>
-										</mat-form-field>
-									</div>
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
-										<mat-form-field class="mat-form-field-fluid">
-											<input matInput placeholder="Enter Company Name" formControlName="companyName"/>
-											<mat-hint align="start">Please enter
-												<strong>Company Name</strong>
-											</mat-hint>
-										</mat-form-field>
-									</div>
 
 									<div class="col-lg-4 kt-margin-bottom-20-mobile">
 										<mat-form-field class="mat-form-field-fluid">
@@ -108,24 +91,7 @@
 					<!--end::Form-->
 				</ng-template>
 			</mat-tab>
-			<mat-tab [disabled]="!user || !user.id">
-				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fa fa-address-book"></i>
-					User address
-				</ng-template>
-				<ng-template matTabContent>
-					<kt-address [(addressSubject)]="addressSubject"></kt-address>
-				</ng-template>
-			</mat-tab>
-			<mat-tab [disabled]="!user || !user.id">
-				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fab fa-facebook"></i>
-					Social Nerworks
-				</ng-template>
-				<ng-template matTabContent>
-					<kt-social-networks [(socialNetworksSubject)]="soicialNetworksSubject"></kt-social-networks>
-				</ng-template>
-			</mat-tab>
+
 			<mat-tab *ngIf="user" [disabled]="!user || !user.id">
 				<ng-template mat-tab-label>
 					<i class="mat-tab-label-icon fa fa-unlock"></i>
@@ -135,7 +101,7 @@
 					<kt-user-roles-list [(rolesSubject)]="rolesSubject"></kt-user-roles-list>
 				</ng-template>
 			</mat-tab>
-			<mat-tab *ngIf="user" [disabled]="!user || !user.id">
+			<!-- <mat-tab *ngIf="user" [disabled]="!user || !user.id">
 				<ng-template mat-tab-label>
 					<i class="mat-tab-label-icon fa fa-exchange-alt"></i>
 					Change password
@@ -143,7 +109,7 @@
 				<ng-template matTabContent>
 					<kt-change-password [userId]="user.id"></kt-change-password>
 				</ng-template>
-			</mat-tab>
+			</mat-tab> -->
 		</mat-tab-group>
 	</kt-portlet-body>
 </kt-portlet>

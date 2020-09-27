@@ -2,7 +2,7 @@ import { BaseModel } from '../../_base/crud';
 import { Address } from './address.model';
 import { SocialNetworks } from './social-networks.model';
 
-export class User extends BaseModel {
+export class User {
     id: number;
     username: string;
     password: string;
@@ -11,10 +11,11 @@ export class User extends BaseModel {
     refreshToken: string;
     roles: number[];
     pic: string;
+    avatar?: string;
     fullname: string;
     occupation: string;
 	companyName: string;
-	phone: string;
+	phone: any;
     address: Address;
     socialNetworks: SocialNetworks;
 

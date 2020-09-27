@@ -33,7 +33,8 @@ import {
 	ProductSpecificationsService
 } from '../../../../core/e-commerce';
 // Core => Utils
-import { HttpUtilsService,
+import {
+	HttpUtilsService,
 	TypesUtilsService,
 	InterceptService,
 	LayoutUtilsService
@@ -143,7 +144,7 @@ const routes: Routes = [
 		MatButtonModule,
 		MatMenuModule,
 		MatSelectModule,
-        MatInputModule,
+		MatInputModule,
 		MatTableModule,
 		MatAutocompleteModule,
 		MatRadioModule,
@@ -162,7 +163,7 @@ const routes: Routes = [
 		NgbProgressbarModule,
 		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forFeature(FakeApiService, {
 			passThruUnknownUrl: true,
-        	dataEncapsulation: false
+			dataEncapsulation: false
 		}) : [],
 		StoreModule.forFeature('products', productsReducer),
 		EffectsModule.forFeature([ProductEffects]),
@@ -176,11 +177,11 @@ const routes: Routes = [
 	providers: [
 		ModuleGuard,
 		InterceptService,
-      	{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
-        	multi: true
-      	},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
+			multi: true
+		},
 		{
 			provide: MAT_DIALOG_DEFAULT_OPTIONS,
 			useValue: {

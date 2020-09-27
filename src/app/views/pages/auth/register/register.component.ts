@@ -75,10 +75,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 */
 	initRegisterForm() {
 		this.registerForm = this.fb.group({
+			fullname: ['', Validators.compose([
+				Validators.required,
+			])
+			],
 			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
 			]),
+			],
+			phone: ['', Validators.compose([
+				Validators.required,
+			])
 			],
 			username: ['', Validators.compose([
 				Validators.required,
@@ -91,6 +99,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			confirmPassword: ['', Validators.compose([
 				Validators.required,
 			])
+			],
+			avatar: ['', Validators.compose([
+				Validators.required,
+			]),
 			],
 			agree: [false, Validators.compose([Validators.required])]
 		}, {
@@ -127,9 +139,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		// _user.username = controls.username.value;
 		// _user.password = controls.password.value;
 		const body = {
+			fullname: controls.fullname.value,
 			username: controls.username.value,
 			password: controls.password.value,
-			email: controls.email.value
+			email: controls.email.value,
+			phone: controls.phone.value,
+			avatar: controls.avatar.value
 		}
 		this.auth.register(body).pipe(
 			tap(user => {

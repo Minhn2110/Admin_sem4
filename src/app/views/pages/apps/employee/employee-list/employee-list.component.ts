@@ -23,20 +23,24 @@ import {
 	UsersDataSource,
 	UserDeleted,
 	UsersPageRequested,
+	EmployeePageRequested,
 	selectUserById,
 	selectAllRoles, AuthService
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
 @Component({
-	selector: 'kt-users-list',
-	templateUrl: './users-list.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'kt-employee-list',
+  templateUrl: './employee-list.component.html',
+  styleUrls: ['./employee-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class EmployeeListComponent implements OnInit {
+
 	// Table fields
 	dataSource: UsersDataSource;
-	displayedColumns = ['select', 'id', 'fullname', 'username', 'email', 'phone', '_roles', 'status', 'actions'];
+	displayedColumns = ['select', 'id', 'fullname', 'email', 'phone', 'salary', 'status', 'actions'];
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
@@ -111,7 +115,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(searchSubscription);
 
 		// Set title to page breadCrumbs
-		this.subheaderService.setTitle('User management');
+		this.subheaderService.setTitle('Employee management');
 
 		// Init DataSource
 		this.dataSource = new UsersDataSource(this.store);
@@ -149,7 +153,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 			this.paginator.pageIndex,
 			this.paginator.pageSize
 		);
-		this.store.dispatch(new UsersPageRequested({ page: queryParams }));
+		this.store.dispatch(new EmployeePageRequested({ page: queryParams }));
 		this.selection.clear();
 	}
 
@@ -232,7 +236,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	 * @param id
 	 */
 	editUser(id) {
-		this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
+		this.router.navigate(['../list/edit', id], { relativeTo: this.activatedRoute });
 	}
 
 	getItemCssClassByStatus(status: boolean): string {
@@ -259,4 +263,5 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		});
 		this.layoutUtilsService.fetchElements(messages);
 	}
+
 }

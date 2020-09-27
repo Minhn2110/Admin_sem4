@@ -28,6 +28,14 @@ const routes: Routes = [
 				loadChildren: () => import('app/views/pages/apps/e-commerce/e-commerce.module').then(m => m.ECommerceModule),
 			},
 			{
+				path: 'department',
+				loadChildren: () => import('app/views/pages/apps/department/department.module').then(m => m.DepartmentModule),
+			},
+			{
+				path: 'employee',
+				loadChildren: () => import('app/views/pages/apps/employee/employee.module').then(m => m.EmployeeModule),
+			},
+			{
 				path: 'ngbootstrap',
 				loadChildren: () => import('app/views/pages/ngbootstrap/ngbootstrap.module').then(m => m.NgbootstrapModule)
 			},

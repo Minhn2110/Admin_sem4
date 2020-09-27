@@ -9,17 +9,31 @@ import { QueryParamsModel } from '../../_base/crud';
 export enum UserActionTypes {
     AllUsersRequested = '[Users Module] All Users Requested',
     AllUsersLoaded = '[Users API] All Users Loaded',
+    DepartmentCreated = '[Department] Department Created',
+    EmployeeCreated = '[Employee] Department Created',
     UserOnServerCreated = '[Edit User Component] User On Server Created',
     UserCreated = '[Edit User Dialog] User Created',
     UserUpdated = '[Edit User Dialog] User Updated',
     UserDeleted = '[Users List Page] User Deleted',
-    UsersPageRequested = '[Users List Page] Users Page Requested',
+    UsersPageRequested = '[Users List Page] ',
     UsersPageLoaded = '[Users API] Users Page Loaded',
     UsersPageCancelled = '[Users API] Users Page Cancelled',
     UsersPageToggleLoading = '[Users] Users Page Toggle Loading',
-    UsersActionToggleLoading = '[Users] Users Action Toggle Loading'
+    UsersActionToggleLoading = '[Users] Users Action Toggle Loading',
+    EmployeePageRequested = '[Employee] Employee Page Requested',
+    EmployeeUpdated = '[Employee] Employee Updated'
+
 }
 
+export class DepartmentCreated implements Action {
+    readonly type = UserActionTypes.DepartmentCreated;
+    constructor(public payload: any) { }
+}
+
+export class EmployeeCreated implements Action {
+    readonly type = UserActionTypes.EmployeeCreated;
+    constructor(public payload: any) { }
+}
 export class UserOnServerCreated implements Action {
     readonly type = UserActionTypes.UserOnServerCreated;
     constructor(public payload: { user: User }) { }
@@ -34,9 +48,19 @@ export class UserCreated implements Action {
 export class UserUpdated implements Action {
     readonly type = UserActionTypes.UserUpdated;
     constructor(public payload: {
+        id: number
         partialUser: Update<User>,
         user: User
-    }) { }
+    }) {     }
+}
+
+export class EmployeeUpdated implements Action {
+    readonly type = UserActionTypes.EmployeeUpdated;
+    constructor(public payload: {
+        id: number
+        partialUser: Update<User>,
+        user: User
+    }) {     }
 }
 
 export class UserDeleted implements Action {
@@ -49,9 +73,14 @@ export class UsersPageRequested implements Action {
     constructor(public payload: { page: QueryParamsModel }) { }
 }
 
+export class EmployeePageRequested implements Action {
+    readonly type = UserActionTypes.EmployeePageRequested;
+    constructor(public payload: { page: QueryParamsModel }) { }
+}
+
 export class UsersPageLoaded implements Action {
     readonly type = UserActionTypes.UsersPageLoaded;
-    constructor(public payload: { users: User[], totalCount: number, page: QueryParamsModel  }) { }
+    constructor(public payload: { users: any[], totalCount: number, page: QueryParamsModel  }) { }
 }
 
 
@@ -77,4 +106,9 @@ export type UserActions = UserCreated
 | UsersPageCancelled
 | UsersPageToggleLoading
 | UsersPageRequested
-| UsersActionToggleLoading;
+| UsersActionToggleLoading
+| DepartmentCreated
+| EmployeeCreated
+| EmployeePageRequested
+| EmployeeUpdated;
+

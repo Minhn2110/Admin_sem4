@@ -29,11 +29,14 @@ import {
 import { SubheaderService } from '../../../../../core/_base/layout';
 
 @Component({
-	selector: 'kt-users-list',
-	templateUrl: './users-list.component.html',
+  selector: 'kt-department-list',
+  templateUrl: './department-list.component.html',
+  styleUrls: ['./department-list.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class DepartmentListComponent implements OnInit, OnDestroy {
+
+
 	// Table fields
 	dataSource: UsersDataSource;
 	displayedColumns = ['select', 'id', 'fullname', 'username', 'email', 'phone', '_roles', 'status', 'actions'];

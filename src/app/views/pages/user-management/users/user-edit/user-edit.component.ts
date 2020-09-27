@@ -21,7 +21,7 @@ import {
 	selectUserById,
 	UserOnServerCreated,
 	selectLastCreatedUserId,
-	selectUsersActionLoading
+	selectUsersActionLoading,
 } from '../../../../../core/auth';
 
 @Component({
@@ -36,7 +36,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	selectedTab = 0;
 	loading$: Observable<boolean>;
 	rolesSubject = new BehaviorSubject<number[]>([]);
-	addressSubject = new BehaviorSubject<Address>(new Address());
 	soicialNetworksSubject = new BehaviorSubject<SocialNetworks>(new SocialNetworks());
 	userForm: FormGroup;
 	hasFormErrors = false;
@@ -79,7 +78,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 					if (res) {
 						this.user = res;
 						this.rolesSubject.next(this.user.roles);
-						this.addressSubject.next(this.user.address);
 						this.soicialNetworksSubject.next(this.user.socialNetworks);
 						this.oldUser = Object.assign({}, this.user);
 						this.initUser();
@@ -89,7 +87,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 				this.user = new User();
 				this.user.clear();
 				this.rolesSubject.next(this.user.roles);
-				this.addressSubject.next(this.user.address);
 				this.soicialNetworksSubject.next(this.user.socialNetworks);
 				this.oldUser = Object.assign({}, this.user);
 				this.initUser();
@@ -197,12 +194,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 		const editedUser = this.prepareUser();
 
-		if (editedUser.id > 0) {
-			this.updateUser(editedUser, withBack);
-			return;
-		}
+		// if (editedUser.id > 0) {
+		// 	this.updateUser(editedUser, withBack);
+		// 	return;
+		// }
+		this.updateUser(editedUser, withBack);
 
-		this.addUser(editedUser, withBack);
+		// this.addUser(editedUser, withBack);
 	}
 
 	/**
@@ -211,21 +209,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	prepareUser(): User {
 		const controls = this.userForm.controls;
 		const _user = new User();
-		_user.clear();
-		_user.roles = this.rolesSubject.value;
-		_user.address = this.addressSubject.value;
-		_user.socialNetworks = this.soicialNetworksSubject.value;
-		_user.accessToken = this.user.accessToken;
-		_user.refreshToken = this.user.refreshToken;
-		_user.pic = this.user.pic;
-		_user.id = this.user.id;
-		_user.username = controls.username.value;
+
 		_user.email = controls.email.value;
+		_user.avatar = 'aaa';
 		_user.fullname = controls.fullname.value;
-		_user.occupation = controls.occupation.value;
-		_user.phone = controls.phone.value;
-		_user.companyName = controls.companyName.value;
-		_user.password = this.user.password;
+		_user.phone =  parseInt(controls.phone.value);
+		_user.password = 'admin';
 		return _user;
 	}
 
@@ -262,10 +251,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		// tslint:disable-next-line:prefer-const
 
 		const updatedUser: Update<User> = {
-			id: _user.id,
+			id: this.user.id,
 			changes: _user
 		};
-		this.store.dispatch(new UserUpdated( { partialUser: updatedUser, user: _user }));
+		this.store.dispatch(new UserUpdated({ partialUser: updatedUser, user: _user, id: this.user.id }));
 		const message = `User successfully has been saved.`;
 		this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
 		if (withBack) {

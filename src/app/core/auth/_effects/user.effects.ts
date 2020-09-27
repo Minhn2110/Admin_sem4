@@ -21,7 +21,7 @@ import {
     UserUpdated,
     UserOnServerCreated,
     UsersActionToggleLoading,
-    UsersPageToggleLoading
+    UsersPageToggleLoading, DepartmentCreated
 } from '../_actions/user.actions';
 
 @Injectable()
@@ -36,18 +36,43 @@ export class UserEffects {
     loadUsersPage$ = this.actions$
         .pipe(
             ofType<UsersPageRequested>(UserActionTypes.UsersPageRequested),
-            mergeMap(( { payload } ) => {
+            mergeMap(({ payload }) => {
                 this.store.dispatch(this.showPageLoadingDistpatcher);
-                const requestToServer = this.auth.findUsers(payload.page);
+                const requestToServer = this.auth.getAllUsers();
                 const lastQuery = of(payload.page);
                 return forkJoin(requestToServer, lastQuery);
+                return requestToServer
             }),
             map(response => {
-                const result: QueryResultsModel = response[0];
+                console.log('response', response);
+                // const result: QueryResultsModel = response[0];
                 const lastQuery: QueryParamsModel = response[1];
                 return new UsersPageLoaded({
-                    users: result.items,
-                    totalCount: result.totalCount,
+                    users: response,
+                    totalCount: response.length,
+                    page: lastQuery
+                });
+            }),
+        );
+
+    @Effect()
+    loadEmployeesPage$ = this.actions$
+        .pipe(
+            ofType<any>(UserActionTypes.EmployeePageRequested),
+            mergeMap(({ payload }) => {
+                this.store.dispatch(this.showPageLoadingDistpatcher);
+                const requestToServer = this.auth.getAllEmployee();
+                const lastQuery = of(payload.page);
+                return forkJoin(requestToServer, lastQuery);
+                return requestToServer
+            }),
+            map(response => {
+                console.log('response', response);
+                // const result: QueryResultsModel = response[0];
+                const lastQuery: QueryParamsModel = response[1];
+                return new UsersPageLoaded({
+                    users: response,
+                    totalCount: response.length,
                     page: lastQuery
                 });
             }),
@@ -57,10 +82,10 @@ export class UserEffects {
     deleteUser$ = this.actions$
         .pipe(
             ofType<UserDeleted>(UserActionTypes.UserDeleted),
-            mergeMap(( { payload } ) => {
-                    this.store.dispatch(this.showActionLoadingDistpatcher);
-                    return this.auth.deleteUser(payload.id);
-                }
+            mergeMap(({ payload }) => {
+                this.store.dispatch(this.showActionLoadingDistpatcher);
+                return this.auth.deleteUser(payload.id);
+            }
             ),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -71,9 +96,24 @@ export class UserEffects {
     updateUser$ = this.actions$
         .pipe(
             ofType<UserUpdated>(UserActionTypes.UserUpdated),
-            mergeMap(( { payload } ) => {
+            mergeMap(({ payload }) => {
+                console.log('payload', payload);
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.updateUser(payload.user);
+                return this.auth.updateUser(payload.id, payload.user);
+            }),
+            map(() => {
+                return this.hideActionLoadingDistpatcher;
+            }),
+        );
+
+    @Effect()
+    updateEmployee$ = this.actions$
+        .pipe(
+            ofType<any>(UserActionTypes.EmployeeUpdated),
+            mergeMap(({ payload }) => {
+                console.log('payload', payload);
+                this.store.dispatch(this.showActionLoadingDistpatcher);
+                return this.auth.updateEmployee(payload.id, payload.user);
             }),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -84,11 +124,50 @@ export class UserEffects {
     createUser$ = this.actions$
         .pipe(
             ofType<UserOnServerCreated>(UserActionTypes.UserOnServerCreated),
-            mergeMap(( { payload } ) => {
+            mergeMap(({ payload }) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
                 return this.auth.createUser(payload.user).pipe(
                     tap(res => {
                         this.store.dispatch(new UserCreated({ user: res }));
+                    })
+                );
+            }),
+            map(() => {
+                return this.hideActionLoadingDistpatcher;
+            }),
+        );
+
+    @Effect()
+    createDepartment$ = this.actions$
+        .pipe(
+            ofType<any>(UserActionTypes.DepartmentCreated),
+            mergeMap((payload) => {
+                console.log('payload', payload.payload.name);
+                // debugger
+                this.store.dispatch(this.showActionLoadingDistpatcher);
+                return this.auth.createDepartment(payload.payload).pipe(
+                    tap(res => {
+                        console.log('ress', res);
+                        // this.store.dispatch(new UserCreated({ user: res }));
+                    })
+                );
+            }),
+            map(() => {
+                return this.hideActionLoadingDistpatcher;
+            }),
+        );
+
+    @Effect()
+    createEmployee$ = this.actions$
+        .pipe(
+            ofType<any>(UserActionTypes.EmployeeCreated),
+            mergeMap((payload) => {
+                console.log('payload', payload);
+                this.store.dispatch(this.showActionLoadingDistpatcher);
+                return this.auth.createEmployee(payload.payload).pipe(
+                    tap(res => {
+                        console.log('ress', res);
+                        // this.store.dispatch(new UserCreated({ user: res }));
                     })
                 );
             }),

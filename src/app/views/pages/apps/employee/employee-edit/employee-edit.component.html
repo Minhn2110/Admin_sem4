@@ -1,0 +1,147 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a [routerLink]="['../../']" class="btn btn-secondary kt-margin-r-10" mat-raised-button matTooltip="Back to the employee list">
+				<i class="la la-arrow-left"></i>
+				<span class="kt-hidden-mobile">Back</span>
+			</a>
+			<a href="javascript:;" class="btn btn-secondary kt-margin-r-10" (click)="reset()" [disabled]="selectedTab !== 0" mat-raised-button matTooltip="Reset changes">
+				<i class="la la-cog"></i>
+				<span class="kt-hidden-mobile">Reset</span>
+			</a>
+			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)" mat-raised-button matTooltip="Save & Continue">
+				<span class="kt-hidden-mobile">Save</span>
+			</a>
+			<button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item color="primary" (click)="onSumbit(true)">Save & Exit</button>
+				<button mat-menu-item color="primary" (click)="onSumbit(false)">Save & Continue</button>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body>
+		<mat-tab-group [(selectedIndex)]="selectedTab">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-user"></i>
+					Employee info
+				</ng-template>
+				<ng-template matTabContent>
+					<!--begin::Form-->
+					<div *ngIf="user">
+						<form [formGroup]="userForm" class="kt-form kt-form--group-seperator-dashed">
+
+							<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000" (close)="onAlertClose($event)">
+								Oh snap! Change a few things up and try submitting again.
+							</kt-alert>
+							<div class="kt-form__section kt-form__section--first">
+								<div class="form-group kt-form__group row">
+                  <!-- Full name -->
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Enter Full Name" formControlName="fullname"/>
+											<mat-error>Full Name is
+												<strong>required</strong>
+											</mat-error>
+											<mat-hint align="start">Please enter
+												<strong>Full Name</strong>
+											</mat-hint>
+										</mat-form-field>
+                  </div>
+                  <!-- Email -->
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input type="email" matInput placeholder="Enter Email" formControlName="email"/>
+											<mat-error>Email is
+												<strong>required</strong>
+											</mat-error>
+											<mat-hint align="start">Please enter
+												<strong>Email</strong>
+											</mat-hint>
+										</mat-form-field>
+                  </div>
+                  <!-- Phone -->
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Enter Phone" formControlName="phone"/>
+											<mat-hint align="start">Please enter
+												<strong>Phone</strong>
+											</mat-hint>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+                  <!-- Gender -->
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                    <div>Gender:</div> 
+                    <mat-radio-group formControlName="gender" class="example-radio-group">
+                      <mat-radio-button class="example-radio-button" value="MALE">Male</mat-radio-button>
+                      <mat-radio-button class="example-radio-button" value="FEMALE">Female</mat-radio-button>
+                      <mat-radio-button class="example-radio-button" value="OTHER">Other</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <!-- Department -->
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                      <mat-select placeholder="Choose Department"> 
+                        <mat-option value="{{department}}" *ngFor="let department of availableDepartment;">{{department}}</mat-option>
+                      </mat-select>
+                      <mat-error>
+                        Department is
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-hint align="start">Please enter
+                        <strong>Department</strong>
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <!-- Salary -->
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                      <input matInput placeholder="Enter Salary" formControlName="salary">
+                      <mat-error>
+                        Salary is
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-hint align="start">Please enter
+                        <strong>Salary</strong>
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <!-- Row -->
+                <!-- Date Picker -->
+                <div class="form-group kt-form__group row">
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                      <input matInput [matDatepicker]="picker" placeholder="Please choose your birthday" formControlName="birthday">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <!-- Avartar -->
+                  <div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Enter Avatar Url" formControlName="avatar"/>
+											<mat-error>Avatar is
+												<strong>required</strong>
+											</mat-error>
+											<mat-hint align="start">Please enter
+												<strong>Avatar</strong>
+											</mat-hint>
+										</mat-form-field>
+                  </div>
+                </div>
+							</div>
+						</form>
+					</div>
+					<!--end::Form-->
+				</ng-template>
+			</mat-tab>
+
+		</mat-tab-group>
+	</kt-portlet-body>
+</kt-portlet>

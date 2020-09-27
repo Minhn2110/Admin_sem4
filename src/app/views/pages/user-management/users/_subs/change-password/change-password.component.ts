@@ -124,6 +124,7 @@ export class ChangePasswordComponent implements OnInit {
 		};
 
 		this.store.dispatch(new UserUpdated({
+			id: null,
 			partialUser: updatedUser,
 			user: this.user
 		}));

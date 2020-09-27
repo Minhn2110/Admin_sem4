@@ -44,7 +44,11 @@ export {
     UsersPageCancelled,
     UsersPageToggleLoading,
     UsersPageRequested,
-    UsersActionToggleLoading
+    UsersActionToggleLoading,
+    DepartmentCreated,
+    EmployeeCreated,
+    EmployeePageRequested,
+    EmployeeUpdated
 } from './_actions/user.actions';
 
 // EFFECTS
