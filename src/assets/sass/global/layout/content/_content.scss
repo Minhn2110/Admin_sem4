@@ -18,10 +18,6 @@
 			padding-bottom: 0;
 		}
 
-		// Footer fixed
-		.kt-footer--fixed & {
-			padding-bottom: kt-get($kt-footer-config, self, fixed, height);
-		}
 	}
 }
 

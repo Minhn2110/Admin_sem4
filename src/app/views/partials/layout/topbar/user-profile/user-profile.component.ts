@@ -21,28 +21,13 @@ export class UserProfileComponent implements OnInit {
 	@Input() badge: boolean;
 	@Input() icon: boolean;
 
-	/**
-	 * Component constructor
-	 *
-	 * @param store: Store<AppState>
-	 */
 	constructor(private store: Store<AppState>) {
 	}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit(): void {
 		this.user$ = this.store.pipe(select(currentUser));
 	}
 
-	/**
-	 * Log out
-	 */
 	logout() {
 		this.store.dispatch(new Logout());
 	}

@@ -36,7 +36,6 @@ import { PartialsModule } from './views/partials/partials.module';
 // Layout Services
 import {
 	DataTableService,
-	FakeApiService,
 	KtDialogService,
 	LayoutConfigService,
 	LayoutRefService,
@@ -94,10 +93,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
-		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forRoot(FakeApiService, {
-			passThruUnknownUrl: true,
-			dataEncapsulation: false
-		}) : [],
 		NgxPermissionsModule.forRoot(),
 		PartialsModule,
 		CoreModule,

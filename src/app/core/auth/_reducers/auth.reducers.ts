@@ -6,7 +6,7 @@ import { User } from '../_models/user.model';
 export interface AuthState {
     loggedIn: boolean;
     authToken: string;
-    user: User;
+    user: any;
     isUserLoaded: boolean;
 }
 
@@ -17,6 +17,11 @@ export const initialAuthState: AuthState = {
     isUserLoaded: false
 };
 
+const fakeUser = {
+    fullname: 'Admin',
+    pic: 'https://www.w3schools.com/howto/img_avatar.png'
+}
+
 export function authReducer(state = initialAuthState, action: AuthActions): AuthState {
     switch (action.type) {
         case AuthActionTypes.Login: {
@@ -24,7 +29,7 @@ export function authReducer(state = initialAuthState, action: AuthActions): Auth
             return {
                 loggedIn: true,
                 authToken: _token,
-                user: undefined,
+                user: fakeUser,
                 isUserLoaded: false
             };
         }

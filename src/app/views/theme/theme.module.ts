@@ -25,7 +25,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { CoreModule } from '../../core/core.module';
 import { HeaderComponent } from './header/header.component';
 import { AsideLeftComponent } from './aside/aside-left.component';
-import { FooterComponent } from './footer/footer.component';
 import { SubheaderComponent } from './subheader/subheader.component';
 import { BrandComponent } from './brand/brand.component';
 import { TopbarComponent } from './header/topbar/topbar.component';
@@ -41,7 +40,6 @@ import { PermissionEffects, permissionsReducer, RoleEffects, rolesReducer } from
 @NgModule({
 	declarations: [
 		BaseComponent,
-		FooterComponent,
 
 		// headers
 		HeaderComponent,
@@ -64,7 +62,6 @@ import { PermissionEffects, permissionsReducer, RoleEffects, rolesReducer } from
 	],
 	exports: [
 		BaseComponent,
-		FooterComponent,
 
 		// headers
 		HeaderComponent,

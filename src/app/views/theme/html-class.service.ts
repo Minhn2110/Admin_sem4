@@ -56,9 +56,6 @@ export class HtmlClassService {
 		// init aside and aside menu
 		this.initAside();
 
-		// init footer
-		this.initFooter();
-
 		this.onClassesUpdated$.next(this.classes);
 	}
 
@@ -178,13 +175,4 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Init Footer
-	 */
-	private initFooter() {
-		// Fixed header
-		if (objectPath.get(this.config, 'footer.self.fixed')) {
-			document.body.classList.add('kt-footer--fixed');
-		}
-	}
 }
