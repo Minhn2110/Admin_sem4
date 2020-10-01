@@ -1,9 +1,10 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createFeatureSelector } from '@ngrx/store';
 import { QueryParamsModel } from '../../_base/crud';
+import { DepartmentActions, DepartmentActionTypes } from '../_actions/department.actions';
 import { EmployeeActionTypes, EmployeeActions } from '../_actions/employee.actions';
 
-export interface EmployeeState extends EntityState<any> {
+export interface DepartmentState extends EntityState<any> {
   listLoading: boolean;
   actionsloading: boolean;
   totalCount: number;
@@ -14,7 +15,7 @@ export interface EmployeeState extends EntityState<any> {
 
 export const adapter: EntityAdapter<any> = createEntityAdapter<any>();
 
-export const initialUsersState: EmployeeState = adapter.getInitialState({
+export const initialUsersState: DepartmentState = adapter.getInitialState({
   listLoading: false,
   actionsloading: false,
   totalCount: 0,
@@ -23,9 +24,9 @@ export const initialUsersState: EmployeeState = adapter.getInitialState({
   showInitWaitingMessage: true
 });
 
-export function employeeReducer(state = initialUsersState, action: EmployeeActions): EmployeeState {
+export function departmentReducer(state = initialUsersState, action: DepartmentActions): DepartmentState {
   switch  (action.type) {
-      case EmployeeActionTypes.EmployeePageLoaded: {
+      case DepartmentActionTypes.DepartmentPageLoaded: {
           return adapter.addMany(action.payload.users, {
               ...initialUsersState,
               totalCount: action.payload.totalCount,
@@ -38,7 +39,7 @@ export function employeeReducer(state = initialUsersState, action: EmployeeActio
   }
 }
 
-export const getEmployeeState = createFeatureSelector<EmployeeState>('employees');
+export const getDepartmentState = createFeatureSelector<DepartmentState>('department');
 
 export const {
     selectAll,

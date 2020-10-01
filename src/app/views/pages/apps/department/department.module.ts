@@ -20,6 +20,7 @@ import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTab
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { PartialsModule } from '../../../partials/partials.module';
 import { DepartmentEditComponent } from './department-edit/department-edit.component';
+import { DepartmentEffects, departmentReducer } from '../../../../core/auth';
 
 
 const routes: Routes = [
@@ -45,16 +46,27 @@ const routes: Routes = [
       {
 				path: 'department/add',
 				component: DepartmentEditComponent
+      },
+      {
+				path: 'department/edit',
+				component: DepartmentEditComponent
+			},
+      {
+				path: 'department/edit/:id',
+				component: DepartmentEditComponent
 			},
     ]
   }
 ];
 
 
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature('department', departmentReducer),
+    EffectsModule.forFeature([DepartmentEffects]),
     HttpClientModule,
     PartialsModule,
     FormsModule,
@@ -106,10 +118,9 @@ const routes: Routes = [
     TypesUtilsService,
     LayoutUtilsService,
     HttpUtilsService,
-    TypesUtilsService,
-    LayoutUtilsService
   ],
   entryComponents: [
+    DeleteEntityDialogComponent
 	],
 })
 

@@ -24,7 +24,7 @@ import {
 	UserDeleted,
 	UsersPageRequested,
 	selectUserById,
-	selectAllRoles, AuthService
+	selectAllRoles, AuthService, DepartmentPageRequested, DepartmentsDataSource
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
@@ -38,8 +38,8 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 
 
 	// Table fields
-	dataSource: UsersDataSource;
-	displayedColumns = ['select', 'id', 'fullname', 'username', 'email', 'phone', '_roles', 'status', 'actions'];
+	dataSource: DepartmentsDataSource;
+	displayedColumns = ['select', 'id', 'name', 'description',  'status', 'actions'];
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
@@ -78,7 +78,6 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
-		this.authService.getAllUsers().subscribe(data => console.log(data));
 		// load roles list
 		const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
 		this.subscriptions.push(rolesSubscription);
@@ -117,7 +116,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 		this.subheaderService.setTitle('User management');
 
 		// Init DataSource
-		this.dataSource = new UsersDataSource(this.store);
+		this.dataSource = new DepartmentsDataSource(this.store);
 		const entitiesSubscription = this.dataSource.entitySubject.pipe(
 			skip(1),
 			distinctUntilChanged()
@@ -152,7 +151,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 			this.paginator.pageIndex,
 			this.paginator.pageSize
 		);
-		this.store.dispatch(new UsersPageRequested({ page: queryParams }));
+		this.store.dispatch(new DepartmentPageRequested({ page: queryParams }));
 		this.selection.clear();
 	}
 

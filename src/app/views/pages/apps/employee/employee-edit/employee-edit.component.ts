@@ -25,7 +25,8 @@ import {
   selectEmployeesInStore,
 
   EmployeeCreated,
-  EmployeeUpdated
+  EmployeeUpdated,
+  DepartmentService
 } from '../../../../../core/auth';
 // import { DepartmentCreated } from 'src/app/core/auth/_actions/user.actions';
 
@@ -36,11 +37,7 @@ import {
 })
 export class EmployeeEditComponent implements OnInit, OnDestroy {
 
-	availableDepartment: any[] = [
-    'Department 1',
-    'Department 2',
-    'Department 3'
-  ];
+	availableDepartment: any[] = [];
 
   user: any;
   userId$: Observable<number>;
@@ -71,7 +68,8 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     private subheaderService: SubheaderService,
     private layoutUtilsService: LayoutUtilsService,
     private store: Store<AppState>,
-    private layoutConfigService: LayoutConfigService) { }
+    private layoutConfigService: LayoutConfigService,
+    private departmentService: DepartmentService) { }
 
   /**
    * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -81,6 +79,8 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit() {
+
+    
     this.loading$ = this.store.pipe(select(selectUsersActionLoading));
 
     const routeSubscription = this.activatedRoute.params.subscribe(params => {
@@ -102,6 +102,16 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(routeSubscription);
 
+  }
+  
+  getDepartment() {
+    this.departmentService.getAllDepartments().subscribe(department => {
+      if (department && department.length > 0) {
+        this.availableDepartment = department;
+      }
+
+      console.log('department', department);
+    })
   }
 
   ngOnDestroy() {
@@ -128,12 +138,15 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       { title: 'Users', page: `user-management/users` },
       { title: 'Edit user', page: `user-management/users/edit`, queryParams: { id: this.user.id } }
     ]);
+    this.getDepartment();
   }
 
   /**
    * Create form
    */
   createForm() {
+    console.log('this.user.department.id', this.user.department.id)
+
     this.userForm = this.userFB.group({
       fullname: [this.user.fullname, Validators.required],
       email: [this.user.email, Validators.required],
@@ -142,6 +155,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       salary: [this.user.salary, Validators.required],
       birthday: [this.user.birthday, Validators.required],
       avatar: [this.user.avatar, Validators.required],
+      department: [this.user.department.id.toString(), Validators.required],
     });
   }
 
@@ -227,7 +241,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       phone: controls.phone.value,
       gender: controls.gender.value,
       salary: parseInt(controls.salary.value),
-      departmentId: ""
+      departmentId: parseInt(controls.department.value, 10)
     }
 
     return employee;

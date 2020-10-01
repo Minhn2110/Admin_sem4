@@ -113,8 +113,13 @@
 					<mat-cell *matCellDef="let user">{{user.salary}}</mat-cell>
 				</ng-container>
 
+				<ng-container matColumnDef="department">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Department</mat-header-cell>
+					<mat-cell *matCellDef="let user">{{user.department ? user.department.name : 'None'}}</mat-cell>
+				</ng-container>
+
 				<ng-container matColumnDef="status">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
 					<mat-cell *matCellDef="let user">
 						<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--{{ getItemCssClassByStatus(user.active) }} kt-badge--wide">{{ user.active ? 'Active' : 'Deactive' }}</span>
 					</mat-cell>
@@ -146,7 +151,7 @@
 			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
 			<!-- MATERIAL PAGINATOR | Binded to dasources -->
 			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
-			<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+			<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
 		</div>
 		<!-- end: BOTTOM -->
 	</kt-portlet-body>

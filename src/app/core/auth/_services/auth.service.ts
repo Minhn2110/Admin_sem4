@@ -7,7 +7,6 @@ import { Role } from '../_models/role.model';
 import { catchError, map } from 'rxjs/operators';
 import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 import { environment } from '../../../../environments/environment';
-import { Router } from '@angular/router';
 
 const API_USERS_URL = 'api/users';
 const API_PERMISSION_URL = 'api/permissions';
@@ -17,9 +16,7 @@ const API_LOGIN = `${environment.api_url}/auth/authenticate`;
 const API_REGISTER = `${environment.api_url}/auth/register`;
 const API_GET_ALL_USER = `${environment.api_url}/management/users`;
 
-const API_CREATE_DEPARTMENT = `${environment.api_url}/management/departments`;
-const API_CREATE_EMPLOYEE = `${environment.api_url}/management/employees`;
-const API_GET_ALL_EMPLOYEE = `${environment.api_url}/management/employees`;
+
 
 @Injectable()
 export class AuthService {
@@ -67,55 +64,13 @@ export class AuthService {
         return this.http.put(API_GET_ALL_USER + '/' + id, _user, httpOptions);
     }
 
-    updateEmployee(id, _user: any): Observable<any> {
-        const userToken = localStorage.getItem('token');
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + userToken,
-            })
-        };
-        httpOptions.headers =
-            httpOptions.headers.set('Content-Type', 'application/json');
-        return this.http.put(API_CREATE_EMPLOYEE + '/' + id, _user, httpOptions);
-    }
 
-    createDepartment(department: any): Observable<any> {
-        const userToken = localStorage.getItem('token');
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + userToken,
-            })
-        };
-        httpOptions.headers =
-            httpOptions.headers.set('Content-Type', 'application/json');
-        return this.http.post<any>(API_CREATE_DEPARTMENT, department, httpOptions);
-    }
 
-    createEmployee(employee: any): Observable<any> {
-        const userToken = localStorage.getItem('token');
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + userToken,
-            })
-        };
-        httpOptions.headers =
-            httpOptions.headers.set('Content-Type', 'application/json');
-        return this.http.post<any>(API_CREATE_EMPLOYEE, employee, httpOptions);
-    }
 
-    getAllEmployee(): Observable<any> {
-        const userToken = localStorage.getItem('token');
-        console.log('userToken', userToken);
-        const httpOptions = {
-            headers: new HttpHeaders({
-                Authorization: 'Bearer ' + userToken
-            })
-        };
-        return this.http.get<any>(API_GET_ALL_EMPLOYEE, httpOptions);
-    }
+
+
+
+
 
     public requestPassword(email: string): Observable<any> {
         return this.http.get(API_USERS_URL + '/forgot?=' + email)

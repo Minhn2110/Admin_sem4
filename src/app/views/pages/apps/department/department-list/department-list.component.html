@@ -91,33 +91,14 @@
 					<mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="fullname">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Full name</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.fullname}}</mat-cell>
+				<ng-container matColumnDef="name">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+					<mat-cell *matCellDef="let user">{{user.name}}</mat-cell>
 				</ng-container>
-
-				<ng-container matColumnDef="username">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.username}}</mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="email">
-					<mat-header-cell *matHeaderCellDef mat-sort-header class="email-cell">Email</mat-header-cell>
-					<mat-cell *matCellDef="let user" class="email-cell">
-						<a href="user-management/users#" class="kt-link">{{user.email}}</a>
-					</mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="phone">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.phone}}</mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="_roles">
-					<mat-header-cell *matHeaderCellDef>Roles</mat-header-cell>
-					<mat-cell *matCellDef="let user">
-						<span>{{ getUserRolesStr(user) }}</span>
-					</mat-cell>
+				
+				<ng-container matColumnDef="description">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+					<mat-cell *matCellDef="let user">{{user.description}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="status">
@@ -153,7 +134,7 @@
 			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
 			<!-- MATERIAL PAGINATOR | Binded to dasources -->
 			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
-			<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+			<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
 		</div>
 		<!-- end: BOTTOM -->
 	</kt-portlet-body>

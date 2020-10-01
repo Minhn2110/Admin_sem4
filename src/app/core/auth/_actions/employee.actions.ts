@@ -11,6 +11,7 @@ export enum EmployeeActionTypes {
     EmployeePageRequested = '[Employee] Employee Page Requested',
     EmployeeUpdated = '[Employee] Employee Updated',
     EmployeePageLoaded = '[Employee] Employee Page Loaded',
+    EmployeeDeleted = '[Employee] Employee Deleted'
 
 }
 
@@ -43,9 +44,15 @@ export class EmployeePageLoaded implements Action {
     constructor(public payload: { users: any[], totalCount: number, page: QueryParamsModel  }) { }
 }
 
+export class EmployeeDeleted implements Action {
+    readonly type = EmployeeActionTypes.EmployeeDeleted;
+    constructor(public payload: { id: number }) {}
+}
+
 
 export type EmployeeActions = EmployeeCreated
 | EmployeePageRequested
 | EmployeeUpdated
-| EmployeePageLoaded;
+| EmployeePageLoaded
+| EmployeeDeleted;
 

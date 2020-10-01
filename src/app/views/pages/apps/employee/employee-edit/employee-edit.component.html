@@ -86,8 +86,8 @@
                   <!-- Department -->
                   <div class="col-lg-4 kt-margin-bottom-20-mobile">
                     <mat-form-field class="mat-form-field-fluid">
-                      <mat-select placeholder="Choose Department"> 
-                        <mat-option value="{{department}}" *ngFor="let department of availableDepartment;">{{department}}</mat-option>
+                      <mat-select placeholder="Choose Department" formControlName="department"> 
+                        <mat-option value="{{department.id}}" *ngFor="let department of availableDepartment;" >{{department.name}}</mat-option>
                       </mat-select>
                       <mat-error>
                         Department is

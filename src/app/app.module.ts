@@ -44,11 +44,14 @@ import {
 	MenuHorizontalService,
 	PageConfigService,
 	SplashScreenService,
-	SubheaderService
+	SubheaderService,
 } from './core/_base/layout';
 // Auth
 import { AuthModule } from './views/pages/auth/auth.module';
 import { AuthService } from './core/auth';
+import { EmployeeService } from './core/auth';
+import { DepartmentService } from './core/auth';
+
 // CRUD
 import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
 // Config
@@ -110,6 +113,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 	exports: [],
 	providers: [
 		AuthService,
+		EmployeeService,
+		DepartmentService,
 		LayoutConfigService,
 		LayoutRefService,
 		MenuConfigService,

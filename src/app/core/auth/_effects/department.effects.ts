@@ -9,7 +9,7 @@ import { Store, select, Action } from '@ngrx/store';
 // CRUD
 import { QueryResultsModel, QueryParamsModel } from '../../_base/crud';
 // Services
-import { EmployeeService } from '../_services';
+import { DepartmentService } from '../_services';
 // State
 import { AppState } from '../../reducers';
 import {
@@ -17,14 +17,10 @@ import {
     UsersPageToggleLoading
 } from '../_actions/user.actions';
 
-import {
-    EmployeePageRequested,
-    EmployeePageLoaded
-} from '../_actions/employee.actions'
-import { EmployeeActionTypes } from '../_actions/employee.actions';
+import { DepartmentActionTypes, DepartmentPageRequested, DepartmentPageLoaded } from '../_actions/department.actions';
 
 @Injectable()
-export class EmployeeEffects {
+export class DepartmentEffects {
     showPageLoadingDistpatcher = new UsersPageToggleLoading({ isLoading: true });
     hidePageLoadingDistpatcher = new UsersPageToggleLoading({ isLoading: false });
 
@@ -33,13 +29,13 @@ export class EmployeeEffects {
 
 
     @Effect()
-    loadEmployeesPage$ = this.actions$
+    loadDepartmentsPage$ = this.actions$
         .pipe(
-            ofType<any>(EmployeeActionTypes.EmployeePageRequested),
+            ofType<any>(DepartmentActionTypes.DepartmentPageRequested),
             mergeMap(({ payload }) => {
                 console.log('payload', payload);
                 this.store.dispatch(this.showPageLoadingDistpatcher);
-                const requestToServer = this.service.getAllEmployee(payload.page.filter.username, payload.page.pageNumber, payload.page.pageSize, payload.page.sortField, payload.page.sortOrder);
+                const requestToServer = this.service.getAllDepartment(payload.page.filter.username, payload.page.pageNumber, payload.page.pageSize, payload.page.sortField, payload.page.sortOrder);
                 const lastQuery = of(payload.page);
                 return forkJoin(requestToServer, lastQuery);
                 return requestToServer
@@ -48,7 +44,7 @@ export class EmployeeEffects {
                 console.log('response', response);
                 // const result: QueryResultsModel = response[0];
                 const lastQuery: QueryParamsModel = response[1];
-                return new EmployeePageLoaded({
+                return new DepartmentPageLoaded({
                     users: response[0].data,
                     totalCount: response[0].totalItems,
                     page: lastQuery
@@ -57,13 +53,13 @@ export class EmployeeEffects {
         );
 
     @Effect()
-    updateEmployee$ = this.actions$
+    updateDepartment$ = this.actions$
         .pipe(
-            ofType<any>(EmployeeActionTypes.EmployeeUpdated),
+            ofType<any>(DepartmentActionTypes.DepartmentUpdated),
             mergeMap(({ payload }) => {
                 console.log('payload', payload);
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.service.updateEmployee(payload.id, payload.user);
+                return this.service.updateDepartment(payload.id, payload.user);
             }),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -72,13 +68,13 @@ export class EmployeeEffects {
 
 
     @Effect()
-    createEmployee$ = this.actions$
+    createDepartment$ = this.actions$
         .pipe(
-            ofType<any>(EmployeeActionTypes.EmployeeCreated),
+            ofType<any>(DepartmentActionTypes.DepartmentCreated),
             mergeMap((payload) => {
                 console.log('payload', payload);
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.service.createEmployee(payload.payload).pipe(
+                return this.service.createDepartment(payload.payload).pipe(
                     tap(res => {
                         console.log('ress', res);
                         // this.store.dispatch(new UserCreated({ user: res }));
@@ -93,10 +89,10 @@ export class EmployeeEffects {
     @Effect()
     deleteUser$ = this.actions$
         .pipe(
-            ofType<any>(EmployeeActionTypes.EmployeeDeleted),
+            ofType<any>(DepartmentActionTypes.DepartmentDeleted),
             mergeMap(({ payload }) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.service.deleteEmployee(payload.id);
+                return this.service.deleteDepartment(payload.id);
             }
             ),
             map(() => {
@@ -104,5 +100,5 @@ export class EmployeeEffects {
             }),
         );
 
-    constructor(private actions$: Actions, private service: EmployeeService, private store: Store<AppState>) { }
+    constructor(private actions$: Actions, private service: DepartmentService, private store: Store<AppState>) { }
 }

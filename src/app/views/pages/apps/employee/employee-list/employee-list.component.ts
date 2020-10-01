@@ -20,11 +20,8 @@ import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../.
 import {
 	User,
 	Role,
-	UsersDataSource,
-	UserDeleted,
-	UsersPageRequested,
 	EmployeePageRequested,
-	selectUserById,
+	EmployeeDeleted,
 	selectAllRoles, AuthService, EmployeesDataSource
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
@@ -40,7 +37,7 @@ export class EmployeeListComponent implements OnInit {
 
 	// Table fields
 	dataSource: EmployeesDataSource;
-	displayedColumns = ['select', 'id', 'fullname', 'email', 'phone', 'salary', 'status', 'actions'];
+	displayedColumns = ['select', 'id', 'fullname', 'email', 'phone', 'salary', 'department', 'status', 'actions'];
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
@@ -144,6 +141,8 @@ export class EmployeeListComponent implements OnInit {
 	 * Load users list
 	 */
 	loadUsersList() {
+		console.log('this.paginator.page', this.paginator.pageIndex);
+
 		console.log('a');
 		this.selection.clear();
 		const queryParams = new QueryParamsModel(
@@ -170,17 +169,11 @@ export class EmployeeListComponent implements OnInit {
 		return filter;
 	}
 
-	/** ACTIONS */
-	/**
-	 * Delete user
-	 *
-	 * @param _item: User
-	 */
-	deleteUser(_item: User) {
-		const _title = 'User Delete';
-		const _description = 'Are you sure to permanently delete this user?';
-		const _waitDesciption = 'User is deleting...';
-		const _deleteMessage = `User has been deleted`;
+	deleteUser(_item: any) {
+		const _title = 'Employee Delete';
+		const _description = 'Are you sure to permanently delete this employee?';
+		const _waitDesciption = 'Employee is deleting...';
+		const _deleteMessage = `Employee has been deleted`;
 
 		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
 		dialogRef.afterClosed().subscribe(res => {
@@ -188,8 +181,10 @@ export class EmployeeListComponent implements OnInit {
 				return;
 			}
 
-			this.store.dispatch(new UserDeleted({ id: _item.id }));
+			this.store.dispatch(new EmployeeDeleted({ id: _item.id }));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+			this.paginator.pageIndex = 0;
+			this.loadUsersList();
 		});
 	}
 

@@ -1,11 +1,12 @@
 // SERVICES
-export { AuthService } from './_services';
+export { AuthService, EmployeeService, DepartmentService } from './_services';
 export { AuthNoticeService } from './auth-notice/auth-notice.service';
 
 // DATA SOURCERS
 export { RolesDataSource } from './_data-sources/roles.datasource';
 export { UsersDataSource } from './_data-sources/users.datasource';
 export { EmployeesDataSource } from './_data-sources/employees.datasource';
+export { DepartmentsDataSource } from './_data-sources/departments.datasource';
 
 // ACTIONS
 export {
@@ -46,15 +47,23 @@ export {
     UsersPageToggleLoading,
     UsersPageRequested,
     UsersActionToggleLoading,
-    DepartmentCreated,
 } from './_actions/user.actions';
 
 export {
     EmployeeCreated,
     EmployeePageRequested,
     EmployeeUpdated,
-    EmployeePageLoaded
-} from './_actions/employee.actions'
+    EmployeePageLoaded,
+    EmployeeDeleted
+} from './_actions/employee.actions';
+
+export {
+    DepartmentCreated,
+    DepartmentPageRequested,
+    DepartmentUpdated,
+    DepartmentPageLoaded,
+    DepartmentDeleted,
+} from './_actions/department.actions';
 
 // EFFECTS
 export { AuthEffects } from './_effects/auth.effects';
@@ -62,6 +71,7 @@ export { PermissionEffects } from './_effects/permission.effects';
 export { RoleEffects } from './_effects/role.effects';
 export { UserEffects } from './_effects/user.effects';
 export { EmployeeEffects } from './_effects/employee.effects';
+export { DepartmentEffects } from './_effects/department.effects';
 
 
 // REDUCERS
@@ -70,6 +80,7 @@ export { permissionsReducer } from './_reducers/permission.reducers';
 export { rolesReducer } from './_reducers/role.reducers';
 export { usersReducer } from './_reducers/user.reducers';
 export { employeeReducer } from './_reducers/employee.reducers';
+export { departmentReducer} from './_reducers/department.reducers';
 
 
 // SELECTORS
@@ -122,6 +133,17 @@ export {
     selectEmployeesShowInitWaitingMessage,
     selectHasEmployeesInStore
 } from './_selectors/employee.selectors';
+
+export {
+    selectDepartmentById,
+    selectDepartmentsPageLoading,
+    selectDepartmentsActionLoading,
+    selectLastCreatedDepartmentId,
+    selectDepartmentsPageLastQuery,
+    selectDepartmentsInStore,
+    selectDepartmentsShowInitWaitingMessage,
+    selectHasDepartmentsInStore
+} from './_selectors/department.selectors';
 
 // GUARDS
 export { AuthGuard } from './_guards/auth.guard';

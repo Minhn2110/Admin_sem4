@@ -152,7 +152,7 @@ const routes: Routes = [
 	],
 	entryComponents: [
 		ActionNotificationComponent,
-		RoleEditDialogComponent
+		RoleEditDialogComponent,
 	],
 	declarations: [
 		UserManagementComponent,

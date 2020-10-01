@@ -102,25 +102,25 @@ export class UserEffects {
             }),
         );
 
-    @Effect()
-    createDepartment$ = this.actions$
-        .pipe(
-            ofType<any>(UserActionTypes.DepartmentCreated),
-            mergeMap((payload) => {
-                console.log('payload', payload.payload.name);
-                // debugger
-                this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.createDepartment(payload.payload).pipe(
-                    tap(res => {
-                        console.log('ress', res);
-                        // this.store.dispatch(new UserCreated({ user: res }));
-                    })
-                );
-            }),
-            map(() => {
-                return this.hideActionLoadingDistpatcher;
-            }),
-        );
+    // @Effect()
+    // createDepartment$ = this.actions$
+    //     .pipe(
+    //         ofType<any>(UserActionTypes.DepartmentCreated),
+    //         mergeMap((payload) => {
+    //             console.log('payload', payload.payload.name);
+    //             // debugger
+    //             this.store.dispatch(this.showActionLoadingDistpatcher);
+    //             return this.auth.createDepartment(payload.payload).pipe(
+    //                 tap(res => {
+    //                     console.log('ress', res);
+    //                     // this.store.dispatch(new UserCreated({ user: res }));
+    //                 })
+    //             );
+    //         }),
+    //         map(() => {
+    //             return this.hideActionLoadingDistpatcher;
+    //         }),
+    //     );
 
     constructor(private actions$: Actions, private auth: AuthService, private store: Store<AppState>) { }
 }

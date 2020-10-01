@@ -121,10 +121,9 @@ const routes: Routes = [
     TypesUtilsService,
     LayoutUtilsService,
     HttpUtilsService,
-    TypesUtilsService,
-    LayoutUtilsService
   ],
   entryComponents: [
+    DeleteEntityDialogComponent
 	],
 })
 

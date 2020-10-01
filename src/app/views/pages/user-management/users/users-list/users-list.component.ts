@@ -75,7 +75,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
-		this.authService.getAllUsers().subscribe(data => console.log(data));
 		// load roles list
 		const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
 		this.subscriptions.push(rolesSubscription);
@@ -209,12 +208,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	/* UI */
-	/**
-	 * Returns user roles string
-	 *
-	 * @param user: User
-	 */
 	getUserRolesStr(user: User): string {
 		const titles: string[] = [];
 		each(user.roles, (roleId: number) => {
