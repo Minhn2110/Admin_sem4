@@ -40,19 +40,19 @@ const routes: Routes = [
         component: DepartmentListComponent
       },
       {
-				path: 'department:id',
+				path: 'list:id',
 				component: DepartmentEditComponent
       },
       {
-				path: 'department/add',
+				path: 'list/add',
 				component: DepartmentEditComponent
       },
       {
-				path: 'department/edit',
+				path: 'list/edit',
 				component: DepartmentEditComponent
 			},
       {
-				path: 'department/edit/:id',
+				path: 'list/edit/:id',
 				component: DepartmentEditComponent
 			},
     ]

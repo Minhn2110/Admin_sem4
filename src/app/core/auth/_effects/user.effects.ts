@@ -38,7 +38,7 @@ export class UserEffects {
             ofType<UsersPageRequested>(UserActionTypes.UsersPageRequested),
             mergeMap(({ payload }) => {
                 this.store.dispatch(this.showPageLoadingDistpatcher);
-                const requestToServer = this.auth.getAllUsers();
+                const requestToServer = this.auth.getAllUsers(payload.page.filter.username, payload.page.pageNumber, payload.page.pageSize, payload.page.sortField, payload.page.sortOrder);
                 const lastQuery = of(payload.page);
                 return forkJoin(requestToServer, lastQuery);
                 return requestToServer
@@ -48,8 +48,8 @@ export class UserEffects {
                 // const result: QueryResultsModel = response[0];
                 const lastQuery: QueryParamsModel = response[1];
                 return new UsersPageLoaded({
-                    users: response,
-                    totalCount: response.length,
+                    users: response[0].data,
+                    totalCount: response[0].totalItems,
                     page: lastQuery
                 });
             }),

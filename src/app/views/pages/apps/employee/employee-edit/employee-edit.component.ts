@@ -122,6 +122,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
    * Init user
    */
   initUser() {
+    this.getDepartment();
     this.createForm();
     if (!this.user.id) {
       this.subheaderService.setTitle('Create user');
@@ -138,14 +139,13 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       { title: 'Users', page: `user-management/users` },
       { title: 'Edit user', page: `user-management/users/edit`, queryParams: { id: this.user.id } }
     ]);
-    this.getDepartment();
   }
 
   /**
    * Create form
    */
   createForm() {
-    console.log('this.user.department.id', this.user.department.id)
+    console.log('thiss', this.user);
 
     this.userForm = this.userFB.group({
       fullname: [this.user.fullname, Validators.required],
@@ -155,7 +155,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       salary: [this.user.salary, Validators.required],
       birthday: [this.user.birthday, Validators.required],
       avatar: [this.user.avatar, Validators.required],
-      department: [this.user.department.id.toString(), Validators.required],
+      department: [this.user.id ? this.user.department.id.toString() : '', Validators.required],
     });
   }
 
@@ -203,6 +203,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
    * @param withBack: boolean
    */
   onSumbit(withBack: boolean = false) {
+    // console.log('this.userForm', this.userForm)
     this.hasFormErrors = false;
     const controls = this.userForm.controls;
     /** check form */
@@ -241,7 +242,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       phone: controls.phone.value,
       gender: controls.gender.value,
       salary: parseInt(controls.salary.value),
-      departmentId: parseInt(controls.department.value, 10)
+      departmentId: parseInt(controls.department.value)
     }
 
     return employee;

@@ -52,9 +52,9 @@ export function usersReducer(state = initialUsersState, action: UserActions): Us
             ...state, listLoading: false, lastQuery: new QueryParamsModel({})
         };
         case UserActionTypes.UsersPageLoaded: {
-            return adapter.addMany(action.payload.users[0], {
+            return adapter.addMany(action.payload.users, {
                 ...initialUsersState,
-                totalCount: action.payload.users[0].length,
+                totalCount: action.payload.totalCount,
                 lastQuery: action.payload.page,
                 listLoading: false,
                 showInitWaitingMessage: false

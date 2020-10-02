@@ -14,17 +14,12 @@ import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud'
 // Services and Models
 import {
   User,
-  UserUpdated,
-  Address,
   SocialNetworks,
-  selectHasUsersInStore,
-  selectUserById,
-  UserOnServerCreated,
   selectLastCreatedUserId,
   selectUsersActionLoading,
-  DepartmentCreated
+  DepartmentCreated, selectDepartmentById, DepartmentUpdated
 } from '../../../../../core/auth';
-// import { DepartmentCreated } from 'src/app/core/auth/_actions/user.actions';
+
 @Component({
   selector: 'kt-department-edit',
   templateUrl: './department-edit.component.html',
@@ -32,7 +27,7 @@ import {
 })
 export class DepartmentEditComponent implements OnInit, OnDestroy {
 
-  user: User;
+  user: any;
   userId$: Observable<number>;
   oldUser: User;
   selectedTab = 0;
@@ -76,8 +71,9 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
     const routeSubscription = this.activatedRoute.params.subscribe(params => {
       const id = params.id;
       if (id && id > 0) {
-        this.store.pipe(select(selectUserById(id))).subscribe(res => {
+        this.store.pipe(select(selectDepartmentById(id))).subscribe(res => {
           if (res) {
+            console.log('res', res);
             this.user = res;
             this.oldUser = Object.assign({}, this.user);
             this.initUser();
@@ -124,7 +120,8 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
    */
   createForm() {
     this.userForm = this.userFB.group({
-      departmentName: ['', Validators.required],
+      departmentName: [this.user.name, Validators.required],
+      description: [this.user.description, Validators.required],
     });
   }
 
@@ -187,13 +184,14 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
 
     const editedUser = this.prepareUser();
 
-    // if (editedUser.id > 0) {
-    // 	this.updateUser(editedUser, withBack);
-    // 	return;
-    // }
-    // this.updateUser(editedUser, withBack);
-
-    this.addUser(editedUser, withBack);
+    if(this.user.id) {
+      // Case Edit
+      this.updateUser(editedUser, withBack);
+      console.log('update');
+    } else {
+      // Case Update
+      this.addUser(editedUser, withBack);
+    }
   }
 
   /**
@@ -202,18 +200,13 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
   prepareUser(): any {
     const controls = this.userForm.controls;
     const department = {
-      name: controls.departmentName.value
+      name: controls.departmentName.value,
+      description: controls.description.value
     }
 
     return department;
   }
 
-  /**
-   * Add User
-   *
-   * @param _user: User
-   * @param withBack: boolean
-   */
   addUser(_user: any, withBack: boolean = false) {
     // console.log('user', _user);
     this.store.dispatch(new DepartmentCreated(_user));
@@ -237,7 +230,7 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
    * @param _user: User
    * @param withBack: boolean
    */
-  updateUser(_user: User, withBack: boolean = false) {
+  updateUser(_user: any, withBack: boolean = false) {
     // Update User
     // tslint:disable-next-line:prefer-const
 
@@ -245,8 +238,8 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
       id: this.user.id,
       changes: _user
     };
-    this.store.dispatch(new UserUpdated({ partialUser: updatedUser, user: _user, id: this.user.id }));
-    const message = `User successfully has been saved.`;
+    this.store.dispatch(new DepartmentUpdated({ partialUser: updatedUser, user: _user, id: this.user.id }));
+    const message = `Department successfully has been saved.`;
     this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
     if (withBack) {
       this.goBackWithId();
@@ -264,7 +257,7 @@ export class DepartmentEditComponent implements OnInit, OnDestroy {
       return result;
     }
 
-    result = `Edit user - ${this.user.fullname}`;
+    result = `Edit department - ${this.user.name}`;
     return result;
   }
 

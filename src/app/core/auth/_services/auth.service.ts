@@ -40,7 +40,7 @@ export class AuthService {
         return this.http.post<any>(API_REGISTER, user);
     }
 
-    getAllUsers(): Observable<any> {
+    getAllUsers(search, pageNumber, pageSize, sortField, sortOrder): Observable<any> {
         const userToken = localStorage.getItem('token');
         console.log('userToken', userToken);
         const httpOptions = {
@@ -48,7 +48,7 @@ export class AuthService {
                 Authorization: 'Bearer ' + userToken
             })
         };
-        return this.http.get<any>(API_GET_ALL_USER, httpOptions);
+        return this.http.get<any>(`${API_GET_ALL_USER}/format?filter=${search}&pageNumber=${pageNumber}&pageSize=${pageSize}&sort=${sortField},${sortOrder}`, httpOptions);
     }
 
     updateUser(id, _user: User): Observable<any> {

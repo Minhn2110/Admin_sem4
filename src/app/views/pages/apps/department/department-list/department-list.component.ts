@@ -24,7 +24,7 @@ import {
 	UserDeleted,
 	UsersPageRequested,
 	selectUserById,
-	selectAllRoles, AuthService, DepartmentPageRequested, DepartmentsDataSource
+	selectAllRoles, AuthService, DepartmentPageRequested, DepartmentsDataSource, DepartmentDeleted
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
@@ -113,7 +113,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(searchSubscription);
 
 		// Set title to page breadCrumbs
-		this.subheaderService.setTitle('User management');
+		this.subheaderService.setTitle('Department management');
 
 		// Init DataSource
 		this.dataSource = new DepartmentsDataSource(this.store);
@@ -174,11 +174,11 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 	 *
 	 * @param _item: User
 	 */
-	deleteUser(_item: User) {
-		const _title = 'User Delete';
-		const _description = 'Are you sure to permanently delete this user?';
-		const _waitDesciption = 'User is deleting...';
-		const _deleteMessage = `User has been deleted`;
+	deleteUser(_item: any) {
+		const _title = 'Department Delete';
+		const _description = 'Are you sure to permanently delete this department?';
+		const _waitDesciption = 'Department is deleting...';
+		const _deleteMessage = `Department has been deleted`;
 
 		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
 		dialogRef.afterClosed().subscribe(res => {
@@ -186,8 +186,10 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 				return;
 			}
 
-			this.store.dispatch(new UserDeleted({ id: _item.id }));
+			this.store.dispatch(new DepartmentDeleted({ id: _item.id }));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+			this.paginator.pageIndex = 0;
+			this.loadUsersList();
 		});
 	}
 
@@ -234,7 +236,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 	 * @param id
 	 */
 	editUser(id) {
-		this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
+		this.router.navigate(['../list/edit', id], { relativeTo: this.activatedRoute });
 	}
 
 	getItemCssClassByStatus(status: boolean): string {
