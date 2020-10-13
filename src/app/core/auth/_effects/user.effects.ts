@@ -41,7 +41,7 @@ export class UserEffects {
                 const requestToServer = this.auth.getAllUsers(payload.page.filter.username, payload.page.pageNumber, payload.page.pageSize, payload.page.sortField, payload.page.sortOrder);
                 const lastQuery = of(payload.page);
                 return forkJoin(requestToServer, lastQuery);
-                return requestToServer
+                // return requestToServer
             }),
             map(response => {
                 console.log('response', response);

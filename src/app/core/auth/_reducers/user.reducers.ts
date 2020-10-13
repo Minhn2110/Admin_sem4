@@ -31,6 +31,7 @@ export const initialUsersState: UsersState = adapter.getInitialState({
 
 export function usersReducer(state = initialUsersState, action: UserActions): UsersState {
     switch  (action.type) {
+        
         case UserActionTypes.UsersPageToggleLoading: return {
             ...state, listLoading: action.payload.isLoading, lastCreatedUserId: undefined
         };

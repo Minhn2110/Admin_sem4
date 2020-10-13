@@ -29,6 +29,10 @@ export class MenuConfig {
 								{
 									title: 'Roles',
 									page: '/user-management/roles'
+								},
+								{
+									title: 'Menus',
+									page: '/user-management/menus'
 								}
 							]
 						},

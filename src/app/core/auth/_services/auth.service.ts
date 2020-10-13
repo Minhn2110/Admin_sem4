@@ -16,6 +16,9 @@ const API_LOGIN = `${environment.api_url}/auth/authenticate`;
 const API_REGISTER = `${environment.api_url}/auth/register`;
 const API_GET_ALL_USER = `${environment.api_url}/management/users`;
 
+const API_MENU = `${environment.api_url}/management/menus`;
+const API_ROLE = `${environment.api_url}/management/roles`;
+
 
 
 @Injectable()
@@ -40,6 +43,19 @@ export class AuthService {
         return this.http.post<any>(API_REGISTER, user);
     }
 
+    createUser(_user: User): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + userToken,
+            })
+        }; 
+        httpOptions.headers =
+            httpOptions.headers.set('Content-Type', 'application/json');
+        return this.http.post(API_REGISTER, _user, httpOptions);
+    }
+
     getAllUsers(search, pageNumber, pageSize, sortField, sortOrder): Observable<any> {
         const userToken = localStorage.getItem('token');
         console.log('userToken', userToken);
@@ -49,6 +65,95 @@ export class AuthService {
             })
         };
         return this.http.get<any>(`${API_GET_ALL_USER}/format?filter=${search}&pageNumber=${pageNumber}&pageSize=${pageSize}&sort=${sortField},${sortOrder}`, httpOptions);
+    }
+
+    getAllMenus(): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.get<any>(`${API_MENU}`, httpOptions);
+    }
+    getMenu(id): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.get<any>(`${API_MENU}/${id}`, httpOptions);
+    }
+    
+
+    createMenus(_menu: any): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.post<any>(`${API_MENU}`, _menu, httpOptions);
+    }
+
+    updateMenus(id, _menu: any): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.put<any>(`${API_MENU}/${id}`, _menu, httpOptions);
+    }
+
+    deleteMenu(id: any): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.delete<any>(`${API_MENU}/${id}`, httpOptions);
+    }
+
+    getAllRoles(): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.get<any>(API_ROLE, httpOptions);
+    }
+
+    createRole(role: any): Observable<Role> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.post<any>(`${API_ROLE}`, role, httpOptions);
+    }
+    getRoleById(roleId: number): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.get<any>(API_ROLE + `/${roleId}`, httpOptions);
+    }
+
+    updateRole(id, role: any): Observable<any> {
+        const userToken = localStorage.getItem('token');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + userToken
+            })
+        };
+        return this.http.put<any>(`${API_ROLE}/${id}`, role, httpOptions);
     }
 
     updateUser(id, _user: User): Observable<any> {
@@ -95,11 +200,11 @@ export class AuthService {
 
 
     // CREATE =>  POST: add a new user to the server
-    createUser(user: User): Observable<User> {
-        const httpHeaders = new HttpHeaders();
-        httpHeaders.set('Content-Type', 'application/json');
-        return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders });
-    }
+    // createUser(user: User): Observable<User> {
+    //     const httpHeaders = new HttpHeaders();
+    //     httpHeaders.set('Content-Type', 'application/json');
+    //     return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders });
+    // }
 
     // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
     // items => filtered/sorted result
@@ -119,28 +224,15 @@ export class AuthService {
     }
 
     // Roles
-    getAllRoles(): Observable<Role[]> {
-        return this.http.get<Role[]>(API_ROLES_URL);
-    }
+ 
 
-    getRoleById(roleId: number): Observable<Role> {
-        return this.http.get<Role>(API_ROLES_URL + `/${roleId}`);
-    }
+  
 
     // CREATE =>  POST: add a new role to the server
-    createRole(role: Role): Observable<Role> {
-        // Note: Add headers if needed (tokens/bearer)
-        const httpHeaders = new HttpHeaders();
-        httpHeaders.set('Content-Type', 'application/json');
-        return this.http.post<Role>(API_ROLES_URL, role, { headers: httpHeaders });
-    }
+
 
     // UPDATE => PUT: update the role on the server
-    updateRole(role: Role): Observable<any> {
-        const httpHeaders = new HttpHeaders();
-        httpHeaders.set('Content-Type', 'application/json');
-        return this.http.put(API_ROLES_URL, role, { headers: httpHeaders });
-    }
+
 
     // DELETE => delete the role from the server
     deleteRole(roleId: number): Observable<Role> {

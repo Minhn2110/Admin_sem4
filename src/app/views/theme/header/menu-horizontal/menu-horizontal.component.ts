@@ -72,7 +72,11 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 	 * @param router: Router
 	 * @param render: Renderer2
 	 * @param cdr: ChangeDetectorRef
+	 * 
+	 * 
 	 */
+
+	 menuItem: any[] = [];
 	constructor(
 		private el: ElementRef,
 		public htmlClassService: HtmlClassService,
@@ -99,6 +103,16 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 	 * On init
 	 */
 	ngOnInit(): void {
+		this.menuHorService.getMenu().subscribe(data => {
+			this.menuItem = data.data;
+			console.log('menu', this.menuItem);
+			this.cdr.markForCheck();
+
+		});
+
+
+
+
 		this.rootArrowEnabled = this.layoutConfigService.getConfig('header.menu.self.root-arrow');
 
 		this.currentRouteUrl = this.router.url;
@@ -108,6 +122,10 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 				this.currentRouteUrl = this.router.url;
 				this.cdr.markForCheck();
 			});
+	}
+
+	getMyMenu() {
+
 	}
 
 	/**

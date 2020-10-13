@@ -86,18 +86,18 @@ export class RoleEffects {
             }),
         );
 
-    @Effect()
-    updateRole$ = this.actions$
-        .pipe(
-            ofType<RoleUpdated>(RoleActionTypes.RoleUpdated),
-            mergeMap(( { payload } ) => {
-                this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.auth.updateRole(payload.role);
-            }),
-            map(() => {
-                return this.hideActionLoadingDistpatcher;
-            }),
-        );
+    // @Effect()
+    // updateRole$ = this.actions$
+    //     .pipe(
+    //         ofType<RoleUpdated>(RoleActionTypes.RoleUpdated),
+    //         mergeMap(( { payload } ) => {
+    //             this.store.dispatch(this.showActionLoadingDistpatcher);
+    //             return this.auth.updateRole(payload.role);
+    //         }),
+    //         map(() => {
+    //             return this.hideActionLoadingDistpatcher;
+    //         }),
+    //     );
 
 
     @Effect()

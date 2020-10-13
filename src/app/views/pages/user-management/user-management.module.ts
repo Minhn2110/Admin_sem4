@@ -11,7 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule } from '@ngx-translate/core';
 import { PartialsModule } from '../../partials/partials.module';
 // Services
-import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../core/_base/crud';
+import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService } from '../../../core/_base/crud';
 // Shared
 import { ActionNotificationComponent } from '../../partials/content/crud';
 // Components
@@ -19,7 +19,7 @@ import { UserManagementComponent } from './user-management.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { RolesListComponent } from './roles/roles-list/roles-list.component';
-import { RoleEditDialogComponent } from './roles/role-edit/role-edit.dialog.component';
+import { RolesEditComponent } from './roles/role-edit/role-edit.dialog.component';
 import { UserRolesListComponent } from './users/_subs/user-roles/user-roles-list.component';
 import { ChangePasswordComponent } from './users/_subs/change-password/change-password.component';
 import { AddressComponent } from './users/_subs/address/address.component';
@@ -54,6 +54,8 @@ import {
 	usersReducer,
 	UserEffects
 } from '../../../core/auth';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
+import { MenuEditComponent } from './menu/menu-edit/menu-edit.component';
 
 const routes: Routes = [
 	{
@@ -68,6 +70,26 @@ const routes: Routes = [
 			{
 				path: 'roles',
 				component: RolesListComponent
+			},
+			{
+				path: 'roles/add',
+				component: RolesEditComponent
+			},
+			{
+				path: 'roles/edit/:id',
+				component: RolesEditComponent
+			},
+			{
+				path: 'menus',
+				component: MenuListComponent
+			},
+			{
+				path: 'menus/add',
+				component: MenuEditComponent
+			},
+			{
+				path: 'menus/edit/:id',
+				component: MenuEditComponent
 			},
 			{
 				path: 'users',
@@ -104,14 +126,14 @@ const routes: Routes = [
 		PartialsModule,
 		RouterModule.forChild(routes),
 		StoreModule.forFeature('users', usersReducer),
-        EffectsModule.forFeature([UserEffects]),
+		EffectsModule.forFeature([UserEffects]),
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
 		MatButtonModule,
 		MatMenuModule,
 		MatSelectModule,
-        MatInputModule,
+		MatInputModule,
 		MatTableModule,
 		MatAutocompleteModule,
 		MatRadioModule,
@@ -133,8 +155,8 @@ const routes: Routes = [
 	providers: [
 		InterceptService,
 		{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
 			multi: true
 		},
 		{
@@ -152,18 +174,20 @@ const routes: Routes = [
 	],
 	entryComponents: [
 		ActionNotificationComponent,
-		RoleEditDialogComponent,
+		// RolesEditComponent,
 	],
 	declarations: [
 		UserManagementComponent,
 		UsersListComponent,
 		UserEditComponent,
 		RolesListComponent,
-		RoleEditDialogComponent,
+		RolesEditComponent,
 		UserRolesListComponent,
 		ChangePasswordComponent,
 		AddressComponent,
-		SocialNetworksComponent
+		SocialNetworksComponent,
+		MenuListComponent,
+		MenuEditComponent
 	]
 })
-export class UserManagementModule {}
+export class UserManagementModule { }

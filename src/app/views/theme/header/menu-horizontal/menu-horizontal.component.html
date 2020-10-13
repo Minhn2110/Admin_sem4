@@ -6,6 +6,18 @@
 			<ng-container *ngFor="let item of menuHorService.menuList$ | async">
 				<ng-container *ngIf="item.title" [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
 			</ng-container>
+
+			
+			<li class="kt-menu__item" *ngFor="let item of menuItem">
+				<a [routerLink]="item.url" class="kt-menu__link kt-menu__toggle" >
+					<span class="kt-menu__item-here"></span> 
+					<!-- menu item title text -->
+					<span class="kt-menu__link-text">
+						{{item.name}}
+					</span>
+				</a>
+			</li>
+
 		</ul>
 	</div>
 </div>

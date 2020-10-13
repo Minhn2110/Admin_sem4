@@ -9,7 +9,7 @@ export class User {
     email: string;
     accessToken: string;
     refreshToken: string;
-    roles: number[];
+    roles: any[];
     pic: string;
     avatar?: string;
     fullname: string;
@@ -18,6 +18,7 @@ export class User {
 	phone: any;
     address: Address;
     socialNetworks: SocialNetworks;
+    department?: string;
 
     clear(): void {
         this.id = undefined;

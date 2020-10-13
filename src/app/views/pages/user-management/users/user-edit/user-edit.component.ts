@@ -22,6 +22,8 @@ import {
 	UserOnServerCreated,
 	selectLastCreatedUserId,
 	selectUsersActionLoading,
+	DepartmentService,
+	AuthService
 } from '../../../../../core/auth';
 
 @Component({
@@ -39,6 +41,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	soicialNetworksSubject = new BehaviorSubject<SocialNetworks>(new SocialNetworks());
 	userForm: FormGroup;
 	hasFormErrors = false;
+	availableDepartment: any[] = [];
+	id: any;
 	// Private properties
 	private subscriptions: Subscription[] = [];
 
@@ -59,7 +63,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		           private subheaderService: SubheaderService,
 		           private layoutUtilsService: LayoutUtilsService,
 		           private store: Store<AppState>,
-		           private layoutConfigService: LayoutConfigService) { }
+							 private layoutConfigService: LayoutConfigService,
+							 private authService : AuthService,
+							 private departmentService: DepartmentService) { }
 
 	/**
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -69,12 +75,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
+		this.getDepartment();
 		this.loading$ = this.store.pipe(select(selectUsersActionLoading));
 
 		const routeSubscription =  this.activatedRoute.params.subscribe(params => {
-			const id = params.id;
-			if (id && id > 0) {
-				this.store.pipe(select(selectUserById(id))).subscribe(res => {
+			this.id = params.id;
+			if (this.id && this.id > 0) {
+				this.store.pipe(select(selectUserById(this.id))).subscribe(res => {
 					if (res) {
 						this.user = res;
 						this.rolesSubject.next(this.user.roles);
@@ -94,6 +101,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		});
 		this.subscriptions.push(routeSubscription);
 	}
+
+	getDepartment() {
+    this.authService.getAllRoles().subscribe(item => {
+      if (item) {
+				console.log('roles', item);
+        this.availableDepartment = item.data;
+      }
+
+    })
+  }
 
 	ngOnDestroy() {
 		this.subscriptions.forEach(sb => sb.unsubscribe());
@@ -129,10 +146,11 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			username: [this.user.username, Validators.required],
 			fullname: [this.user.fullname, Validators.required],
 			email: [this.user.email, Validators.email],
-			phone: [this.user.phone],
-			companyName: [this.user.companyName],
-			occupation: [this.user.occupation]
-		});
+			phone: [this.user.phone, Validators.required],
+			avatar: [this.user.avatar, Validators.required],
+			password: [this.user.password, Validators.required],
+			role: [this.user.roles, Validators.required],
+		}); 
 	}
 
 	/**
@@ -194,13 +212,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 		const editedUser = this.prepareUser();
 
-		// if (editedUser.id > 0) {
-		// 	this.updateUser(editedUser, withBack);
-		// 	return;
-		// }
-		this.updateUser(editedUser, withBack);
+		if (this.id) {
+			this.updateUser(editedUser, withBack);
+			return;
+		} 
+		// this.updateUser(editedUser, withBack);
 
-		// this.addUser(editedUser, withBack);
+		this.addUser(editedUser, withBack);
 	}
 
 	/**
@@ -208,15 +226,20 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	 */
 	prepareUser(): User {
 		const controls = this.userForm.controls;
-		const _user = new User();
-
+		const _user = new User(); 
+		_user.username = controls.username.value
 		_user.email = controls.email.value;
-		_user.avatar = 'aaa';
+		_user.avatar = controls.avatar.value;
 		_user.fullname = controls.fullname.value;
 		_user.phone =  parseInt(controls.phone.value);
-		_user.password = 'admin';
+		_user.password = controls.password.value;
+		if (this.id) {
+			_user.roles = controls.role.value
+		}
 		return _user;
 	}
+
+
 
 	/**
 	 * Add User
