@@ -12,7 +12,9 @@ const API_USERS_URL = 'api/users';
 const API_PERMISSION_URL = 'api/permissions';
 const API_ROLES_URL = 'api/roles';
 
-const API_LOGIN = `${environment.api_url}/auth/authenticate`;
+// const API_LOGIN = `${environment.api_url}/auth/authenticate`;
+const API_LOGIN = `http://128.199.89.67/api/v1/auth/authenticate`;
+// http://128.199.89.67/api/v1/auth/authenticate
 const API_REGISTER = `${environment.api_url}/auth/register`;
 const API_GET_ALL_USER = `${environment.api_url}/management/users`;
 

@@ -43,6 +43,10 @@ const routes: Routes = [
 				path: 'user-management',
 				loadChildren: () => import('app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule)
 			},
+			{
+				path: 'partner',
+				loadChildren: () => import('app/views/pages/apps/partner/partner.module').then(m => m.PartnerModule)
+			},
 			// {
 			// 	path: 'builder',
 			// 	loadChildren: () => import('app/views/theme/content/builder/builder.module').then(m => m.BuilderModule)

@@ -12,6 +12,7 @@ import { UserManagementModule } from './user-management/user-management.module';
 import { MyPageComponent } from './my-page/my-page.component';
 import { DepartmentModule } from './apps/department/department.module';
 import { EmployeeModule } from './apps/employee/employee.module';
+import { PartnerModule } from './apps/partner/partner.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -25,7 +26,8 @@ import { EmployeeModule } from './apps/employee/employee.module';
 		MailModule,
 		UserManagementModule,
 		DepartmentModule,
-		EmployeeModule
+		EmployeeModule,
+		PartnerModule
 	],
 	providers: []
 })
