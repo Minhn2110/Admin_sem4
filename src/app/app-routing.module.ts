@@ -47,6 +47,10 @@ const routes: Routes = [
 				path: 'partner',
 				loadChildren: () => import('app/views/pages/apps/partner/partner.module').then(m => m.PartnerModule)
 			},
+			{
+				path: 'product',
+				loadChildren: () => import('app/views/pages/apps/product/product.module').then(m => m.ProductModule)
+			},
 			// {
 			// 	path: 'builder',
 			// 	loadChildren: () => import('app/views/theme/content/builder/builder.module').then(m => m.BuilderModule)

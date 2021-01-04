@@ -13,6 +13,7 @@ import { MyPageComponent } from './my-page/my-page.component';
 import { DepartmentModule } from './apps/department/department.module';
 import { EmployeeModule } from './apps/employee/employee.module';
 import { PartnerModule } from './apps/partner/partner.module';
+import { ProductModule } from './apps/product/product.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -27,7 +28,8 @@ import { PartnerModule } from './apps/partner/partner.module';
 		UserManagementModule,
 		DepartmentModule,
 		EmployeeModule,
-		PartnerModule
+		PartnerModule,
+		ProductModule
 	],
 	providers: []
 })

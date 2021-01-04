@@ -4,3 +4,4 @@ export { EmployeeService } from './employee.service';
 export { DepartmentService } from './department.service';
 export { PartnerService } from './partner.service';
 
+export { ProductService } from './product.service';
