@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product, ProductFormBuilderModel } from '../product.model';
 import { PartnerService } from '../../../../../core/auth/_services';
 import { ProductService } from '../../../../../core/auth/_services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -46,6 +47,8 @@ export class ProductEditComponent implements OnInit {
   constructor(private productFB: FormBuilder,
     private partnerService: PartnerService,
     private productService: ProductService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
 
   ) { }
 
@@ -193,6 +196,11 @@ export class ProductEditComponent implements OnInit {
       }
     })
 
+  }
+
+  goBackWithId() {
+    const url = `/product/list`;
+    this.router.navigateByUrl(url, { relativeTo: this.activatedRoute });
   }
 
 }

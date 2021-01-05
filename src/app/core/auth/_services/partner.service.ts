@@ -23,6 +23,18 @@ export class PartnerService {
     httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
     return this.http.post<any>(API_PARTNER, partner, httpOptions);
   }
+  updatePartner(partner: any, id): Observable<any> {
+    const userToken = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + userToken,
+      })
+    };
+    httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
+    return this.http.put<any>(`${API_PARTNER}/${id}`, partner, httpOptions);
+  }
+
   list(): Observable<any> {
     const userToken = localStorage.getItem('token');
     console.log('userToken', userToken);
@@ -32,5 +44,15 @@ export class PartnerService {
       })
     };
     return this.http.get<any>(`${API_PARTNER}`, httpOptions);
+  }
+  getById(id: Number): Observable<any> {
+    const userToken = localStorage.getItem('token');
+    console.log('userToken', userToken);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + userToken
+      })
+    };
+    return this.http.get<any>(`${API_PARTNER}/${id}`, httpOptions);
   }
 }

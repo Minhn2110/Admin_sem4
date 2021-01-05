@@ -1,14 +1,9 @@
-<p>product-edit works!</p>
 <kt-portlet>
 	<kt-portlet-header [sticky]="true" [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'">
 		<ng-container ktPortletTools>
-			<!-- <a (click)="goBackWithoutId()" class="btn btn-secondary kt-margin-r-10"  mat-raised-button matTooltip="Back to the products list">
+			<a (click)="goBackWithId()" class="btn btn-secondary kt-margin-r-10"  mat-raised-button matTooltip="Back to the products list">
 				<i class="la la-arrow-left"></i>
 				<span class="kt-hidden-mobile">Back</span>
-			</a> -->
-			<a href="javascript:;" class="btn btn-secondary kt-margin-r-10" (click)="reset()" [disabled]="selectedTab !== 0" mat-raised-button matTooltip="Reset changes">
-				<i class="la la-cog"></i>
-				<span class="kt-hidden-mobile">Reset</span>
 			</a>
 			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)" mat-raised-button matTooltip="Save & Continue">
 				<span class="kt-hidden-mobile">Save</span>
@@ -115,7 +110,7 @@
 
 							</div>
 						</form>
-					</div>
+					</div> 
           <!--end::Form-->
           
         </ng-template>

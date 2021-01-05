@@ -40,10 +40,6 @@ const routes: Routes = [
 				loadChildren: () => import('app/views/pages/material/material.module').then(m => m.MaterialModule)
 			},
 			{
-				path: 'user-management',
-				loadChildren: () => import('app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule)
-			},
-			{
 				path: 'partner',
 				loadChildren: () => import('app/views/pages/apps/partner/partner.module').then(m => m.PartnerModule)
 			},

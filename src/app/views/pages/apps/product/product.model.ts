@@ -10,7 +10,7 @@ export class Product {
   priceObj: Number;
   shortDescription: String;
   avatarImage: File;
-  effectiveDateRangeSelectionNumber: Number;
+  effectiveDateRangeSelectionNumber: Number; 
   
 }
 

@@ -1,5 +1,6 @@
 import { DataSource } from '@angular/cdk/table';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PartnerService } from '../../../../../core/auth/_services';
 
@@ -14,10 +15,13 @@ export class PartnerListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
 		private router: Router,) { }
 
-  dataSource: DataSource<any>;
+  dataSource: MatTableDataSource<any>;
   displayedColumns = ['id', 'name', 'email',  'status', 'actions'];
   length: number;
   loading$:boolean;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
 
 
   ngOnInit() {
@@ -26,11 +30,11 @@ export class PartnerListComponent implements OnInit {
       console.log('res', res);
       if (res && res.data.length > 0 ) {
         const data = res.data;
-        this.dataSource = res.data;
+        this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.paginator = this.paginator;
         this.length = res.data.length;
         this.loading$ = false;
       } 
-
     })
 
 

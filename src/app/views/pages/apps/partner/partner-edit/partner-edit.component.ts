@@ -20,6 +20,7 @@ import {
   DepartmentCreated, selectDepartmentById, DepartmentUpdated
 } from '../../../../../core/auth';
 import { PartnerService } from '../../../../../core/auth/_services';
+import { Partner } from '../partner.model';
 
 export interface PartnerForm {
   formControlName: string;
@@ -46,15 +47,19 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
   hasFormErrors = false;
 
+  partner: Partner
+
+  partnerId: Number;
+
   partnerFormBuilder: Array<PartnerForm> = [
     { formControlName: 'name', placeholder: 'Enter Partner Name', error: 'Partner name', hint: 'Partner name' },
+    { formControlName: 'code', placeholder: 'Enter Partner code', error: 'Partner code', hint: 'code' },
     { formControlName: 'email', placeholder: 'Enter Email', error: 'Email', hint: 'Email' },
     { formControlName: 'phoneNumber', placeholder: 'Enter Phone Number', error: 'Phone number', hint: 'Phone number' },
-    { formControlName: 'introductionContent', placeholder: 'Enter description', error: 'description', hint: 'description' },
-    { formControlName: 'appellation', placeholder: 'Enter Appellation', error: 'Appellation', hint: 'Appellation' },
     { formControlName: 'contact', placeholder: 'Enter Contact', error: 'Contact', hint: 'Contact' },
-    { formControlName: 'code', placeholder: 'Enter code', error: 'code', hint: 'code' },
     { formControlName: 'hotline', placeholder: 'Enter hotline', error: 'hotline', hint: 'hotline' },
+    { formControlName: 'introductionContent', placeholder: 'Enter description', error: 'description', hint: 'description' },
+
   ]
   // Private properties
   private subscriptions: Subscription[] = [];
@@ -69,18 +74,21 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
     private layoutConfigService: LayoutConfigService) { }
 
   createForm() {
+    console.log('partner2', this.partner);
+    this.partner = new Partner();
+
     this.userForm = this.userFB.group({
-      name: [this.user.name, Validators.required],
-      email: [this.user.description, Validators.required],
-      phoneNumber: [this.user.description, Validators.required],
-      introductionContent: [this.user.description, Validators.required],
-      appellation: [this.user.description, Validators.required],
-      contact: [this.user.description, Validators.required],
-      code: [this.user.description, Validators.required],
-      hotline: [this.user.description, Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      introductionContent: ['', Validators.required],
+      appellation: ['', Validators.required],
+      contact: ['', Validators.required],
+      code: ['', Validators.required],
+      hotline: ['', Validators.required],
     });
   }
-  preparePartner(): any {
+  preparePartner(): Partner {
     const controls = this.userForm.controls;
     const partner = {
       name: controls.name.value,
@@ -95,53 +103,37 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
     return partner;
   }
   ngOnInit() {
-    this.loading$ = this.store.pipe(select(selectUsersActionLoading));
+    // this.loading$ = this.store.pipe(select(selectUsersActionLoading));
 
     const routeSubscription = this.activatedRoute.params.subscribe(params => {
+      this.partnerId = params.id;
+      console.log('partnerId', this.partnerId);
       const id = params.id;
+      console.log('id', id);
       if (id && id > 0) {
-        this.store.pipe(select(selectDepartmentById(id))).subscribe(res => {
-          if (res) {
-            console.log('res', res);
-            this.user = res;
-            this.oldUser = Object.assign({}, this.user);
-            this.initUser();
-          }
-        });
+        this.getPartner();
+        // this.store.pipe(select(selectDepartmentById(id))).subscribe(res => {
+        //   if (res) {
+        //     console.log('res', res);
+        //     this.user = res;
+        //     this.oldUser = Object.assign({}, this.user);
+        //     this.initUser();
+        //   }
+        // });
       } else {
-        this.user = new User();
         this.user.clear();
         this.oldUser = Object.assign({}, this.user);
-        this.initUser();
+
       }
+      this.createForm();
     });
     this.subscriptions.push(routeSubscription);
   }
 
+
+
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());
-  }
-
-  /**
-   * Init user
-   */
-  initUser() {
-    this.createForm();
-    if (!this.user.id) {
-      this.subheaderService.setTitle('Create user');
-      this.subheaderService.setBreadcrumbs([
-        { title: 'User Management', page: `user-management` },
-        { title: 'Users', page: `user-management/users` },
-        { title: 'Create user', page: `user-management/users/add` }
-      ]);
-      return;
-    }
-    this.subheaderService.setTitle('Edit user');
-    this.subheaderService.setBreadcrumbs([
-      { title: 'User Management', page: `user-management` },
-      { title: 'Users', page: `user-management/users` },
-      { title: 'Edit user', page: `user-management/users/edit`, queryParams: { id: this.user.id } }
-    ]);
   }
 
   goBackWithId() {
@@ -149,12 +141,6 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(url, { relativeTo: this.activatedRoute });
   }
 
-  /**
-   * Refresh user
-   *
-   * @param isNew: boolean
-   * @param id: number
-   */
   refreshUser(isNew: boolean = false, id = 0) {
     let url = this.router.url;
     if (!isNew) {
@@ -166,17 +152,6 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(url, { relativeTo: this.activatedRoute });
   }
 
-  /**
-   * Reset
-   */
-  reset() {
-    this.user = Object.assign({}, this.oldUser);
-    this.createForm();
-    this.hasFormErrors = false;
-    this.userForm.markAsPristine();
-    this.userForm.markAsUntouched();
-    this.userForm.updateValueAndValidity();
-  }
 
   /**
    * Save data
@@ -199,10 +174,9 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
 
     const partnerData = this.preparePartner();
 
-    if (this.user.id) {
+    if (this.partnerId) {
       // Case Edit
-      this.updateUser(partnerData, withBack);
-      console.log('update');
+      this.updatePartner(partnerData, this.partnerId);
     } else {
       // Case Update
       alert('a');
@@ -215,73 +189,69 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
    */
 
 
+
+
+  getPartner() {
+    this.partnerService.getById(this.partnerId).subscribe((res) => {
+      if (res) {
+        console.log('res', res);
+        // this.partner.name = res.data.name
+        // this.partner = res.data;
+        console.log('partner', this.partner);
+        // const message = `Partner uccessfully has been added.`;
+        // this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        // this.goBackWithId();
+        this.bindPartner(res);
+      }
+    })
+  }
+
+  bindPartner(res) {
+    this.userForm.controls['name'].setValue(res.data.name);
+    this.userForm.controls['email'].setValue(res.data.email);
+    this.userForm.controls['phoneNumber'].setValue(res.data.phoneNumber);
+    this.userForm.controls['introductionContent'].setValue(res.data.introductionContent);
+    this.userForm.controls['appellation'].setValue(res.data.appellation);
+    this.userForm.controls['contact'].setValue(res.data.contact);
+    this.userForm.controls['code'].setValue(res.data.code);
+    this.userForm.controls['hotline'].setValue(res.data.hotline);
+
+  }
+
   createPartner(partner: any) {
     // console.log('user', _user);
     // this.store.dispatch(new DepartmentCreated(_user));
     this.partnerService.createPartner(partner).subscribe((res) => {
       if (res) {
         console.log('res', res);
-        const message = `Partner uccessfully has been added.`;
+        const message = `Partner successfully has been added.`;
         this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
         this.goBackWithId();
       }
     })
-    // const addSubscription = this.store.pipe(select(selectLastCreatedUserId)).subscribe(newId => {
-    //   const message = `New user successfully has been added.`;
-    //   this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
-    //   if (newId) {
-    //     if (withBack) {
-    //       this.goBackWithId();
-    //     } else {
-    //       this.refreshUser(true, newId);
-    //     }
-    //   }
-    // });
-    // this.subscriptions.push(addSubscription);
   }
 
-  /**
-   * Update user
-   *
-   * @param _user: User
-   * @param withBack: boolean
-   */
-  updateUser(_user: any, withBack: boolean = false) {
-    // Update User
-    // tslint:disable-next-line:prefer-const
-
-    const updatedUser: Update<User> = {
-      id: this.user.id,
-      changes: _user
-    };
-    this.store.dispatch(new DepartmentUpdated({ partialUser: updatedUser, user: _user, id: this.user.id }));
-    const message = `Department successfully has been saved.`;
-    this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
-    if (withBack) {
-      this.goBackWithId();
-    } else {
-      this.refreshUser(false);
-    }
+  updatePartner(partner: any, id) {
+    this.partnerService.updatePartner(partner, id).subscribe((res) => {
+      if (res) {
+        console.log('res', res);
+        const message = `Partner successfully has been updated.`;
+        this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        this.goBackWithId();
+      }
+    })
   }
 
-  /**
-   * Returns component title
-   */
   getComponentTitle() {
     let result = 'Create Partner';
-    if (!this.user || !this.user.id) {
+    if (!this.partnerId) {
       return result;
     }
 
-    result = `Edit Partner - ${this.user.name}`;
+    result = `Edit Partner`;
     return result;
   }
 
-  /**
-   * Close Alert
-   *
-   * @param $event: Event
-   */
   onAlertClose($event) {
     this.hasFormErrors = false;
   }

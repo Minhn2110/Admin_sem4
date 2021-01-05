@@ -11,44 +11,44 @@ export class MenuConfig {
 					translate: 'MENU.DASHBOARD',
 				},
 
+				// {
+				// 	title: 'Authentication',
+				// 	root: true,
+				// 	alignment: 'left',
+				// 	toggle: 'click',
+				// 	submenu: [
+				// 		{
+				// 			title: 'User Management',
+				// 			bullet: 'dot',
+				// 			icon: 'flaticon-user',
+				// 			submenu: [
+				// 				{
+				// 					title: 'Users',
+				// 					page: '/user-management/users'
+				// 				},
+				// 				{
+				// 					title: 'Roles',
+				// 					page: '/user-management/roles'
+				// 				},
+				// 				{
+				// 					title: 'Menus',
+				// 					page: '/user-management/menus'
+				// 				}
+				// 			]
+				// 		}, 
+				// 	]
+				// },
 				{
-					title: 'Authentication',
+					title: 'Partner',
 					root: true,
 					alignment: 'left',
-					toggle: 'click',
-					submenu: [
-						{
-							title: 'User Management',
-							bullet: 'dot',
-							icon: 'flaticon-user',
-							submenu: [
-								{
-									title: 'Users',
-									page: '/user-management/users'
-								},
-								{
-									title: 'Roles',
-									page: '/user-management/roles'
-								},
-								{
-									title: 'Menus',
-									page: '/user-management/menus'
-								}
-							]
-						},
-					]
+					page: '/partner',
 				},
 				{
-					title: 'Department',
+					title: 'Product',
 					root: true,
 					alignment: 'left',
-					page: '/department',
-				},
-				{
-					title: 'Employee',
-					root: true,
-					alignment: 'left',
-					page: '/employee',
+					page: '/product',
 				},
 			]
 		},
