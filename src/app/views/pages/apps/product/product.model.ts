@@ -11,6 +11,8 @@ export class Product {
   shortDescription: String;
   avatarImage: File;
   effectiveDateRangeSelectionNumber: Number; 
+
+  files ?: any;
   
 }
 

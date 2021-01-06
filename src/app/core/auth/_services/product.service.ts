@@ -28,11 +28,11 @@ export class ProductService {
     const userToken = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + userToken,
-      })
-    };
-    httpOptions.headers = httpOptions.headers.set('Content-Type', 'multipart/form-data');
-    return this.http.post<any>(API_PRODUCT, product, httpOptions);
+        // 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + userToken, 
+      }) 
+    }; 
+    // httpOptions.headers = httpOptions.headers.set('Content-Type', 'multipart/form-data'); 
+    return this.http.post<any>(API_PRODUCT, product, httpOptions); 
   }
 }

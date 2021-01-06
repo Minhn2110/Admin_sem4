@@ -111,20 +111,26 @@ export class ProductEditComponent implements OnInit {
 
     _product.name = controls.name.value;
     _product.code = controls.code.value;
-    _product.priceObj = controls.priceObj.value;
-    _product.effectiveDateRangeSelectionNumber = controls.effectiveDateRangeSelectionNumber.value;
+    _product.priceObj = parseInt(controls.priceObj.value, 10);
+    _product.effectiveDateRangeSelectionNumber = parseInt(controls.effectiveDateRangeSelectionNumber.value, 10) ;
     _product.detailedDescription = controls.detailedDescription.value;
     _product.shortDescription = controls.shortDescription.value;
-    _product.genderApply = controls.gender.value;
-    _product.partnerId = controls.partner.value;
-    _product.productCategotyId = controls.productCategory.value;
-    _product.insuredRule = this.insuredRuleFile;
-    _product.bannerImage = this.bannerImageFile;
-    _product.avatarImage = this.avatarImageFile;
+    _product.genderApply = controls.gender.value; 
+    _product.partnerId = parseInt(controls.partner.value, 10);
+    _product.productCategotyId = parseInt(controls.productCategory.value, 10);
 
-    const _productFormData = new FormData();
-    _productFormData.append('body',  JSON.stringify(_product))
-    return _productFormData;
+    // _product.files = {
+    //   insuredRule: this.insuredRuleFile, 
+    //   bannerImage:  this.bannerImageFile,
+    //   avatarImage: this.avatarImageFile
+    // }
+
+    const _productFormData = new FormData(); 
+    _productFormData.append('primitive',  JSON.stringify(_product));
+    _productFormData.append('insuredRule',  this.insuredRuleFile);
+    _productFormData.append('bannerImage',  this.bannerImageFile);
+    _productFormData.append('avatarImage',  this.avatarImageFile);
+        return _productFormData;
   }
 
   getAllPartners() {
