@@ -5,6 +5,12 @@ import { Product, ProductFormBuilderModel } from '../product.model';
 import { PartnerService } from '../../../../../core/auth/_services';
 import { ProductService } from '../../../../../core/auth/_services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
+import { LayoutConfigService, SplashScreenService, TranslationService } from '../../../../../core/_base/layout';
+
 
 
 @Component({
@@ -24,10 +30,22 @@ export class ProductEditComponent implements OnInit {
   bannerImageFile: File;
   avatarImageFile: File;
 
+  insuredRuleFileUrl: any;
+  bannerImageFileUrl: any;
+  avatarImageFileUrl: any;
+
 
   availablePartner: Array<any> = [];
   availableCategory: Array<any> = [];
   hasFormErrors = false;
+
+  downloadURL: Observable<string>;
+  currentDate: any;
+  fb;
+
+  loader: any;
+
+
 
   @ViewChild('insuredRule', { static: false }) insuredRuleInput: ElementRef
 
@@ -49,10 +67,15 @@ export class ProductEditComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private storage: AngularFireStorage,
+    private layoutConfigService: LayoutConfigService
+
 
   ) { }
 
   ngOnInit() {
+    this.loader = this.layoutConfigService.getConfig('loader.enabled');
+
     this.createProductForm();
     this.getAllPartners();
     this.getAllProductCategory();
@@ -93,44 +116,29 @@ export class ProductEditComponent implements OnInit {
   prepareProduct() {
     const controls = this.productForm.controls;
     const partnerId = controls.partner.value;
-    console.log('controls', controls);
     const _product = new Product();
-    // _product.append('name', controls.name.value);
-    // _product.append('code', controls.code.value);
-    // _product.append('priceObj', controls.priceObj.value);
-    // _product.append('effectiveDateRangeSelectionNumber', controls.effectiveDateRangeSelectionNumber.value);
-    // _product.append('detailedDescription', controls.detailedDescription.value);
-    // _product.append('shortDescription', controls.shortDescription.value);
-    // _product.append('genderApply', controls.gender.value);
-    // _product.append('partnerId', Number(controls.partner.value));
-    // _product.append('productCategotyId', controls.productCategory.value);
-    // _product.append('insuredRule', this.insuredRuleFile);
-    // _product.append('bannerImage', this.bannerImageFile);
-    // _product.append('avatarImage', this.avatarImageFile);
+
 
 
     _product.name = controls.name.value;
     _product.code = controls.code.value;
     _product.priceObj = parseInt(controls.priceObj.value, 10);
-    _product.effectiveDateRangeSelectionNumber = parseInt(controls.effectiveDateRangeSelectionNumber.value, 10) ;
+    _product.effectiveDateRangeSelectionNumber = parseInt(controls.effectiveDateRangeSelectionNumber.value, 10);
     _product.detailedDescription = controls.detailedDescription.value;
     _product.shortDescription = controls.shortDescription.value;
-    _product.genderApply = controls.gender.value; 
+    _product.genderApply = controls.gender.value;
     _product.partnerId = parseInt(controls.partner.value, 10);
-    _product.productCategotyId = parseInt(controls.productCategory.value, 10);
+    _product.productCategoryId = parseInt(controls.productCategory.value, 10);
+    _product.avatarImage = this.avatarImageFileUrl;
+    _product.insuredRule = this.insuredRuleFileUrl;
+    _product.bannerImage = this.bannerImageFileUrl;
 
-    // _product.files = {
-    //   insuredRule: this.insuredRuleFile, 
-    //   bannerImage:  this.bannerImageFile,
-    //   avatarImage: this.avatarImageFile
-    // }
 
-    const _productFormData = new FormData(); 
-    _productFormData.append('primitive',  JSON.stringify(_product));
-    _productFormData.append('insuredRule',  this.insuredRuleFile);
-    _productFormData.append('bannerImage',  this.bannerImageFile);
-    _productFormData.append('avatarImage',  this.avatarImageFile);
-        return _productFormData;
+
+    console.log('_product', _product);
+
+
+    return _product;
   }
 
   getAllPartners() {
@@ -151,18 +159,30 @@ export class ProductEditComponent implements OnInit {
     this.insuredRuleFile = event.target.files[0];
     this.insuredRuleFileName = event.target.files[0].name;
     console.log(event.target.files);
+    this.upploadFileToFireBase(this.insuredRuleFile, 'Insured Rule');
+    setTimeout(() => {
+      console.log(this.insuredRuleFileUrl);
+    }, 5000);
   }
 
   onUploadbannerImage(event) {
     this.bannerImageFile = event.target.files[0];
     this.bannerImageFileName = event.target.files[0].name;
     console.log(event.target.files);
+    this.upploadFileToFireBase(this.bannerImageFile, 'Banner Image');
+    setTimeout(() => {
+      console.log(this.bannerImageFileUrl);
+    }, 5000);
+
   }
 
   onUploadavatarImage(event) {
     this.avatarImageFile = event.target.files[0];
     this.avatarImageFileName = event.target.files[0].name;
-    console.log(event.target.files);
+    this.upploadFileToFireBase(this.avatarImageFile, 'Avartar Image');
+    setTimeout(() => {
+      console.log(this.avatarImageFileUrl);
+    }, 5000);
   }
 
 
@@ -207,6 +227,44 @@ export class ProductEditComponent implements OnInit {
   goBackWithId() {
     const url = `/product/list`;
     this.router.navigateByUrl(url, { relativeTo: this.activatedRoute });
+  }
+
+  upploadFileToFireBase(file, name) {
+    // If update Avatar
+    const filePath = `ProjectImage/${name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(`ProjectImage/${name}`, file);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe(url => {
+            if (url) {
+              switch (name) {
+                case 'Avartar Image':
+                  this.avatarImageFileUrl = url;
+                  break;
+                case 'Banner Image':
+                  this.bannerImageFileUrl = url;
+                  break;
+                case 'Insured Rule':
+                  this.insuredRuleFileUrl = url;
+                  break;
+                default:
+                  break;
+              }
+              // this.fb = url;
+            }
+            // console.log('link', this.fb);
+          });
+        })
+      )
+      .subscribe(url => {
+        if (url) {
+          console.log('url', this.fb);
+        }
+      });
   }
 
 }

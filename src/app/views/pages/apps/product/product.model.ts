@@ -2,17 +2,21 @@ export class Product {
   name: String;
   partnerId: Number;
   code: String;
-  insuredRule: File;
   detailedDescription: String;
-  productCategotyId: Number;
+  productCategoryId: Number;
   genderApply: String;
-  bannerImage: File;
   priceObj: Number;
   shortDescription: String;
-  avatarImage: File;
   effectiveDateRangeSelectionNumber: Number; 
+  // Imange and PDF
+  insuredRule: any;
+  avatarImage: any;
+  bannerImage: any;
+  targetGroupId?: any;
 
-  files ?: any;
+
+
+
   
 }
 

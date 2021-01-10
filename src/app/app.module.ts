@@ -34,6 +34,22 @@ import { ThemeModule } from './views/theme/theme.module';
 // Partials
 import { PartialsModule } from './views/partials/partials.module';
 // Layout Services
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBBignCfPEtIIGntZzCpopvW0ZaJ_vl0SQ",
+  authDomain: "testsmartfund.firebaseapp.com",
+  databaseURL: "https://testsmartfund.firebaseio.com",
+  projectId: "testsmartfund",
+  storageBucket: "testsmartfund.appspot.com",
+  messagingSenderId: "852175374861",
+  appId: "1:852175374861:web:904159eb09735d43"
+};
+
 import {
 	DataTableService,
 	KtDialogService,
@@ -108,7 +124,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot(),
-		ThemeModule
+		ThemeModule,
+		AngularFireModule.initializeApp(firebaseConfig),
+		AngularFirestoreModule, // firestore
+		AngularFireAuthModule, // auth
+    AngularFireStorageModule,
 	],
 	exports: [],
 	providers: [
