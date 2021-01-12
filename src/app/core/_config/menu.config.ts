@@ -50,6 +50,18 @@ export class MenuConfig {
 					alignment: 'left',
 					page: '/product',
 				},
+				{
+					title: 'Transaction History',
+					root: true,
+					alignment: 'left',
+					page: '/transaction-history',
+				},
+				{
+					title: 'Contract',
+					root: true,
+					alignment: 'left',
+					page: '/contract',
+				},
 			]
 		},
 		aside: {

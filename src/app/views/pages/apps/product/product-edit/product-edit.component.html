@@ -1,11 +1,13 @@
 <kt-portlet>
 	<kt-portlet-header [sticky]="true" [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'">
 		<ng-container ktPortletTools>
-			<a (click)="goBackWithId()" class="btn btn-secondary kt-margin-r-10"  mat-raised-button matTooltip="Back to the products list">
+			<a (click)="goBackWithId()" class="btn btn-secondary kt-margin-r-10" mat-raised-button
+				matTooltip="Back to the products list">
 				<i class="la la-arrow-left"></i>
 				<span class="kt-hidden-mobile">Back</span>
 			</a>
-			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)" mat-raised-button matTooltip="Save & Continue">
+			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)"
+				mat-raised-button matTooltip="Save & Continue">
 				<span class="kt-hidden-mobile">Save</span>
 			</a>
 		</ng-container>
@@ -24,7 +26,8 @@
 
 										<div class="col-md-4 kt-margin-bottom-20" *ngFor="let controls of productFormBuilderInput">
 											<mat-form-field class="mat-form-field-fluid">
-												<input matInput placeholder="{{controls.placeholder}}" formControlName="{{controls.formControlName}}">
+												<input matInput placeholder="{{controls.placeholder}}"
+													formControlName="{{controls.formControlName}}">
 												<mat-error> {{controls.error}} is <strong>required</strong></mat-error>
 												<mat-hint align="start">Please enter <strong>{{controls.hint}}</strong></mat-hint>
 											</mat-form-field>
@@ -33,7 +36,8 @@
 										<div class="col-md-4 kt-margin-bottom-10-mobile">
 											<mat-form-field class="mat-form-field-fluid">
 												<mat-select placeholder="Select Partner" formControlName="partner">
-													<mat-option value={{item.id}} *ngFor="let item of availablePartner;">{{item.name}}</mat-option>
+													<mat-option value={{item.id}} *ngFor="let item of availablePartner;">{{item.name}}
+													</mat-option>
 												</mat-select>
 												<mat-error>
 													Parner is
@@ -48,7 +52,8 @@
 										<div class="col-md-4 kt-margin-bottom-10-mobile">
 											<mat-form-field class="mat-form-field-fluid">
 												<mat-select placeholder="Select Category" formControlName="productCategory">
-													<mat-option value={{item.id}} *ngFor="let item of availableCategory;">{{item.name}}</mat-option>
+													<mat-option value={{item.id}} *ngFor="let item of availableCategory;">{{item.name}}
+													</mat-option>
 												</mat-select>
 												<mat-error>
 													Category is
@@ -59,7 +64,7 @@
 												</mat-hint>
 											</mat-form-field>
 										</div>
-										
+
 										<div class="col-md-4 kt-margin-bottom-10-mobile">
 											<div>Gender Apply:</div>
 											<mat-radio-group formControlName="gender" class="example-radio-group">
@@ -70,52 +75,89 @@
 										</div>
 
 
-                    
-                  </div>
 
-                </div>
+									</div>
 
-                <div class="kt-form__group">
+								</div>
+
+								<div class="kt-form__group">
 									<div class="button-row">
 										<div class="col-4">
-											<button mat-raised-button color="primary" (click)="insuredRule.click()" type="button">Upload Insured Rule</button>
+											<button mat-raised-button color="primary" (click)="insuredRule.click()" type="button">Upload
+												Insured Rule</button>
 											<input type="file" id="insuredRule" #insuredRule (change)="onUploadInsuredRule($event)">
 											<span style="padding-left: 10px;">{{insuredRuleFileName}}</span>
 										</div>
 										<div class="col-4">
-											<button mat-raised-button color="primary" (click)="bannerImage.click()" type="button">Upload Banner Image</button>
+											<button mat-raised-button color="primary" (click)="bannerImage.click()" type="button">Upload
+												Banner Image</button>
 											<input type="file" id="bannerImage" #bannerImage (change)="onUploadbannerImage($event)">
 											<span style="padding-left: 10px;">{{bannerImageFileName}}</span>
 										</div>
 										<div class="col-4">
-											<button mat-raised-button color="primary" (click)="avatarImage.click()" type="button">Upload Avatar Image</button>
+											<button mat-raised-button color="primary" (click)="avatarImage.click()" type="button">Upload
+												Avatar Image</button>
 											<input type="file" id="avatarImage" #avatarImage (change)="onUploadavatarImage($event)">
 											<span style="padding-left: 10px;">{{avatarImageFileName}}</span>
 										</div>
-                  </div>
+									</div>
 
 								</div>
-								
+
 								<div class="kt-form__group">
 									<div class="row">
-										<div class="col-md-12 kt-margin-bottom-10-mobile" *ngFor="let controls of productFormBuilderTextArea">
+										<div class="col-md-12 kt-margin-bottom-10-mobile"
+											*ngFor="let controls of productFormBuilderTextArea">
 											<mat-form-field class="mat-form-field-fluid">
-												<textarea matInput rows="7" placeholder="{{controls.placeholder}}" formControlName="{{controls.formControlName}}"></textarea>
+												<textarea matInput rows="7" placeholder="{{controls.placeholder}}"
+													formControlName="{{controls.formControlName}}"></textarea>
 											</mat-form-field>
 										</div>
 									</div>
-								</div>                
-                
+								</div>
+
 
 							</div>
 						</form>
-					</div> 
-          <!--end::Form-->
-          
-        </ng-template>
-        
+					</div>
+					<!--end::Form-->
+
+				</ng-template>
+
+			</mat-tab>
+			<mat-tab label="Insured Config">
+				<ng-template matTabContent>
+					<div>
+						<!--begin::Form-->
+						<form [formGroup]="insuredConfigForm" class="kt-form kt-form--group-seperator-dashed">
+
+							<div class="kt-form__section kt-form__section--first">
+								<div class="kt-form__group">
+									<div class="row">
+
+										<div class="col-md-4 kt-margin-bottom-20" *ngFor="let controls of insuredConfigFormBuilderInput">
+											<mat-form-field class="mat-form-field-fluid">
+												<input matInput placeholder="{{controls.placeholder}}"
+													formControlName="{{controls.formControlName}}">
+												<mat-error> {{controls.error}} is <strong>required</strong></mat-error>
+												<mat-hint align="start">Please enter <strong>{{controls.hint}}</strong></mat-hint>
+											</mat-form-field>
+										</div>
+
+									</div>
+
+								</div>
+
+
+
+							</div>
+						</form>
+					</div>
+					<!--end::Form-->
+
+				</ng-template>
+
 			</mat-tab>
 		</mat-tab-group>
 	</kt-portlet-body>
 </kt-portlet>
-

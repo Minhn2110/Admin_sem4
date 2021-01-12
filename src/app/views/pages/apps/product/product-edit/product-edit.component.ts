@@ -21,6 +21,7 @@ import { LayoutConfigService, SplashScreenService, TranslationService } from '..
 export class ProductEditComponent implements OnInit {
   product: Product;
   productForm: FormGroup;
+  insuredConfigForm: FormGroup;
   selectedTab = 0;
 
   insuredRuleFileName: String;
@@ -60,6 +61,15 @@ export class ProductEditComponent implements OnInit {
   productFormBuilderTextArea: Array<ProductFormBuilderModel> = [
     { formControlName: 'detailedDescription', placeholder: 'Enter Detail Description', error: 'Detail Description', hint: 'Detail Description' },
     { formControlName: 'shortDescription', placeholder: 'Enter Short Description', error: 'Short Description', hint: 'Short Description' },
+  ]
+
+  insuredConfigFormBuilderInput: Array<ProductFormBuilderModel> = [
+    { formControlName: 'physicalDamageInsuranceFee', placeholder: 'Enter Physical Dame Fee', error: 'Physical Dame', hint: 'Physical Dame' },
+    { formControlName: 'liabilityFee', placeholder: 'Enter Liability Fee', error: 'Liability Fee', hint: 'Liability Fee' },
+    { formControlName: 'collisionInsuranceFee', placeholder: 'Enter Collision Insurance Fee', error: 'Collision Insurance Fee', hint: 'Collision Insurance Fee' },
+    // { formControlName: 'code', placeholder: 'Enter Insurance Code', error: 'Insurance Code', hint: 'Insurance Code' },
+    // { formControlName: 'priceObj', placeholder: 'Enter Price', error: 'Price', hint: 'Price' },
+    // { formControlName: 'effectiveDateRangeSelectionNumber', placeholder: 'Enter Effective Date', error: 'Effective Date', hint: 'Effective Date' },
   ]
 
   constructor(private productFB: FormBuilder,
@@ -110,6 +120,13 @@ export class ProductEditComponent implements OnInit {
       gender: ['', Validators.required],
       partner: ['', Validators.required],
       productCategory: ['', Validators.required]
+    });
+
+    this.insuredConfigForm = this.productFB.group({
+      physicalDamageInsuranceFee: ['', Validators.required],
+      liabilityFee: ['', Validators.required],
+      collisionInsuranceFee: ['', Validators.required],
+
     });
   }
 

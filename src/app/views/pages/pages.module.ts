@@ -13,6 +13,11 @@ import { DepartmentModule } from './apps/department/department.module';
 import { EmployeeModule } from './apps/employee/employee.module';
 import { PartnerModule } from './apps/partner/partner.module';
 import { ProductModule } from './apps/product/product.module';
+import { TransanctionHistoryModule } from './apps/transaction-history/transaction-history.module';
+import { ContractModule } from './apps/contract/contract.module';
+
+import { CustomerModule } from './apps/customer/customer.module';
+
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -26,8 +31,11 @@ import { ProductModule } from './apps/product/product.module';
 		MailModule,
 		DepartmentModule, 
 		EmployeeModule,
-		PartnerModule,
-		ProductModule
+		PartnerModule, 
+		ProductModule,
+		TransanctionHistoryModule,
+		ContractModule,
+		CustomerModule
 	],
 	providers: []
 })

@@ -47,6 +47,18 @@ const routes: Routes = [
 				path: 'product',
 				loadChildren: () => import('app/views/pages/apps/product/product.module').then(m => m.ProductModule)
 			},
+			{
+				path: 'transaction-history',
+				loadChildren: () => import('app/views/pages/apps/transaction-history/transaction-history.module').then(m => m.TransanctionHistoryModule)
+			}, 
+			{ 
+				path: 'contract',
+				loadChildren: () => import('app/views/pages/apps/contract/contract.module').then(m => m.ContractModule)
+			}, 
+			{ 
+				path: 'customer',
+				loadChildren: () => import('app/views/pages/apps/customer/customer.module').then(m => m.CustomerModule)
+			}, 
 			// {
 			// 	path: 'builder',
 			// 	loadChildren: () => import('app/views/theme/content/builder/builder.module').then(m => m.BuilderModule)

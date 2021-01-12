@@ -5,3 +5,6 @@ export { DepartmentService } from './department.service';
 export { PartnerService } from './partner.service';
 
 export { ProductService } from './product.service';
+export { TransactionHistoryService } from './transaction-history.service';
+export { ContractService } from './contract.service';
+
