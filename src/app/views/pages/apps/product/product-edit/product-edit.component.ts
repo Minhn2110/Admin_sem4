@@ -54,7 +54,7 @@ export class ProductEditComponent implements OnInit {
   productFormBuilderInput: Array<ProductFormBuilderModel> = [
     { formControlName: 'name', placeholder: 'Enter Insurance Name', error: 'Insurance Name', hint: 'Insurance Name' },
     { formControlName: 'code', placeholder: 'Enter Insurance Code', error: 'Insurance Code', hint: 'Insurance Code' },
-    { formControlName: 'priceObj', placeholder: 'Enter Price', error: 'Price', hint: 'Price' },
+    { formControlName: 'priceObj', placeholder: 'Enter Maximum Compensation', error: 'Maximum Compensation', hint: 'Maximum Compensation' },
     { formControlName: 'effectiveDateRangeSelectionNumber', placeholder: 'Enter Effective Date', error: 'Effective Date', hint: 'Effective Date' },
   ]
 
@@ -64,9 +64,15 @@ export class ProductEditComponent implements OnInit {
   ]
 
   insuredConfigFormBuilderInput: Array<ProductFormBuilderModel> = [
-    { formControlName: 'physicalDamageInsuranceFee', placeholder: 'Enter Physical Dame Fee', error: 'Physical Dame', hint: 'Physical Dame' },
-    { formControlName: 'liabilityFee', placeholder: 'Enter Liability Fee', error: 'Liability Fee', hint: 'Liability Fee' },
-    { formControlName: 'collisionInsuranceFee', placeholder: 'Enter Collision Insurance Fee', error: 'Collision Insurance Fee', hint: 'Collision Insurance Fee' },
+    { formControlName: 'componentFee', placeholder: 'Enter Component Fee %', error: 'Component Fee', hint: 'Component Fee' },
+    { formControlName: 'scratchedFee', placeholder: 'Enter Scratched Fee %', error: 'Scratched Fee', hint: 'Scratched Fee' },
+    { formControlName: 'repaintFee', placeholder: 'Enter Repaint Fee %', error: 'Repaint Fee', hint: 'Repaint Fee' },
+    { formControlName: 'stolenFee', placeholder: 'Enter Stolen Fee %', error: 'Stolen Fee', hint: 'Stolen Fee' },
+    { formControlName: 'bringingFee', placeholder: 'Enter Bringing Fee', error: 'Bringing Fee', hint: 'Bringing Fee' },
+    { formControlName: 'doorAndGlass', placeholder: 'Enter doorAndGlass Fee', error: 'doorAndGlass Fee', hint: 'doorAndGlass Fee' },
+    { formControlName: 'rearViewMirror', placeholder: 'Enter Rear View Mirror Fee', error: 'Rear View Mirror Fee', hint: 'Rear View Mirror Fee' },
+    // { formControlName: 'liabilityFee', placeholder: 'Enter Liability Fee', error: 'Liability Fee', hint: 'Liability Fee' },
+    // { formControlName: 'collisionInsuranceFee', placeholder: 'Enter Collision Insurance Fee', error: 'Collision Insurance Fee', hint: 'Collision Insurance Fee' },
     // { formControlName: 'code', placeholder: 'Enter Insurance Code', error: 'Insurance Code', hint: 'Insurance Code' },
     // { formControlName: 'priceObj', placeholder: 'Enter Price', error: 'Price', hint: 'Price' },
     // { formControlName: 'effectiveDateRangeSelectionNumber', placeholder: 'Enter Effective Date', error: 'Effective Date', hint: 'Effective Date' },
@@ -97,6 +103,18 @@ export class ProductEditComponent implements OnInit {
     console.log('a', this.insuredRuleInput.nativeElement);
   }
 
+  createCarBodyInsurance() {
+    this.insuredConfigForm = this.productFB.group({
+      componentFee: ['', Validators.required],
+      scratchedFee: ['', Validators.required],
+      repaintFee: ['', Validators.required],
+      stolenFee: ['', Validators.required],
+      bringingFee: ['', Validators.required],
+      doorAndGlass: ['', Validators.required],
+      rearViewMirror: ['', Validators.required],
+    });
+  }
+
 
 
   getComponentTitle() {
@@ -121,13 +139,9 @@ export class ProductEditComponent implements OnInit {
       partner: ['', Validators.required],
       productCategory: ['', Validators.required]
     });
+    this.createCarBodyInsurance();
 
-    this.insuredConfigForm = this.productFB.group({
-      physicalDamageInsuranceFee: ['', Validators.required],
-      liabilityFee: ['', Validators.required],
-      collisionInsuranceFee: ['', Validators.required],
 
-    });
   }
 
   prepareProduct() {
