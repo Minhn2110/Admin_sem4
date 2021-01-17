@@ -67,10 +67,11 @@ export class ProductEditComponent implements OnInit {
     { formControlName: 'componentFee', placeholder: 'Enter Component Fee %', error: 'Component Fee', hint: 'Component Fee' },
     { formControlName: 'scratchedFee', placeholder: 'Enter Scratched Fee %', error: 'Scratched Fee', hint: 'Scratched Fee' },
     { formControlName: 'repaintFee', placeholder: 'Enter Repaint Fee %', error: 'Repaint Fee', hint: 'Repaint Fee' },
-    { formControlName: 'stolenFee', placeholder: 'Enter Stolen Fee %', error: 'Stolen Fee', hint: 'Stolen Fee' },
+    // { formControlName: 'stolenFee', placeholder: 'Enter Stolen Fee %', error: 'Stolen Fee', hint: 'Stolen Fee' },
     { formControlName: 'bringingFee', placeholder: 'Enter Bringing Fee', error: 'Bringing Fee', hint: 'Bringing Fee' },
-    { formControlName: 'doorAndGlass', placeholder: 'Enter doorAndGlass Fee', error: 'doorAndGlass Fee', hint: 'doorAndGlass Fee' },
+    // { formControlName: 'doorAndGlass', placeholder: 'Enter doorAndGlass Fee', error: 'doorAndGlass Fee', hint: 'doorAndGlass Fee' },
     { formControlName: 'rearViewMirror', placeholder: 'Enter Rear View Mirror Fee', error: 'Rear View Mirror Fee', hint: 'Rear View Mirror Fee' },
+    { formControlName: 'numberRearViewMirror', placeholder: 'Enter Rear View Mirror Number', error: 'Rear View Mirror Number', hint: 'Rear View Mirror Number' },
     // { formControlName: 'liabilityFee', placeholder: 'Enter Liability Fee', error: 'Liability Fee', hint: 'Liability Fee' },
     // { formControlName: 'collisionInsuranceFee', placeholder: 'Enter Collision Insurance Fee', error: 'Collision Insurance Fee', hint: 'Collision Insurance Fee' },
     // { formControlName: 'code', placeholder: 'Enter Insurance Code', error: 'Insurance Code', hint: 'Insurance Code' },
@@ -108,10 +109,11 @@ export class ProductEditComponent implements OnInit {
       componentFee: ['', Validators.required],
       scratchedFee: ['', Validators.required],
       repaintFee: ['', Validators.required],
-      stolenFee: ['', Validators.required],
+      // stolenFee: ['', Validators.required],
       bringingFee: ['', Validators.required],
-      doorAndGlass: ['', Validators.required],
+      // doorAndGlass: ['', Validators.required],
       rearViewMirror: ['', Validators.required],
+      numberRearViewMirror: ['', Validators.required]
     });
   }
 
@@ -146,8 +148,8 @@ export class ProductEditComponent implements OnInit {
 
   prepareProduct() {
     const controls = this.productForm.controls;
-    const partnerId = controls.partner.value;
     const _product = new Product();
+    const insuredConfigControls = this.insuredConfigForm.controls;
 
 
 
@@ -164,6 +166,11 @@ export class ProductEditComponent implements OnInit {
     _product.insuredRule = this.insuredRuleFileUrl;
     _product.bannerImage = this.bannerImageFileUrl;
 
+    _product.componentFee = insuredConfigControls.componentFee.value;
+    _product.scratchedFee = insuredConfigControls.scratchedFee.value;
+    _product.repaintFee = insuredConfigControls.repaintFee.value;
+    _product.bringingFee = insuredConfigControls.bringingFee.value;
+    _product.rearViewMirror = insuredConfigControls.rearViewMirror.value;
 
 
     console.log('_product', _product);

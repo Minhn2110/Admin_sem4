@@ -8,3 +8,4 @@ export { ProductService } from './product.service';
 export { TransactionHistoryService } from './transaction-history.service';
 export { ContractService } from './contract.service';
 
+export { CustomerService } from './customer.service';

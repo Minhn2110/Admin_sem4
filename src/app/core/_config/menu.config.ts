@@ -39,6 +39,12 @@ export class MenuConfig {
 				// 	]
 				// },
 				{
+					title: 'Customer',
+					root: true,
+					alignment: 'left',
+					page: '/customer',
+				},
+				{
 					title: 'Partner',
 					root: true,
 					alignment: 'left',

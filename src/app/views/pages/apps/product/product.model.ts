@@ -15,8 +15,12 @@ export class Product {
   targetGroupId?: any;
 
 
-
-
+  componentFee?: any;
+  scratchedFee?: any;
+  repaintFee?: any;
+  bringingFee?: any;
+  rearViewMirror?: any;
+  numberRearViewMirror?: any;
   
 }
 

@@ -57,5 +57,12 @@ export class PartnerListComponent implements OnInit {
 		this.router.navigate(['../list/edit', id], { relativeTo: this.activatedRoute });
 
   }
+  onActivePartner(id) {
+    const body = 'APPROVED';
+    this.partnerService.updateStatus(id, body).subscribe((res) => {
+      console.log('res', res);
+    })
+    console.log('id', id);
+  }
 
 }

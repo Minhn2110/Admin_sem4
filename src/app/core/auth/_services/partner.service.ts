@@ -14,6 +14,7 @@ export class PartnerService {
 
   createPartner(partner: any): Observable<any> {
     const userToken = localStorage.getItem('token');
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -22,6 +23,18 @@ export class PartnerService {
     };
     httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
     return this.http.post<any>(API_PARTNER, partner, httpOptions);
+  }
+  updateStatus(id: any, body): Observable<any> {
+    const userToken = localStorage.getItem('token');
+    console.log('userToken', userToken);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + userToken,
+      })
+    };
+    httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
+    return this.http.post<any>(`${API_PARTNER}/active/${id}`, body, httpOptions);
   }
   updatePartner(partner: any, id): Observable<any> {
     const userToken = localStorage.getItem('token');
