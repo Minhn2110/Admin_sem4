@@ -16,13 +16,21 @@ export class InterceptService implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler
 	): Observable<HttpEvent<any>> {
+		// const userToken = localStorage.getItem('token');
+    // console.log('userToken', userToken);
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     Authorization: 'Bearer ' + userToken
+    //   })
+    // };
 		// tslint:disable-next-line:no-debugger
 		// modify request
-		// request = request.clone({
-		// 	setHeaders: {
-		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-		// 	}
-		// });
+		console.log('a');
+		request = request.clone({
+			setHeaders: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		});
 		// console.log('----request----');
 		// console.log(request);
 		// console.log('--- end of request---');

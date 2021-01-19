@@ -9,3 +9,4 @@ export { TransactionHistoryService } from './transaction-history.service';
 export { ContractService } from './contract.service';
 
 export { CustomerService } from './customer.service';
+export { CarService } from './car.service';

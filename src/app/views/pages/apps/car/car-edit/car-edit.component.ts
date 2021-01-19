@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CarService } from '../../../../../core/auth/_services';
 
 @Component({
   selector: 'kt-car-edit',
@@ -14,6 +15,7 @@ export class CarEditComponent implements OnInit {
   hasFormErrors = false;
 
   carMakerModel: any;
+  carCode: string;
 
 
   carBrandFormBuilder: Array<any> = [
@@ -27,19 +29,26 @@ export class CarEditComponent implements OnInit {
     { formControlName: 'carMakerPrice_0', placeholder: 'Enter Car Maker Price', error: ' Price', hint: ' Price' },
   ]
 
-  ngOnInit() {
-    setTimeout(() => {
 
-    }, 5000);
-    this.initCarBrandForm();
-    this.initCarMakerForm();
-  }
 
   constructor(
     public dialogRef: MatDialogRef<CarEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private carFB: FormBuilder,
+    private carService: CarService
   ) { }
+
+  ngOnInit() {
+    this.initCarBrandForm();
+    this.initCarMakerForm();
+
+    if (this.data) {
+      this.carCode = this.data.code;
+      this.getCarBrand();
+    }
+
+    // console.log(this.data);
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -104,37 +113,73 @@ export class CarEditComponent implements OnInit {
     let carData = this.prepareCarData();
 
 
-    // if (this.productId) {
+    if (this.carCode) {
 
-    //   this.editProduct(this.productId, editedProduct);
-    // } else {
-    //   this.addProduct(editedProduct, withBack);
-    // }
+      this.updateCarBrand(this.carCode, carData);
+    } else {
+      this.createCarBrand(carData);
+    }
 
   }
 
   prepareCarData() {
     this.carMakerModel = '';
     const controls = this.carForm.controls;
-    const _car = {
-      carBrand: controls.carBrand.value,
-      carBrandCode: controls.carBrandCode.value,
-      models: []
-    }
+
+    const modelArray = [];
     for (let index = 0; index <= this.index; index++) {
       let item = {
         title: controls[`carMakerTitle_${index}`].value,
         code: controls[`carMakerCode_${index}`].value,
         price: controls[`carMakerPrice_${index}`].value
       }
-      _car.models.push(item);
+      modelArray.push(item);
+    }
+    const _car = {
+      carBrand: controls.carBrand.value,
+      carBrandCode: controls.carBrandCode.value,
+      models: JSON.stringify(modelArray)
     }
     console.log(this.index);
-    console.log(_car);
+    console.log(JSON.parse( _car.models));
     // console.log(this.carForm.getRawValue());
 
 
     return _car;
+  }
+
+  createCarBrand(data) {
+    // this.carService.createCarBrand(data).subscribe((res: any) => {
+    //   console.log('res', res);
+    // })
+  }
+
+  getCarBrand() {
+    this.carService.get(this.carCode).subscribe((res: any) => {
+      console.log('datra', res);
+      if (res) {
+        this.bindCarBrand(res);
+      }
+    })
+  }
+
+  bindCarBrand(res) {
+    const controls = this.carForm.controls;
+
+    controls['carBrand'].setValue(res.carBrand);
+    controls['carBrandCode'].setValue(res.carBrandCode);
+
+    res.models.forEach((item, index) => {
+      controls[`carMakerTitle_${index}`].setValue(item.title);
+      controls[`carMakerCode_${index}`].setValue(item.code);
+      controls[`carMakerPrice_${index}`].setValue(item.price);
+    });
+
+  }
+  updateCarBrand(code, data) {
+    this.carService.update(code, data).subscribe((res: any) => {
+      console.log('res', res);
+    })
   }
 
 }

@@ -43,22 +43,6 @@ const routes: Routes = [
         path: 'list',
         component: CarListComponent
       },
-      {
-				path: 'list:id',
-				component: CarEditComponent
-      },
-      {
-				path: 'list/add',
-				component: CarEditComponent
-      },
-      {
-				path: 'list/edit',
-				component: CarEditComponent
-			},
-      {
-				path: 'list/edit/:id',
-				component: CarEditComponent
-			},
     ]
   }
 ];
@@ -127,7 +111,8 @@ const routes: Routes = [
     HttpUtilsService,
   ],
   entryComponents: [
-    DeleteEntityDialogComponent
+    DeleteEntityDialogComponent,
+    CarEditComponent
 	],
 })
 
