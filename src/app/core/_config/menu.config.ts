@@ -60,13 +60,19 @@ export class MenuConfig {
 					title: 'Transaction History',
 					root: true,
 					alignment: 'left',
-					page: '/transaction-history',
+					page: '/transaction-history', 
 				},
 				{
 					title: 'Contract',
 					root: true,
 					alignment: 'left',
 					page: '/contract',
+				},
+				{
+					title: 'Car',
+					root: true,
+					alignment: 'left',
+					page: '/car',
 				},
 			]
 		},

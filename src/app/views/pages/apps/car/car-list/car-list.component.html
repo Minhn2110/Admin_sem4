@@ -1,0 +1,21 @@
+<kt-portlet-header [title]="'Car list'" [class]="'kt-portlet__head--lg'">
+    <ng-container ktPortletTools>
+        <button [routerLink]="['../list/add']" mat-raised-button color="primary" matTooltip="Create new car">New
+            Partner</button>
+    </ng-container>
+</kt-portlet-header>
+
+<ol>
+    <li>
+      <mat-form-field>
+        <mat-label>What's your name?</mat-label>
+        <input matInput [(ngModel)]="name">
+      </mat-form-field>
+    </li>
+    <li>
+      <button mat-raised-button (click)="openDialog()">Pick one</button>
+    </li>
+    <li *ngIf="animal">
+      You chose: <i>{{animal}}</i>
+    </li>
+  </ol>

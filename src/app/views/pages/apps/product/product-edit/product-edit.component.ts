@@ -45,6 +45,7 @@ export class ProductEditComponent implements OnInit {
   fb;
 
   loader: any;
+  productId: String;
 
 
 
@@ -92,11 +93,29 @@ export class ProductEditComponent implements OnInit {
 
   ngOnInit() {
     this.loader = this.layoutConfigService.getConfig('loader.enabled');
-
-    this.createProductForm();
-    this.getAllPartners();
-    this.getAllProductCategory();
+    const routeSubscription = this.activatedRoute.params.subscribe(params => {
+      this.productId = params.id;
+      console.log('productId', this.productId);
+      const id = params.id;
+      console.log('id', id);
+      if (id) {
+        this.getProduct();
+        // this.store.pipe(select(selectDepartmentById(id))).subscribe(res => {
+        //   if (res) {
+        //     console.log('res', res);
+        //     this.user = res;
+        //     this.oldUser = Object.assign({}, this.user);
+        //     this.initUser();
+        //   }
+        // });
+      }
+      this.createProductForm();
+      this.getAllPartners();
+      this.getAllProductCategory();
+    });
   }
+
+
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
@@ -137,8 +156,7 @@ export class ProductEditComponent implements OnInit {
       effectiveDateRangeSelectionNumber: ['', Validators.required],
       detailedDescription: ['', Validators.required],
       shortDescription: ['', Validators.required],
-      gender: ['', Validators.required],
-      partner: ['', Validators.required],
+      genderApply: ['', Validators.required],
       productCategory: ['', Validators.required]
     });
     this.createCarBodyInsurance();
@@ -159,12 +177,11 @@ export class ProductEditComponent implements OnInit {
     _product.effectiveDateRangeSelectionNumber = parseInt(controls.effectiveDateRangeSelectionNumber.value, 10);
     _product.detailedDescription = controls.detailedDescription.value;
     _product.shortDescription = controls.shortDescription.value;
-    _product.genderApply = controls.gender.value;
-    _product.partnerId = parseInt(controls.partner.value, 10);
+    _product.genderApply = controls.genderApply.value;
     _product.productCategoryId = parseInt(controls.productCategory.value, 10);
-    _product.avatarImage = this.avatarImageFileUrl;
-    _product.insuredRule = this.insuredRuleFileUrl;
-    _product.bannerImage = this.bannerImageFileUrl;
+    _product.avatarImage = this.avatarImageFileUrl ? this.avatarImageFileUrl : null;
+    _product.insuredRule = this.insuredRuleFileUrl ? this.insuredRuleFileUrl : null;
+    _product.bannerImage = this.bannerImageFileUrl ? this.bannerImageFileUrl : null;
 
     _product.componentFee = insuredConfigControls.componentFee.value;
     _product.scratchedFee = insuredConfigControls.scratchedFee.value;
@@ -247,7 +264,13 @@ export class ProductEditComponent implements OnInit {
     // 	return;
     // }
 
-    this.addProduct(editedProduct, withBack);
+    if (this.productId) {
+
+      this.editProduct(this.productId, editedProduct);
+    } else {
+      this.addProduct(editedProduct, withBack);
+    }
+
   }
 
   addProduct(_product: any, withBack: boolean = false) {
@@ -259,6 +282,47 @@ export class ProductEditComponent implements OnInit {
         // this.goBackWithId();
       }
     })
+  }
+
+  getProduct() {
+    this.productService.getProduct(this.productId).subscribe((res) => {
+      if (res) {
+        console.log('resaaa', res);
+        // const message = `Product uccessfully has been added.`;
+        // this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        // this.goBackWithId();
+        this.bindProduct(res.data);
+      }
+    })
+  }
+  editProduct(code, _product) {
+    this.productService.editProduct(1, _product).subscribe((res) => {
+      if (res) {
+        console.log('resaaa', res);
+        // const message = `Product uccessfully has been added.`;
+        // this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        // this.goBackWithId();
+        this.bindProduct(res.data);
+      }
+    })
+  }
+
+  bindProduct(data) {
+    const controls = this.productForm.controls;
+    const insuredConfigControls = this.insuredConfigForm.controls;
+    console.log('controls', controls);
+    setTimeout(() => {
+      for (const property in controls) {
+        this.productForm.controls[property].setValue(data[property]);
+      }
+      for (const property in insuredConfigControls) {
+        this.insuredConfigForm.controls[property].setValue(data[property]);
+      }
+      this.productForm.controls['productCategory'].setValue(data.code);
+      this.productForm.controls['productCategory'].setValue(data.code);
+    }, 1000);
+
+
 
   }
 

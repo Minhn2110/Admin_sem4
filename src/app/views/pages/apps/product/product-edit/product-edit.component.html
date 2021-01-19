@@ -33,26 +33,11 @@
 											</mat-form-field>
 										</div>
 
-										<div class="col-md-4 kt-margin-bottom-10-mobile">
-											<mat-form-field class="mat-form-field-fluid">
-												<mat-select placeholder="Select Partner" formControlName="partner">
-													<mat-option value={{item.id}} *ngFor="let item of availablePartner;">{{item.name}}
-													</mat-option>
-												</mat-select>
-												<mat-error>
-													Parner is
-													<strong>required</strong>
-												</mat-error>
-												<mat-hint align="start">Please enter
-													<strong>Parner is</strong>
-												</mat-hint>
-											</mat-form-field>
-										</div>
 
 										<div class="col-md-4 kt-margin-bottom-10-mobile">
 											<mat-form-field class="mat-form-field-fluid">
 												<mat-select placeholder="Select Category" formControlName="productCategory">
-													<mat-option value={{item.id}} *ngFor="let item of availableCategory;">{{item.name}}
+													<mat-option value={{item.code}} *ngFor="let item of availableCategory;">{{item.name}}
 													</mat-option>
 												</mat-select>
 												<mat-error>
@@ -67,7 +52,7 @@
 
 										<div class="col-md-4 kt-margin-bottom-10-mobile">
 											<div>Gender Apply:</div>
-											<mat-radio-group formControlName="gender" class="example-radio-group">
+											<mat-radio-group formControlName="genderApply" class="example-radio-group">
 												<mat-radio-button class="example-radio-button" value="MALE">Male</mat-radio-button>
 												<mat-radio-button class="example-radio-button" value="FEMALE">Female</mat-radio-button>
 												<mat-radio-button class="example-radio-button" value="ALL">All</mat-radio-button>

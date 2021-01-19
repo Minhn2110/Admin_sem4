@@ -59,7 +59,6 @@ export class PartnerEditComponent implements OnInit, OnDestroy {
     { formControlName: 'contact', placeholder: 'Enter Contact', error: 'Contact', hint: 'Contact' },
     { formControlName: 'hotline', placeholder: 'Enter hotline', error: 'hotline', hint: 'hotline' },
     { formControlName: 'introductionContent', placeholder: 'Enter description', error: 'description', hint: 'description' },
-
   ]
   // Private properties
   private subscriptions: Subscription[] = [];

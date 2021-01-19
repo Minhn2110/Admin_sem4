@@ -59,6 +59,10 @@ const routes: Routes = [
 				path: 'customer',
 				loadChildren: () => import('app/views/pages/apps/customer/customer.module').then(m => m.CustomerModule)
 			}, 
+			{ 
+				path: 'car',
+				loadChildren: () => import('app/views/pages/apps/car/car.module').then(m => m.CarModule)
+			}, 
 			// {
 			// 	path: 'builder',
 			// 	loadChildren: () => import('app/views/theme/content/builder/builder.module').then(m => m.BuilderModule)

@@ -21,7 +21,7 @@ export class ProductService {
         Authorization: 'Bearer ' + userToken
       })
     };
-    return this.http.get<any>(`${API_PRODUCT_CATEGORY}`, httpOptions);
+    return this.http.get<any>(`${API_PRODUCT}`, httpOptions);
   }
 
   createProduct(product: any): Observable<any> {
@@ -34,5 +34,25 @@ export class ProductService {
     }; 
     // httpOptions.headers = httpOptions.headers.set('Content-Type', 'multipart/form-data'); 
     return this.http.post<any>(API_PRODUCT, product, httpOptions); 
+  }
+  getProduct(code): Observable<any> {
+    const userToken = localStorage.getItem('token');
+    console.log('userToken', userToken);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + userToken
+      })
+    };
+    return this.http.get<any>(`${API_PRODUCT}/${code}`, httpOptions);
+  }
+  editProduct(id, product: any): Observable<any> {
+    const userToken = localStorage.getItem('token');
+    console.log('userToken', userToken);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + userToken
+      })
+    };
+    return this.http.put<any>(`${API_PRODUCT}/id/${id}`, product, httpOptions);
   }
 }

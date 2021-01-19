@@ -17,10 +17,13 @@ import { TransanctionHistoryModule } from './apps/transaction-history/transactio
 import { ContractModule } from './apps/contract/contract.module';
 
 import { CustomerModule } from './apps/customer/customer.module';
+import { CarModule } from './apps/car/car.module';
+import { AboutUsPageComponent } from './Others/about-us-page/about-us-page.component';
+
 
 
 @NgModule({
-	declarations: [MyPageComponent],
+	declarations: [MyPageComponent, AboutUsPageComponent], 
 	exports: [],
 	imports: [
 		CommonModule,
@@ -35,7 +38,8 @@ import { CustomerModule } from './apps/customer/customer.module';
 		ProductModule,
 		TransanctionHistoryModule,
 		ContractModule,
-		CustomerModule
+		CustomerModule,
+		CarModule
 	],
 	providers: []
 })
