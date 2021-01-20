@@ -41,13 +41,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBBignCfPEtIIGntZzCpopvW0ZaJ_vl0SQ",
-  authDomain: "testsmartfund.firebaseapp.com",
-  databaseURL: "https://testsmartfund.firebaseio.com",
-  projectId: "testsmartfund",
-  storageBucket: "testsmartfund.appspot.com",
-  messagingSenderId: "852175374861",
-  appId: "1:852175374861:web:904159eb09735d43"
+	apiKey: "AIzaSyBBignCfPEtIIGntZzCpopvW0ZaJ_vl0SQ",
+	authDomain: "testsmartfund.firebaseapp.com",
+	databaseURL: "https://testsmartfund.firebaseio.com",
+	projectId: "testsmartfund",
+	storageBucket: "testsmartfund.appspot.com",
+	messagingSenderId: "852175374861",
+	appId: "1:852175374861:web:904159eb09735d43"
 };
 
 import {
@@ -78,6 +78,7 @@ import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
 import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
+import { QuillModule } from 'ngx-quill';
 
 // tslint:disable-next-line:class-name
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -98,10 +99,10 @@ export function initializeLayoutConfig(appConfig: LayoutConfigService) {
 
 export function hljsLanguages(): HighlightLanguage[] {
 	return [
-		{name: 'typescript', func: typescript},
-		{name: 'scss', func: scss},
-		{name: 'xml', func: xml},
-		{name: 'json', func: json}
+		{ name: 'typescript', func: typescript },
+		{ name: 'scss', func: scss },
+		{ name: 'xml', func: xml },
+		{ name: 'json', func: json }
 	];
 }
 
@@ -116,9 +117,9 @@ export function hljsLanguages(): HighlightLanguage[] {
 		PartialsModule,
 		CoreModule,
 		OverlayModule,
-		StoreModule.forRoot(reducers, {metaReducers}),
+		StoreModule.forRoot(reducers, { metaReducers }),
 		EffectsModule.forRoot([]),
-		StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+		StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
 		StoreDevtoolsModule.instrument(),
 		AuthModule.forRoot(),
 		TranslateModule.forRoot(),
@@ -128,7 +129,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 		AngularFireModule.initializeApp(firebaseConfig),
 		AngularFirestoreModule, // firestore
 		AngularFireAuthModule, // auth
-    AngularFireStorageModule,
+		AngularFireStorageModule,
+		QuillModule.forRoot()
 	],
 	exports: [],
 	providers: [
@@ -158,7 +160,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		},
 		{
 			provide: HIGHLIGHT_OPTIONS,
-			useValue: {languages: hljsLanguages}
+			useValue: { languages: hljsLanguages }
 		},
 		// template services
 		SubheaderService,

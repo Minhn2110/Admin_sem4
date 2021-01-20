@@ -65,12 +65,6 @@ const routes: Routes = [
 		EffectsModule.forFeature([AuthEffects])
 	],
 	providers: [
-		// InterceptService,
-		// {
-		// 	provide: HTTP_INTERCEPTORS,
-		// 	useClass: InterceptService, 
-		// 	multi: true
-		// },
 	],
 	exports: [AuthComponent],
 	declarations: [

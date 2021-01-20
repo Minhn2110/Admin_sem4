@@ -1,0 +1,67 @@
+<kt-portlet>
+    <kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+      <ng-container ktPortletTools>
+        <a [routerLink]="['../../']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
+          matTooltip="Back to the users list">
+          <i class="la la-arrow-left"></i>
+          <span class="kt-hidden-mobile">Back</span>
+        </a>
+        <a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)"
+          mat-raised-button matTooltip="Save & Continue">
+          <span class="kt-hidden-mobile">Save</span>
+        </a>
+      </ng-container>
+    </kt-portlet-header>
+  
+    <kt-portlet-body>
+      <mat-tab-group [(selectedIndex)]="selectedTab">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="mat-tab-label-icon fa fa-user"></i>
+            Basic info
+          </ng-template>
+          <ng-template matTabContent>
+            <!--begin::Form-->
+            <div>
+              <form [formGroup]="claimConfigForm" class="kt-form kt-form--group-seperator-dashed">
+  							<div class="kt-form__section kt-form__section--first">
+                  <!-- Row -->
+                  <div class="form-group kt-form__group row">
+                    <!-- Full name -->
+                    <div class="col-lg-8 kt-margin-bottom-20-mobile">
+                      <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Enter Header" formControlName="claimConfigFormHeader"/>
+                        <mat-error>Full Name is
+                          <strong>required</strong>
+                        </mat-error>
+                        <mat-hint align="start">Please enter
+                          <strong>Full Name</strong>
+                        </mat-hint>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                      <button mat-raised-button color="primary" (click)="insuredRule.click()" type="button">Upload Claim Banner </button>
+                      <input type="file" id="claimConfigBanner" #insuredRule (change)="onUploadInsuredRule($event)">
+                      <span style="padding-left: 10px;">{{insuredRuleFileName}}</span>
+                    </div>
+
+                  </div>
+
+                </div>
+              </form>
+              <quill-editor 
+                (onBlur)="blur($event)" 
+                [(ngModel)]="editorContent"
+                placeholder="Enter Body"
+                [styles]="{height: '500px'}"
+              
+              ></quill-editor>
+
+            </div>
+            <!--end::Form-->
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </kt-portlet-body>
+  </kt-portlet>

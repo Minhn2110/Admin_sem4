@@ -14,23 +14,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../../core/_base/crud';
 // Shared
 import { ActionNotificationComponent, DeleteEntityDialogComponent, FetchEntityDialogComponent, UpdateStatusDialogComponent } from '../../../partials/content/crud';
-import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { PartialsModule } from '../../../partials/partials.module';
 import { DepartmentEffects, departmentReducer } from '../../../../core/auth';
 
-import { CarComponent } from './car.component';
-import { CarListComponent } from './car-list/car-list.component';
-import { CarEditComponent } from './car-edit/car-edit.component';
+import { ClaimComponent } from './claim.component';
+import { ClaimConfigComponent } from './claim-config/claim-config.component';
+// import { ProductEditComponent } from './product-edit/product-edit.component';
 
 import { MaterialPreviewModule } from '../../../partials/content/general/material-preview/material-preview.module';
-import {MatDividerModule} from '@angular/material/divider';
+import { QuillModule } from 'ngx-quill';
+
 
 
 const routes: Routes = [
   {
     path: '',
-    component: CarComponent,
+    component: ClaimComponent,
     // canActivate: [ModuleGuard],
     // data: { moduleName: 'ecommerce' },
     children: [
@@ -40,9 +41,25 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'list',
-        component: CarListComponent
+        path: 'config',
+        component: ClaimConfigComponent
       },
+    //   {
+	// 			path: 'list:id',
+	// 			component: ProductEditComponent
+    //   },
+    //   {
+	// 			path: 'list/add',
+	// 			component: ProductEditComponent
+    //   },
+    //   {
+	// 			path: 'list/edit',
+	// 			component: ProductEditComponent
+	// 		},
+    //   {
+	// 			path: 'list/edit/:id',
+	// 			component: ProductEditComponent
+	// 		},
     ]
   }
 ];
@@ -80,13 +97,11 @@ const routes: Routes = [
     MatTooltipModule,
     NgbProgressbarModule,
     MaterialPreviewModule,
-    MatDialogModule,
-    MatDividerModule
+    QuillModule
   ],
   declarations: [
-      CarListComponent,
-      CarComponent,
-      CarEditComponent
+      ClaimComponent,
+      ClaimConfigComponent
   ],
 
   exports: [],
@@ -111,12 +126,10 @@ const routes: Routes = [
     HttpUtilsService,
   ],
   entryComponents: [
-    DeleteEntityDialogComponent,
-    ActionNotificationComponent,
-    CarEditComponent
+    DeleteEntityDialogComponent
 	],
 })
 
 
 
-export class CarModule { }
+export class ClaimModule { }

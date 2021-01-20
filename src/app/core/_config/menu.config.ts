@@ -74,6 +74,12 @@ export class MenuConfig {
 					alignment: 'left',
 					page: '/car',
 				},
+				{ 
+					title: 'Claim',
+					root: true,
+					alignment: 'left',
+					page: '/claim',
+				},
 			]
 		},
 		aside: {

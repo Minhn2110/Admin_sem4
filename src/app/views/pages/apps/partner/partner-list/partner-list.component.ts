@@ -19,6 +19,7 @@ export class PartnerListComponent implements OnInit {
   displayedColumns = ['id', 'name', 'email',  'status', 'actions'];
   length: number;
   loading$:boolean;
+  
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 

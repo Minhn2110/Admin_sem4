@@ -62,6 +62,10 @@ const routes: Routes = [
 			{ 
 				path: 'car',
 				loadChildren: () => import('app/views/pages/apps/car/car.module').then(m => m.CarModule)
+			},
+			{ 
+				path: 'claim', 
+				loadChildren: () => import('app/views/pages/apps/claim/claim.module').then(m => m.ClaimModule)
 			}, 
 			// {
 			// 	path: 'builder',

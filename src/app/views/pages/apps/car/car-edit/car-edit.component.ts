@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CarService } from '../../../../../core/auth/_services';
+import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
+
 
 @Component({
   selector: 'kt-car-edit',
@@ -35,7 +37,9 @@ export class CarEditComponent implements OnInit {
     public dialogRef: MatDialogRef<CarEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private carFB: FormBuilder,
-    private carService: CarService
+    private carService: CarService,
+    private layoutUtilsService: LayoutUtilsService,
+
   ) { }
 
   ngOnInit() {
@@ -79,9 +83,17 @@ export class CarEditComponent implements OnInit {
   }
   onAddCarMaker() {
     this.index = this.index + 1;
-    let title = `carMakerTitle_${this.index}`;
-    let code = `carMakerCode_${this.index}`;
-    let price = `carMakerPrice_${this.index}`;
+    this.buildCarMakerRow(this.index);
+
+
+    console.log(this.carForm);
+
+  }
+
+  buildCarMakerRow(idx) {
+    let title = `carMakerTitle_${idx}`;
+    let code = `carMakerCode_${idx}`;
+    let price = `carMakerPrice_${idx}`;
 
     this.carMakerFormBuilder.push(
       { formControlName: title, placeholder: 'Enter Car Maker Title', error: ' Title', hint: ' Title' },
@@ -91,9 +103,6 @@ export class CarEditComponent implements OnInit {
     this.carForm.addControl(title, this.carFB.control('', Validators.required));
     this.carForm.addControl(code, this.carFB.control('', Validators.required));
     this.carForm.addControl(price, this.carFB.control('', Validators.required));
-
-    console.log(this.carForm);
-
   }
 
   onSubmit() {
@@ -149,9 +158,14 @@ export class CarEditComponent implements OnInit {
   }
 
   createCarBrand(data) {
-    // this.carService.createCarBrand(data).subscribe((res: any) => {
-    //   console.log('res', res);
-    // })
+    this.carService.createCarBrand(data).subscribe((res: any) => {
+      console.log('res', res);
+      if (res && res.status) {
+        const message = `Car successfully has been added.`;
+        this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        this.dialogRef.close(res.status);
+      }
+    })
   }
 
   getCarBrand() {
@@ -169,7 +183,24 @@ export class CarEditComponent implements OnInit {
     controls['carBrand'].setValue(res.carBrand);
     controls['carBrandCode'].setValue(res.carBrandCode);
 
-    res.models.forEach((item, index) => {
+    const carMakerList = JSON.parse(res.models);
+    console.log('dataa', carMakerList);  
+
+    if (carMakerList && carMakerList.length > 1) {
+
+      // Set index
+      this.index = carMakerList.length - 1;
+
+      carMakerList.forEach((element, index) => {
+        if (index > 0) {
+        console.log(index);
+        this.buildCarMakerRow(index);
+        }
+      });
+    }
+    
+
+    carMakerList.forEach((item, index) => {
       controls[`carMakerTitle_${index}`].setValue(item.title);
       controls[`carMakerCode_${index}`].setValue(item.code);
       controls[`carMakerPrice_${index}`].setValue(item.price);
@@ -179,6 +210,11 @@ export class CarEditComponent implements OnInit {
   updateCarBrand(code, data) {
     this.carService.update(code, data).subscribe((res: any) => {
       console.log('res', res);
+      if (res && res.status) {
+        const message = `Car successfully has been updated.`;
+        this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+        this.dialogRef.close(res.status);
+      }
     })
   }
 

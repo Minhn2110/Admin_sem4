@@ -83,17 +83,14 @@ export class CarListComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-          this.animal = result;
+          console.log('The dialog was closed', result);
+
         });
     } else {
-      const dialogRef = this.dialog.open(CarEditComponent, {
-        data: {name: this.name, animal: this.animal}
-      });
+      const dialogRef = this.dialog.open(CarEditComponent);
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        this.animal = result;
+        console.log('The dialog was closed', result);
       });
     }
 

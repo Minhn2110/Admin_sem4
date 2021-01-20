@@ -25,7 +25,7 @@ export class InterceptService implements HttpInterceptor {
     // };
 		// tslint:disable-next-line:no-debugger
 		// modify request
-		console.log('a');
+		// console.log('a');
 		request = request.clone({
 			setHeaders: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`

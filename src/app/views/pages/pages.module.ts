@@ -19,6 +19,7 @@ import { ContractModule } from './apps/contract/contract.module';
 import { CustomerModule } from './apps/customer/customer.module';
 import { CarModule } from './apps/car/car.module';
 import { AboutUsPageComponent } from './Others/about-us-page/about-us-page.component';
+import { ClaimModule } from './apps/claim/claim.module';
 
 
 
@@ -39,7 +40,8 @@ import { AboutUsPageComponent } from './Others/about-us-page/about-us-page.compo
 		TransanctionHistoryModule,
 		ContractModule,
 		CustomerModule,
-		CarModule
+		CarModule,
+		ClaimModule
 	],
 	providers: []
 })

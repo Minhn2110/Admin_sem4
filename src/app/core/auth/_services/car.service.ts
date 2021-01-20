@@ -15,13 +15,7 @@ export class CarService {
   constructor(private http: HttpClient) { }
 
   createCarBrand(body: any): Observable<any> {
-    const userToken = localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + userToken, 
-      }) 
-    }; 
-    return this.http.post<any>(API_CAR, body, httpOptions); 
+    return this.http.post<any>(API_CAR, body); 
   }
 
   list(): Observable<any> {
@@ -29,23 +23,10 @@ export class CarService {
   }
 
   get(code): Observable<any> {
-    const userToken = localStorage.getItem('token');
-    console.log('userToken', userToken);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + userToken
-      })
-    };
-    return this.http.get<any>(`${API_CAR}/${code}`, httpOptions);
+    return this.http.get<any>(`${API_CAR}/${code}`);
   }
   update(code, body: any): Observable<any> {
-    const userToken = localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + userToken, 
-      }) 
-    }; 
-    return this.http.put<any>(`${API_CAR}/${code}`, body, httpOptions); 
+    return this.http.put<any>(`${API_CAR}/${code}`, body); 
   }
   
   
