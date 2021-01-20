@@ -10,3 +10,4 @@ export { ContractService } from './contract.service';
 
 export { CustomerService } from './customer.service';
 export { CarService } from './car.service';
+export { ClaimService } from './claim.service';

@@ -40,14 +40,15 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+
 const firebaseConfig = {
-	apiKey: "AIzaSyBBignCfPEtIIGntZzCpopvW0ZaJ_vl0SQ",
-	authDomain: "testsmartfund.firebaseapp.com",
-	databaseURL: "https://testsmartfund.firebaseio.com",
-	projectId: "testsmartfund",
-	storageBucket: "testsmartfund.appspot.com",
-	messagingSenderId: "852175374861",
-	appId: "1:852175374861:web:904159eb09735d43"
+  apiKey: "AIzaSyCR5XxiMS6yRtVzIIeGKT0LNS5roSAPMtw",
+  authDomain: "insurance-admin-580a8.firebaseapp.com",
+  databaseURL: "https://insurance-admin-580a8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "insurance-admin-580a8",
+  storageBucket: "insurance-admin-580a8.appspot.com",
+  messagingSenderId: "466348697456",
+  appId: "1:466348697456:web:ae1edf1ce840eda9ac51b5" 
 };
 
 import {

@@ -126,7 +126,8 @@ const routes: Routes = [
     HttpUtilsService,
   ],
   entryComponents: [
-    DeleteEntityDialogComponent
+    DeleteEntityDialogComponent,
+    ActionNotificationComponent
 	],
 })
 

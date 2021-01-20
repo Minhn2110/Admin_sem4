@@ -28,7 +28,7 @@
                   <!-- Row -->
                   <div class="form-group kt-form__group row">
                     <!-- Full name -->
-                    <div class="col-lg-8 kt-margin-bottom-20-mobile">
+                    <div class="col-lg-7 kt-margin-bottom-20-mobile">
                       <mat-form-field class="mat-form-field-fluid">
                         <input matInput placeholder="Enter Header" formControlName="claimConfigFormHeader"/>
                         <mat-error>Full Name is
@@ -40,10 +40,10 @@
                       </mat-form-field>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-5">
                       <button mat-raised-button color="primary" (click)="insuredRule.click()" type="button">Upload Claim Banner </button>
-                      <input type="file" id="claimConfigBanner" #insuredRule (change)="onUploadInsuredRule($event)">
-                      <span style="padding-left: 10px;">{{insuredRuleFileName}}</span>
+                      <input type="file" id="claimConfigBanner" #insuredRule (change)="onUploadClaimConfigBanner($event)">
+                      <span style="padding-left: 10px;">{{claimConfigBannerFileName}}</span>
                     </div>
 
                   </div>
