@@ -1,0 +1,56 @@
+<kt-portlet>
+
+    <kt-portlet-header [title]="'Customer List'" [class]="'kt-portlet__head--lg'"></kt-portlet-header>
+  
+    <kt-portlet-body>
+      <div class="kt-form kt-margin-b-30">
+        <div class="kt-form__filtration">
+          <div class="row align-items-center">
+            <div class="col-md-2 kt-margin-bottom-10-mobile">
+              <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Search user" #searchInput placeholder="Search">
+                <mat-hint align="start">
+                  <strong>Search</strong> in all fields
+                </mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="mat-table__wrapper">
+        <mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort" matSortActive="id"
+          matSortDirection="asc" matSortDisableClear>
+  
+          <ng-container *ngFor="let item of displayedColumnsBinding" matColumnDef="{{item.matColumnDef}}">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>{{item.header}}</mat-header-cell>
+            <mat-cell *matCellDef="let user">{{user[item.matColumnDef]}}</mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+  
+              <button mat-icon-button color="warn" matTooltip="Delete customer" type="button"
+                (click)="deleteCustomer(customer)">
+                <mat-icon>delete</mat-icon>
+              </button>&nbsp;
+  
+            </mat-cell>
+          </ng-container>
+  
+  
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+  
+      </div>
+  
+      <div class="mat-table__bottom">
+        <mat-spinner [diameter]="20" *ngIf="loading$"></mat-spinner>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" [length]="length" [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+    </kt-portlet-body>
+  </kt-portlet>

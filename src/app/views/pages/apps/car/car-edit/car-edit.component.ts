@@ -18,6 +18,8 @@ export class CarEditComponent implements OnInit {
 
   carMakerModel: any;
   carCode: string;
+  viewLoading = false;
+
 
 
   carBrandFormBuilder: Array<any> = [
@@ -43,11 +45,13 @@ export class CarEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.initCarBrandForm();
     this.initCarMakerForm();
 
     if (this.data) {
       this.carCode = this.data.code;
+      console.log(this.carCode);
       this.getCarBrand();
     }
 
@@ -170,7 +174,6 @@ export class CarEditComponent implements OnInit {
 
   getCarBrand() {
     this.carService.get(this.carCode).subscribe((res: any) => {
-      console.log('datra', res);
       if (res) {
         this.bindCarBrand(res);
       }
@@ -197,7 +200,7 @@ export class CarEditComponent implements OnInit {
         this.buildCarMakerRow(index);
         }
       });
-    }
+    } 
     
 
     carMakerList.forEach((item, index) => {

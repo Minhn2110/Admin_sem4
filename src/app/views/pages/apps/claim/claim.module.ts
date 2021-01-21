@@ -25,6 +25,7 @@ import { ClaimConfigComponent } from './claim-config/claim-config.component';
 
 import { MaterialPreviewModule } from '../../../partials/content/general/material-preview/material-preview.module';
 import { QuillModule } from 'ngx-quill';
+import { ClaimListComponent } from './claim-list/claim-list.component';
 
 
 
@@ -39,6 +40,10 @@ const routes: Routes = [
         path: '',
         redirectTo: 'list', 
         pathMatch: 'full'
+      },
+      {
+        path: 'list',
+        component: ClaimListComponent
       },
       {
         path: 'config',
@@ -101,7 +106,8 @@ const routes: Routes = [
   ],
   declarations: [
       ClaimComponent,
-      ClaimConfigComponent
+      ClaimConfigComponent,
+      ClaimListComponent
   ],
 
   exports: [],

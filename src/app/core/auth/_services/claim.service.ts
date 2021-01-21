@@ -5,6 +5,8 @@ import { environment } from '../../../../environments/environment';
 
 
 const API_ClaimConfig = `${environment.api_url}/configs/claim`;
+const API_Claim = `${environment.api_url}/claims`;
+
 
 
 @Injectable({
@@ -26,6 +28,9 @@ export class ClaimService {
   get(id): Observable<any> {
     return this.http.get<any>(`${API_ClaimConfig}/${id}`);
   }
+  getClaimList(filter, page, size, sort): Observable<any> {
+    return this.http.get<any>(`${API_Claim}?page=${page}&size=${size}`);
+  }  
   update(id, body: any): Observable<any> {
     return this.http.put<any>(`${API_ClaimConfig}/${id}`, body); 
   }

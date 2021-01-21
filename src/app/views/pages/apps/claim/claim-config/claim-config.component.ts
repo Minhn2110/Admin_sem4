@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ClaimService } from '../../../../../core/auth/_services';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
@@ -24,6 +24,11 @@ export class ClaimConfigComponent implements OnInit {
   claimConfigBannerFile: File;
 
   claimConfigBannerFileUrl: any;
+  viewLoading = false; 
+
+
+  // loadingSubject = new BehaviorSubject<boolean>(true);
+	// loading$: Observable<boolean>;
 
 
   constructor(
@@ -37,6 +42,8 @@ export class ClaimConfigComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.loading$ = this.loadingSubject.asObservable();
+		// this.loadingSubject.next(true);
     this.initClaimConfigForm();
     this.getClaimConfig();
   }
@@ -119,6 +126,7 @@ export class ClaimConfigComponent implements OnInit {
   }
 
   upploadFileToFireBase(file, name) {
+    this.viewLoading = true; 
     // If update Avatar
     const filePath = `Admin/${name}`;
     const fileRef = this.storage.ref(filePath);
@@ -131,6 +139,7 @@ export class ClaimConfigComponent implements OnInit {
           this.downloadURL.subscribe(url => {
             if (url) {
               this.claimConfigBannerFileUrl = url
+              this.viewLoading = false;
             }
           });
         })

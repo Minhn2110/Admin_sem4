@@ -1,4 +1,4 @@
-<kt-portlet>
+<kt-portlet class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
     <kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
       <ng-container ktPortletTools>
         <a [routerLink]="['../../']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
@@ -14,6 +14,9 @@
     </kt-portlet-header>
   
     <kt-portlet-body>
+      <div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
       <mat-tab-group [(selectedIndex)]="selectedTab">
         <mat-tab>
           <ng-template mat-tab-label>
