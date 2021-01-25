@@ -1,0 +1,55 @@
+<kt-portlet class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+  <kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'">
+    <ng-container ktPortletTools>
+      <a [routerLink]="['../']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
+        matTooltip="Back to the users list">
+        <i class="la la-arrow-left"></i>
+        <span class="kt-hidden-mobile">Back</span>
+      </a>
+      <a href="javascript:void(0)" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)"
+        mat-raised-button matTooltip="Save & Continue">
+        <span class="kt-hidden-mobile">Save</span>
+      </a>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="kt-portlet__body-progress">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </div>
+
+    <div>
+      <form class="kt-form kt-form--group-seperator-dashed">
+        <div class="kt-form__section kt-form__section--first">
+          <!-- Row -->
+          <div class="form-group kt-form__group row">
+
+
+
+            <div class="col-5">
+              <button mat-raised-button color="primary" (click)="carBannerImg.click()" type="button">Upload Car Banner </button>
+              <input type="file" id="carBanner" #carBannerImg (change)="onUploadClaimConfigBanner($event)">
+              <span style="padding-left: 10px;">{{carConfigBannerFileName}}</span>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+      <quill-editor 
+      [(ngModel)]="carConfigHeaderContent"
+      placeholder="Enter Paragraph with Image"
+      [styles]="{height: '200px'}"
+    
+    ></quill-editor>
+      <quill-editor 
+        [(ngModel)]="carConfigBodyContent"
+        placeholder="Enter Body"
+        [styles]="{height: '500px'}"
+      
+      ></quill-editor>
+
+    </div>
+
+  </kt-portlet-body>
+</kt-portlet>

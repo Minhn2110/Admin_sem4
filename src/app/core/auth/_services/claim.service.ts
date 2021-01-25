@@ -31,6 +31,13 @@ export class ClaimService {
   getClaimList(filter, page, size, sort): Observable<any> {
     return this.http.get<any>(`${API_Claim}?page=${page}&size=${size}`);
   }  
+  getClaimInfo(code): Observable<any> {
+    return this.http.get<any>(`${API_Claim}/${code}`);
+  }
+  changeStatisClaimInfo(body: any, id): Observable<any> {
+    return this.http.post<any>(`${API_Claim}/status/${id}`, body); 
+  }
+  
   update(id, body: any): Observable<any> {
     return this.http.put<any>(`${API_ClaimConfig}/${id}`, body); 
   }

@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../../core/_base/crud';
 // Shared
 import { ActionNotificationComponent, DeleteEntityDialogComponent, FetchEntityDialogComponent, UpdateStatusDialogComponent } from '../../../partials/content/crud';
-import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDividerModule } from '@angular/material';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { PartialsModule } from '../../../partials/partials.module';
 import { DepartmentEffects, departmentReducer } from '../../../../core/auth';
@@ -95,7 +95,8 @@ const routes: Routes = [
     MatTabsModule,
     MatTooltipModule,
     NgbProgressbarModule,
-    MaterialPreviewModule
+    MaterialPreviewModule,
+    MatDividerModule,
   ],
   declarations: [
     ProductComponent,

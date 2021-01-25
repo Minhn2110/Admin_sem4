@@ -72,13 +72,20 @@ export class ProductEditComponent implements OnInit {
     { formControlName: 'bringingFee', placeholder: 'Enter Bringing Fee', error: 'Bringing Fee', hint: 'Bringing Fee' },
     // { formControlName: 'doorAndGlass', placeholder: 'Enter doorAndGlass Fee', error: 'doorAndGlass Fee', hint: 'doorAndGlass Fee' },
     { formControlName: 'rearViewMirror', placeholder: 'Enter Rear View Mirror Fee', error: 'Rear View Mirror Fee', hint: 'Rear View Mirror Fee' },
+    // Number
     { formControlName: 'numberRearViewMirror', placeholder: 'Enter Rear View Mirror Number', error: 'Rear View Mirror Number', hint: 'Rear View Mirror Number' },
+    { formControlName: 'numberRepaint', placeholder: 'Enter Repaint Number', error: 'Repaint Number', hint: 'Repaint Number' },
+    { formControlName: 'numberScratched', placeholder: 'Enter Scratched Number', error: 'Scratched Number', hint: 'Scratched Number' },
+    { formControlName: 'numberBringing', placeholder: 'Enter Bringing Number', error: 'Bringing Number', hint: 'Bringing Number' },
+    { formControlName: 'numberComponent', placeholder: 'Enter Component Number', error: 'Component Number', hint: 'Component Number' },
+
     // { formControlName: 'liabilityFee', placeholder: 'Enter Liability Fee', error: 'Liability Fee', hint: 'Liability Fee' },
     // { formControlName: 'collisionInsuranceFee', placeholder: 'Enter Collision Insurance Fee', error: 'Collision Insurance Fee', hint: 'Collision Insurance Fee' },
     // { formControlName: 'code', placeholder: 'Enter Insurance Code', error: 'Insurance Code', hint: 'Insurance Code' },
     // { formControlName: 'priceObj', placeholder: 'Enter Price', error: 'Price', hint: 'Price' },
     // { formControlName: 'effectiveDateRangeSelectionNumber', placeholder: 'Enter Effective Date', error: 'Effective Date', hint: 'Effective Date' },
   ]
+
 
   constructor(private productFB: FormBuilder,
     private partnerService: PartnerService,
@@ -132,7 +139,11 @@ export class ProductEditComponent implements OnInit {
       bringingFee: ['', Validators.required],
       // doorAndGlass: ['', Validators.required],
       rearViewMirror: ['', Validators.required],
-      numberRearViewMirror: ['', Validators.required]
+      numberRearViewMirror: ['', Validators.required],
+      numberRepaint: ['', Validators.required],
+      numberScratched: ['', Validators.required],
+      numberBringing: ['', Validators.required],
+      numberComponent: ['', Validators.required],
     });
   }
 
@@ -321,9 +332,6 @@ export class ProductEditComponent implements OnInit {
       this.productForm.controls['productCategory'].setValue(data.code);
       this.productForm.controls['productCategory'].setValue(data.code);
     }, 1000);
-
-
-
   }
 
   goBackWithId() {

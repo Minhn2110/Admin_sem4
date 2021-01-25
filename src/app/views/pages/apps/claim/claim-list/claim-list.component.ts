@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClaimService } from '../../../../../core/auth/_services';
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
+import { ClaimInfoComponent } from '../claim-info/claim-info.component';
 
 @Component({
   selector: 'kt-claim-list',
@@ -14,20 +15,21 @@ export class ClaimListComponent implements OnInit {
   constructor(private claimService: ClaimService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog,
     private layoutUtilsService: LayoutUtilsService,
     ) { }
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['id', 'givenName', 'surname', 'username', 'phoneNumber', 'email', 'address', 'actions'];
+  displayedColumns = ['id', 'name', 'numberPlate', 'partnerCode', 'partnerName', 'status', 'actions'];
 
   displayedColumnsBinding = [
     { matColumnDef: 'id', header: 'Id' },
-    { matColumnDef: 'givenName', header: 'First Name' },
-    { matColumnDef: 'surname', header: 'Last Name' },
-    { matColumnDef: 'username', header: 'Username' },
-    { matColumnDef: 'phoneNumber', header: 'Phone Number' },
-    { matColumnDef: 'email', header: 'Email' },
-    { matColumnDef: 'address', header: 'Address' },
+    { matColumnDef: 'name', header: 'First Name' },
+    { matColumnDef: 'numberPlate', header: 'Last Name' },
+    { matColumnDef: 'partnerCode', header: 'Username' },
+    { matColumnDef: 'partnerName', header: 'Phone Number' },
+    // { matColumnDef: 'status', header: 'Email' },
+    // { matColumnDef: 'address', header: 'Address' },
   ];
 
   length: number;
@@ -63,6 +65,49 @@ export class ClaimListComponent implements OnInit {
 
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
 		});
-	}
+  }
+  
+  getItemCssClassByStatus(status: any): string {
+		switch (status) {
+			case 'Approved':
+				return 'success';
+			case 'Pending':
+				return 'metal';
+		}
+		return '';
+  }
+  
+  editClaim(id) {
+    this.openDialog(id)
+  }
+
+  openDialog(id ?: any): void {
+    console.log('code', id);
+    if (id) {
+        console.log('id', id);
+        const dialogRef = this.dialog.open(ClaimInfoComponent, {
+          data: {
+            id: id
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed', result);
+
+        });
+    } else {
+      const dialogRef = this.dialog.open(ClaimInfoComponent,
+        {
+          data: {
+            code: null
+          }
+        });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed', result);
+      });
+    }
+
+  }
 
 }

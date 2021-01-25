@@ -19,7 +19,7 @@ export class ClaimConfigComponent implements OnInit {
   hasFormErrors = false;
   downloadURL: Observable<string>;
 
-  claimConfigBannerFileName: String;
+  claimConfigBannerFileName: string;
 
   claimConfigBannerFile: File;
 

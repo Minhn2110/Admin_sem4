@@ -1,0 +1,68 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="claimInfoForm" >
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner> 
+			</div>
+
+			<ng-container *ngFor="let row of claimInfoPersonalFormBuilder">
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-4 kt-margin-bottom-20" *ngFor="let controls of row.inputs">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="{{controls.placeholder}}"
+								formControlName="{{controls.formControlName}}"/>
+							<mat-error>{{controls.error}} <strong> is required</strong></mat-error>
+							<mat-hint align="start">Please enter <strong> {{controls.hint}}</strong> </mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+				<mat-divider *ngIf="row.divider"></mat-divider>
+			</ng-container>
+
+
+
+			<!-- <div class="form-group kt-form__group row">
+				<div class="col-lg-4 kt-margin-bottom-20" *ngFor="let controls of carMakerFormBuilder">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="{{controls.placeholder}}"
+							formControlName="{{controls.formControlName}}" />
+						<mat-error>{{controls.error}} <strong> is required</strong></mat-error>
+						<mat-hint align="start">Please enter <strong> {{controls.hint}}</strong> </mat-hint>
+					</mat-form-field>
+				</div>
+			</div> -->
+
+
+		</div>
+
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-4 addCarMaker-wrapper">
+						<!-- <button type="button" mat-raised-button color="primary" (click)="onAddCarMaker()"
+							[disabled]="viewLoading" matTooltip="Save changes">
+							Add Car Maker
+						</button> -->
+					</div>
+					<div class="col-lg-8">
+						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial
+							matTooltip="Cancel changes">
+							Close
+						</button>&nbsp;
+						<button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+							[disabled]="viewLoading" matTooltip="Save changes">
+							Approved
+						</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

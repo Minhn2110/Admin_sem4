@@ -66,7 +66,6 @@ import {
 // Auth
 import { AuthModule } from './views/pages/auth/auth.module';
 import { AuthService } from './core/auth';
-import { EmployeeService } from './core/auth';
 import { DepartmentService } from './core/auth';
 
 // CRUD
@@ -136,7 +135,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 	exports: [],
 	providers: [
 		AuthService,
-		EmployeeService,
 		DepartmentService,
 		LayoutConfigService,
 		LayoutRefService,

@@ -5,6 +5,8 @@ import { environment } from '../../../../environments/environment';
 
 
 const API_CAR = `${environment.api_url}/car-brand`;
+const API_CAR_CONFIG = `${environment.api_url}/configs/car`;
+
 
 
 @Injectable({
@@ -28,6 +30,10 @@ export class CarService {
   update(code, body: any): Observable<any> {
     return this.http.put<any>(`${API_CAR}/${code}`, body); 
   }
-  
-  
+  getCarConfig(): Observable<any> {
+    return this.http.get<any>(`${API_CAR_CONFIG}/1`);
+  } 
+  updateCarConfig(body: any): Observable<any> {
+    return this.http.put<any>(`${API_CAR_CONFIG}/1`, body); 
+  }
 }

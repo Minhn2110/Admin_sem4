@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../../core/_base/crud';
 // Shared
 import { ActionNotificationComponent, DeleteEntityDialogComponent, FetchEntityDialogComponent, UpdateStatusDialogComponent } from '../../../partials/content/crud';
-import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSelectModule, MatInputModule, MatTableModule, MatAutocompleteModule, MatRadioModule, MatIconModule, MatNativeDateModule, MatProgressBarModule, MatDatepickerModule, MatCardModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule, MatTooltipModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDividerModule, MatDialogModule } from '@angular/material';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { PartialsModule } from '../../../partials/partials.module';
 import { DepartmentEffects, departmentReducer } from '../../../../core/auth';
@@ -26,6 +26,7 @@ import { ClaimConfigComponent } from './claim-config/claim-config.component';
 import { MaterialPreviewModule } from '../../../partials/content/general/material-preview/material-preview.module';
 import { QuillModule } from 'ngx-quill';
 import { ClaimListComponent } from './claim-list/claim-list.component';
+import { ClaimInfoComponent } from './claim-info/claim-info.component';
 
 
 
@@ -102,12 +103,15 @@ const routes: Routes = [
     MatTooltipModule,
     NgbProgressbarModule,
     MaterialPreviewModule,
-    QuillModule
+    QuillModule,
+    MatDialogModule,
+    MatDividerModule
   ],
   declarations: [
       ClaimComponent,
       ClaimConfigComponent,
-      ClaimListComponent
+      ClaimListComponent,
+      ClaimInfoComponent
   ],
 
   exports: [],
@@ -133,7 +137,8 @@ const routes: Routes = [
   ],
   entryComponents: [
     DeleteEntityDialogComponent,
-    ActionNotificationComponent
+    ActionNotificationComponent,
+    ClaimInfoComponent
 	],
 })
 

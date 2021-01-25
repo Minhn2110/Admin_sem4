@@ -10,7 +10,6 @@ import { CoreModule } from '../../core/core.module';
 import { MailModule } from './apps/mail/mail.module';
 import { MyPageComponent } from './my-page/my-page.component';
 import { DepartmentModule } from './apps/department/department.module';
-import { EmployeeModule } from './apps/employee/employee.module';
 import { PartnerModule } from './apps/partner/partner.module';
 import { ProductModule } from './apps/product/product.module';
 import { TransanctionHistoryModule } from './apps/transaction-history/transaction-history.module';
@@ -34,7 +33,6 @@ import { ClaimModule } from './apps/claim/claim.module';
 		PartialsModule,
 		MailModule,
 		DepartmentModule, 
-		EmployeeModule,
 		PartnerModule, 
 		ProductModule,
 		TransanctionHistoryModule,

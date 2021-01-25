@@ -25,6 +25,8 @@ import { CarEditComponent } from './car-edit/car-edit.component';
 
 import { MaterialPreviewModule } from '../../../partials/content/general/material-preview/material-preview.module';
 import {MatDividerModule} from '@angular/material/divider';
+import { CarConfigComponent } from './car-config/car-config.component';
+import { QuillModule } from 'ngx-quill';
 
 
 const routes: Routes = [
@@ -42,6 +44,10 @@ const routes: Routes = [
       {
         path: 'list',
         component: CarListComponent
+      },
+      {
+        path: 'config',
+        component: CarConfigComponent
       },
     ]
   }
@@ -81,12 +87,14 @@ const routes: Routes = [
     NgbProgressbarModule,
     MaterialPreviewModule,
     MatDialogModule,
-    MatDividerModule
+    MatDividerModule,
+    QuillModule,
   ],
   declarations: [
       CarListComponent,
       CarComponent,
-      CarEditComponent
+      CarEditComponent,
+      CarConfigComponent
   ],
 
   exports: [],

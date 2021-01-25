@@ -24,6 +24,7 @@ import { ContractListComponent } from './contract-list/contract-list.component';
 // import { ProductEditComponent } from './product-edit/product-edit.component';
 
 import { MaterialPreviewModule } from '../../../partials/content/general/material-preview/material-preview.module';
+import { ContractInfoComponent } from './contract-info/contract-info.component';
 
 
 
@@ -84,6 +85,7 @@ const routes: Routes = [
   declarations: [
     ContractComponent,
     ContractListComponent,
+    ContractInfoComponent,
   ],
 
   exports: [],
@@ -108,7 +110,8 @@ const routes: Routes = [
     HttpUtilsService,
   ],
   entryComponents: [
-    DeleteEntityDialogComponent
+    DeleteEntityDialogComponent,
+    ContractInfoComponent
 	],
 })
 
