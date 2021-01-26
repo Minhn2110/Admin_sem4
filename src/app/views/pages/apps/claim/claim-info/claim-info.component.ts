@@ -19,6 +19,7 @@ export class ClaimInfoComponent implements OnInit {
   carMakerModel: any;
   claimId: number;
   viewLoading = false;
+  isPending: boolean = true;
 
 
 
@@ -86,6 +87,7 @@ export class ClaimInfoComponent implements OnInit {
 
     // console.log(this.data);
     this.getClaimInfo();
+    this.disableContractInfo();
   }
 
   initClaimInfoForm() {
@@ -128,6 +130,11 @@ export class ClaimInfoComponent implements OnInit {
   }
 
   bindClaimInfo(res) {
+    if (res.status == 'Done') {
+      this.isPending = false;
+    } else {
+      this.isPending = true;
+    }
     const controls = this.claimInfoForm.controls;
     for (const property in controls) {
       controls[property].setValue(res[property] ? res[property] : '');
@@ -135,10 +142,15 @@ export class ClaimInfoComponent implements OnInit {
 
 
   }
+  disableContractInfo() {
+    const controls = this.claimInfoForm.controls;
+    for (const property in controls) {
+      this.claimInfoForm.controls[property].disable();
+    }
+  }
 
   onSubmit() {
-    alert('a');
-    const body = {
+      const body = {
       status: 'Done'
     }
     this.claimService.changeStatisClaimInfo(body, this.claimId).subscribe((res) => {

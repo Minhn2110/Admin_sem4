@@ -55,7 +55,7 @@
 							matTooltip="Cancel changes">
 							Close
 						</button>&nbsp;
-						<button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+						<button type="button" mat-raised-button color="primary" (click)="onSubmit()" *ngIf="isPending"
 							[disabled]="viewLoading" matTooltip="Save changes">
 							Approved
 						</button>

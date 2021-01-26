@@ -40,12 +40,7 @@ export class TransactionHistoryListComponent implements OnInit {
     this.getData();
     this.dataSource.paginator = this.paginator;
   }
-  ngAfterViewInit(): void {
 
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-
-  }
   getData() {
     this.loading$ = true;
     this.transactionHistoryService.list('', this.pageIndex, this.pageSize, 'desc').subscribe((res) => {

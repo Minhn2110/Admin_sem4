@@ -17,4 +17,7 @@ export class ContractService {
   list(filter, page, size, sort): Observable<any> {
     return this.http.get<any>(`${API_CONTRACT}?page=${page}&size=${size}`);
   }
+  get(id): Observable<any> {
+    return this.http.get<any>(`${API_CONTRACT}/${id}`);
+  }
 }

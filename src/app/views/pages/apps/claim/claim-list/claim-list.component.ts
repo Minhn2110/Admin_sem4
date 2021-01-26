@@ -19,7 +19,6 @@ export class ClaimListComponent implements OnInit {
     private layoutUtilsService: LayoutUtilsService,
     ) { }
 
-  dataSource: MatTableDataSource<any>;
   displayedColumns = ['id', 'name', 'numberPlate', 'partnerCode', 'partnerName', 'status', 'actions'];
 
   displayedColumnsBinding = [
@@ -34,42 +33,40 @@ export class ClaimListComponent implements OnInit {
 
   length: number;
   loading$:boolean;
+  pageIndex: any; 
+  pageSize:any;
+  dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {read: true, static: false}) paginator: MatPaginator;
   ngOnInit() {
+    this.pageIndex = 1;
+    this.pageSize = 5;
+    this.getData();
+    this.dataSource.paginator = this.paginator;
+  }
+  getData() {
     this.loading$ = true;
-    this.claimService.getClaimList('', 1, 5, 'desc').subscribe((res) => {
+    this.claimService.getClaimList('', this.pageIndex, this.pageSize, 'desc').subscribe((res) => {
       console.log('res', res);
       if (res && res.data.length > 0 ) {
-        const data = res.data;
-        this.dataSource = new MatTableDataSource(res.data);
-        console.log('this datasoource', this.dataSource);
-        this.dataSource.paginator = this.paginator;
-        this.length = res.data.length;
+        // this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.data = res.data;
+        this.length = res.totalItems;
         this.loading$ = false;
       } 
     })
   }
-
-  deleteCustomer(_item: any) {
-		const _title: string = 'Customer Delete';
-		const _description: string = 'Are you sure to permanently delete this customer?';
-		const _waitDesciption: string = 'Customer is deleting';
-		const _deleteMessage = 'Customer has been deleted';
-
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
-		dialogRef.afterClosed().subscribe(res => {
-			if (!res) {
-				return;
-			}
-
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-		});
+  onPaginate(event) {
+    this.pageIndex = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getData();
+    console.log(event);
   }
+
   
   getItemCssClassByStatus(status: any): string {
 		switch (status) {
-			case 'Approved':
+			case 'Done':
 				return 'success';
 			case 'Pending':
 				return 'metal';

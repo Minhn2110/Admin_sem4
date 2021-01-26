@@ -14,59 +14,57 @@ import { ContractInfoComponent } from '../contract-info/contract-info.component'
 export class ContractListComponent implements OnInit {
 
   constructor(private contractService: ContractService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
     public dialog: MatDialog,
     private layoutUtilsService: LayoutUtilsService,
     ) { }
 
-  dataSource: MatTableDataSource<any>;
-  displayedColumns = ['id', 'fullName', 'productName', 'phoneNumber', 'paidAmount', 'status', 'actions'];
+  displayedColumns = ['id', 'code', 'fullName', 'productName', 'phoneNumber', 'paidAmount', 'status', 'actions'];
 
   displayedColumnsBinding = [
     { matColumnDef: 'id', header: 'Id' },
+    { matColumnDef: 'code', header: 'Contract Code' },
     { matColumnDef: 'fullName', header: 'Full Name' },
     { matColumnDef: 'productName', header: 'Product' },
     { matColumnDef: 'phoneNumber', header: 'Phone Number' },
     { matColumnDef: 'paidAmount', header: 'Fee' },
-    // { matColumnDef: 'status', header: 'Email' },
     // { matColumnDef: 'address', header: 'Address' },
   ];
 
   length: number;
   loading$:boolean;
+  pageIndex: any; 
+  pageSize:any;
+  dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  @ViewChild(MatPaginator, {read: true, static: false}) paginator: MatPaginator;
   ngOnInit() {
+    this.pageIndex = 1;
+    this.pageSize = 5;
+    this.getData();
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getData() {
     this.loading$ = true;
-    this.contractService.list('', 1, 5, 'desc').subscribe((res) => {
+    this.contractService.list('', this.pageIndex, this.pageSize, 'desc').subscribe((res) => {
       console.log('res', res);
       if (res && res.data.length > 0 ) {
-        const data = res.data;
-        this.dataSource = new MatTableDataSource(res.data);
-        console.log('this datasoource', this.dataSource);
-        this.dataSource.paginator = this.paginator;
-        this.length = res.data.length;
+        // this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.data = res.data;
+        this.length = res.totalItems;
         this.loading$ = false;
       } 
     })
   }
 
-  deleteCustomer(_item: any) {
-		const _title: string = 'Customer Delete';
-		const _description: string = 'Are you sure to permanently delete this customer?';
-		const _waitDesciption: string = 'Customer is deleting';
-		const _deleteMessage = 'Customer has been deleted';
-
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
-		dialogRef.afterClosed().subscribe(res => {
-			if (!res) {
-				return;
-			}
-
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-		});
+  onPaginate(event) {
+    this.pageIndex = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getData();
+    console.log(event);
   }
+
   
   getItemCssClassByStatus(status: boolean): string {
 		switch (status) {
@@ -82,12 +80,12 @@ export class ContractListComponent implements OnInit {
     this.openDialog(id)
   }
 
-  openDialog(code ?: any): void {
-    if (code) {
-        console.log('id', code);
+  openDialog(id ?: any): void {
+    if (id) {
+        console.log('id', id);
         const dialogRef = this.dialog.open(ContractInfoComponent, {
           data: {
-            code: code
+            id: id
           }
         });
     
@@ -99,7 +97,7 @@ export class ContractListComponent implements OnInit {
       const dialogRef = this.dialog.open(ContractInfoComponent,
         {
           data: {
-            code: null
+            id: null
           }
         });
 
